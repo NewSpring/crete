@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Campus gets campuses 1`] = `
+Object {
+  "data": Object {
+    "campuses": Array [
+      Object {
+        "image": Object {
+          "uri": "https://fake-image-url.com",
+        },
+      },
+    ],
+  },
+}
+`;

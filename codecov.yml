@@ -1,0 +1,9 @@
+coverage:
+  status:
+    project:
+      api:
+        paths:
+          - ./*
+comment:
+  layout: "reach, diff, files"
+  behavior: once

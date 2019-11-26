@@ -1,0 +1,57 @@
+{
+  "description": "NewSpring Church",
+  "formatVersion": 1,
+  "organizationName": "NewSpring Church",
+  "passTypeIdentifier": "pass.com.newspringchurch.testing",
+  "teamIdentifier": "7TM8C6252Z",
+  "logoText": "NewSpring Church",
+  "backgroundColor": "rgb(107,172,67)",
+  "foregroundColor": "rgb(248,247,244)",
+  "labelColor": "rgb(255,255,255)",
+  "serialNumber": "checkinpass-{{ person | GetPersonAlternateId }}",
+  "thumbnail": {
+    "uri": "{{ person.Photo.Url }}&format=png&height=200"
+  },
+  "thumbnail@2x": {
+    "uri": "{{ person.Photo.Url }}&format=png&height=400"
+  },
+  "barcodes": [
+    {
+      "message": "{{ person | GetPersonAlternateId }}",
+      "format": "PKBarcodeFormatQR",
+      "messageEncoding": "iso-8859-1"
+    }
+  ],
+{% assign personCampus = person | Campus %}
+{% if personCampus.Location.Latitude %}
+  "locations": [
+    {
+      "latitude": {{ personCampus.Location.Latitude }},
+      "longitude": {{ personCampus.Location.Longitude }},
+      "relevantText": "Tap to check-in at {{ personCampus.Name }}"
+    }
+  ],
+{% endif %}
+  "generic": {
+    "primaryFields": [
+      {
+        "key": "member",
+        "value": "{{ person.FullName }}"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "home",
+        "label": "Home",
+        "value": "{{ person | Address:'Home','[[City]], [[State]]' }}"
+      },
+      {
+        "key": "campus",
+        "label": "Campus",
+        "textAlignment": "PKTextAlignmentRight",
+        "value":
+          "{% assign personCampus = person | Campus %}{{ personCampus.Name  }}"
+      }
+    ]
+  }
+}
