@@ -2,7 +2,7 @@ coverage:
   status:
     project: yes
     patch: yes
-    changes: yes
+    changes: no
 comment:
   layout: "reach, diff, files"
   behavior: once
