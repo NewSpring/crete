@@ -13,6 +13,7 @@
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
     "fixlint": "eslint ./src --ext .js --fix",
+    "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov"
   },
   "engines": {
