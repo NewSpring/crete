@@ -9,14 +9,7 @@ const prayerRequestSchema = gql`
     savedPrayers: [PrayerRequest]
   }
   extend type Mutation {
-    addPrayer(
-      campusId: String @deprecated(reason: "Not used")
-      categoryId: Int @deprecated(reason: "Not used")
-      text: String!
-      firstName: String @deprecated(reason: "Not used")
-      lastName: String @deprecated(reason: "Not used")
-      isAnonymous: Boolean
-    ): PrayerRequest
+    addPrayer(text: String!, isAnonymous: Boolean): PrayerRequest
     deletePrayer(nodeId: String!): PrayerRequest
     incrementPrayerCount(nodeId: String!): PrayerRequest
     flagPrayer(nodeId: String!): PrayerRequest
