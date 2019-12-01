@@ -69,7 +69,6 @@ typings/
 storyLoader.js
 
 # compiled code
-
-**/lib
+lib
 
 .watchmanconfig
