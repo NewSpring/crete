@@ -181,11 +181,7 @@ describe('PrayerRequest resolver', () => {
     const query = `
       mutation {
         addPrayer(
-          firstName: "Test"
-          lastName: "Bro"
           text: "Jesus Rocks"
-          campusId: "Campus:4f68015ba18662a7409d1219a4ce013e"
-          categoryId: 1
           isAnonymous: true
         ) {
           id
