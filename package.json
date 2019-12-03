@@ -61,7 +61,7 @@
     "@babel/cli": "^7.4.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.7.4",
-    "apollo": "^2.21.1",
+    "apollo": "^1.9.2",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-plugin-module-resolver": "^3.2.0",
