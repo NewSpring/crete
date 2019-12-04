@@ -8,6 +8,8 @@ import * as PrayerRequest from '../index';
 import prayerRequestSchema from '../schema';
 import authMock from '../../authMock';
 import campusMock from '../../campusMock';
+import oneRockPrayer, { twoRockPrayers } from '../../mocks/prayer';
+import oneRockPerson from '../../mocks/person';
 
 const { getSchema, getContext } = createTestHelpers({
   PrayerRequest,
@@ -16,71 +18,6 @@ const { getSchema, getContext } = createTestHelpers({
   Campus: { dataSource: campusMock },
 });
 
-const currentPersonResMock = jest.fn(() =>
-  Promise.resolve({
-    id: 1,
-    firstName: 'Isaac',
-    lastName: 'Hardy',
-  })
-);
-
-const onePrayerResMock = jest.fn(() =>
-  Promise.resolve({
-    id: 'PrayerRequest:b36e55d803443431e96bb4b5068147ec',
-    firstName: 'Isaac',
-    lastName: 'Hardy',
-    text: 'Pray this works.',
-    requestedByPersonAliasId: 447217,
-    campusId: 16,
-    categoryId: 2,
-    flagCount: 0,
-    prayerCount: 4,
-    attributeValues: {
-      isAnonymous: {
-        value: 'True',
-      },
-    },
-  })
-);
-
-const twoPrayerResMock = jest.fn(() =>
-  Promise.resolve([
-    {
-      id: 'PrayerRequest:b36e55d803443431e96bb4b5068147ec',
-      firstName: 'Isaac',
-      lastName: 'Hardy',
-      text: 'Pray this works.',
-      requestedByPersonAliasId: 447217,
-      enteredDateTime: '2019-07-02T13:08:02.035',
-      campusId: 16,
-      categoryId: 2,
-      flagCount: 0,
-      prayerCount: 4,
-      attributeValues: {
-        isAnonymous: {
-          value: 'True',
-        },
-      },
-    },
-    {
-      id: 'PrayerRequest:57c465ee3cd69524d729569b338607de',
-      firstName: 'Rich',
-      lastName: 'Dubee',
-      text: 'Help me',
-      requestedByPersonAliasId: 447217,
-      enteredDateTime: '2019-07-03T13:08:02.035',
-      campusId: 16,
-      categoryId: 2,
-      flagCount: 0,
-      prayerCount: 4,
-      attributeValues: {
-        isAnonymous: {
-          value: 'True',
-        },
-      },
-    },
-  ])
-);
 describe('PrayerRequest resolver', () => {
   let schema;
   let context;
@@ -90,7 +27,9 @@ describe('PrayerRequest resolver', () => {
     fetch.mockRockDataSourceAPI();
     schema = getSchema([prayerRequestSchema, peopleSchema, campusSchema]);
     context = getContext();
-    context.dataSources.Person.getFromAliasId = currentPersonResMock;
+    context.dataSources.Person.getFromAliasId = jest.fn(() =>
+      Promise.resolve(oneRockPerson)
+    );
     context.dataSources.PrayerRequest.createInteraction = jest.fn(() => null);
     rootValue = {};
   });
@@ -121,7 +60,9 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getAll = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getAll = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -140,7 +81,9 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.getAllByCampus = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getAllByCampus = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -156,7 +99,9 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromCurrentPerson = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getFromCurrentPerson = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -172,7 +117,9 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromGroups = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getFromGroups = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -190,7 +137,9 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.add = onePrayerResMock;
+    context.dataSources.PrayerRequest.add = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -207,7 +156,9 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.incrementPrayed = onePrayerResMock;
+    context.dataSources.PrayerRequest.incrementPrayed = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -222,7 +173,9 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.flag = onePrayerResMock;
+    context.dataSources.PrayerRequest.flag = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
