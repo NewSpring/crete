@@ -95,18 +95,15 @@ Object {
         "text": "Pray this works.",
       },
       Object {
-        "campus": Object {
-          "id": "Campus:be35f49307d7297989d3514be788ef2d",
-          "name": "Anderson",
-        },
-        "flagCount": 0,
+        "campus": null,
+        "flagCount": 1,
         "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
-        "isAnonymous": true,
+        "isAnonymous": false,
         "isSaved": true,
         "person": Object {
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",
         },
-        "prayerCount": 4,
+        "prayerCount": 0,
         "requestor": Object {
           "firstName": "Isaac",
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",
@@ -133,10 +130,7 @@ Object {
         "text": "Pray this works.",
       },
       Object {
-        "campus": Object {
-          "id": "Campus:be35f49307d7297989d3514be788ef2d",
-          "name": "Anderson",
-        },
+        "campus": null,
         "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
         "text": "Help me",
       },

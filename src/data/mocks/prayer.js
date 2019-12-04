@@ -41,13 +41,13 @@ export const twoRockPrayers = [
     text: 'Help me',
     requestedByPersonAliasId: 447217,
     enteredDateTime: '2019-07-03T13:08:02.035',
-    campusId: 16,
+    campusId: null,
     categoryId: 2,
-    flagCount: 0,
-    prayerCount: 4,
+    flagCount: 1,
+    prayerCount: 0,
     attributeValues: {
       isAnonymous: {
-        value: 'True',
+        value: 'False',
       },
     },
   },
