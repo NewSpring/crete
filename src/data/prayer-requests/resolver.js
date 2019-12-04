@@ -67,8 +67,11 @@ export default {
     startTime: ({ enteredDateTime }) => enteredDateTime,
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
-    isAnonymous: ({ attributeValues: { isAnonymous: { value } = {} } = {} }) =>
-      value === 'True',
+    isAnonymous: ({
+      attributeValues: {
+        isAnonymous: { value },
+      },
+    }) => value === 'True',
     // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Person.getFromAliasId(requestedByPersonAliasId),
