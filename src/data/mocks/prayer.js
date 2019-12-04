@@ -51,3 +51,39 @@ export const twoRockPrayers = [
     },
   },
 ];
+
+export const threeUnsortedPrayers = [
+  {
+    text: 'prayer1',
+    prayerCount: 2,
+    createdDateTime: '2019-05-30T09:41:44.607',
+  },
+  {
+    text: 'prayer2',
+    prayerCount: 2,
+    createdDateTime: '2019-05-29T09:41:44.607',
+  },
+  {
+    text: 'prayer3',
+    prayerCount: 1,
+    createdDateTime: '2019-05-30T09:41:44.607',
+  },
+];
+
+export const threeSortedPrayers = [
+  {
+    text: 'prayer3',
+    prayerCount: 1,
+    createdDateTime: '2019-05-30T09:41:44.607',
+  },
+  {
+    text: 'prayer2',
+    prayerCount: 2,
+    createdDateTime: '2019-05-29T09:41:44.607',
+  },
+  {
+    text: 'prayer1',
+    prayerCount: 2,
+    createdDateTime: '2019-05-30T09:41:44.607',
+  },
+];
