@@ -11,6 +11,17 @@ Object {
 }
 `;
 
+exports[`PrayerRequest resolver deletes a prayer 1`] = `
+Object {
+  "data": Object {
+    "deletePrayer": Object {
+      "id": "PrayerRequest:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
 exports[`PrayerRequest resolver flags a prayer request 1`] = `
 Object {
   "data": Object {
@@ -71,12 +82,16 @@ Object {
         "id": "PrayerRequest:559b23fd0aa90e81b1c023e72e230fa1",
         "isAnonymous": true,
         "isSaved": true,
+        "person": Object {
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+        },
         "prayerCount": 4,
         "requestor": Object {
           "firstName": "Isaac",
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",
           "lastName": "Hardy",
         },
+        "startTime": "2019-07-02T13:08:02.035",
         "text": "Pray this works.",
       },
       Object {
@@ -88,12 +103,16 @@ Object {
         "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
         "isAnonymous": true,
         "isSaved": true,
+        "person": Object {
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+        },
         "prayerCount": 4,
         "requestor": Object {
           "firstName": "Isaac",
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",
           "lastName": "Hardy",
         },
+        "startTime": "2019-07-03T13:08:02.035",
         "text": "Help me",
       },
     ],
@@ -118,6 +137,23 @@ Object {
           "id": "Campus:be35f49307d7297989d3514be788ef2d",
           "name": "Anderson",
         },
+        "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`PrayerRequest resolver gets all saved prayers 1`] = `
+Object {
+  "data": Object {
+    "savedPrayers": Array [
+      Object {
+        "id": "PrayerRequest:559b23fd0aa90e81b1c023e72e230fa1",
+        "text": "Pray this works.",
+      },
+      Object {
         "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
         "text": "Help me",
       },

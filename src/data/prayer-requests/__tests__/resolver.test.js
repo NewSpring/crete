@@ -50,6 +50,7 @@ describe('PrayerRequest resolver', () => {
             id
             name
           }
+          startTime
           flagCount
           prayerCount
           isAnonymous
@@ -58,6 +59,9 @@ describe('PrayerRequest resolver', () => {
             id
             firstName
             lastName
+          }
+          person {
+            id
           }
         }
       }
@@ -136,6 +140,22 @@ describe('PrayerRequest resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+  it('gets all saved prayers', async () => {
+    const query = `
+      query {
+        savedPrayers {
+          id
+          text
+        }
+      }
+    `;
+
+    context.dataSources.PrayerRequest.getSavedPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
 
   it('creates a new prayer', async () => {
     const query = `
@@ -150,6 +170,23 @@ describe('PrayerRequest resolver', () => {
       }
     `;
     context.dataSources.PrayerRequest.add = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('deletes a prayer', async () => {
+    const query = `
+      mutation {
+        deletePrayer(
+          nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec"
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.PrayerRequest.deletePrayer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);

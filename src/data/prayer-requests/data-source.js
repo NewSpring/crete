@@ -3,6 +3,7 @@ import ApollosConfig from '@apollosproject/config';
 import moment from 'moment-timezone';
 import { uniq } from 'lodash';
 import { parseGlobalId } from '@apollosproject/server-core';
+import bugsnagClient from '../../bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
 export default class PrayerRequest extends RockApolloDataSource {
@@ -51,12 +52,26 @@ export default class PrayerRequest extends RockApolloDataSource {
     // if it's older than 2 hours ago
     // TODO this check is taking on average 2.5 sec and will only get slower
     // we need a better algorithm
-    const { interactionDateTime: time } = await this.request('Interactions')
-      .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
-      .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
-      .orderBy('InteractionDateTime', 'desc')
-      .select('InteractionDateTime')
-      .first();
+    let time;
+    try {
+      const { interactionDateTime } = await this.request('Interactions')
+        .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
+        .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
+        .orderBy('InteractionDateTime', 'desc')
+        .select('InteractionDateTime')
+        .first();
+      time = interactionDateTime;
+    } catch (e) {
+      // report error for time out
+      bugsnagClient.notify(
+        new Error('Sorting interactions failed, did not send notification.'),
+        {
+          metaData: { prayerId },
+          severity: 'warning',
+        }
+      );
+    }
+
     const summary =
       !time || moment(time).add(2, 'hours') < moment()
         ? 'PrayerNotificationSent'

@@ -4,6 +4,7 @@ export default {
   lastName: 'Hardy',
   text: 'Pray this works.',
   requestedByPersonAliasId: 447217,
+  enteredDateTime: '2019-07-02T13:08:02.035',
   campusId: 16,
   categoryId: 2,
   flagCount: 0,
