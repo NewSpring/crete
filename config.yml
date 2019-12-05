@@ -128,13 +128,21 @@ ROCK_MAPPINGS:
 
   SERMON_CHANNEL_ID: 19
 
+  LIVE_STREAM_SCHEDULE_IDS:
+    - 3334
+    - 3335
+    - 3336
+    - 3337
+    - 3338
+    - 3339
+    - 3340
+
   ASSET_STORAGE_PROVIDERS:
     '6': ns.assets
     '7': ns.downloads
     '8': ns.images
     '9': ns.videos
 
-  # TODO: merge into core
   SERMON_SERIES_CHANNEL_ID: 20
   DEVOTIONAL_SERIES_CHANNEL_ID: 18
 

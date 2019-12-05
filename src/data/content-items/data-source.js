@@ -4,9 +4,10 @@ import ApollosConfig from '@apollosproject/config';
 import { parseKeyValueAttribute } from '@apollosproject/rock-apollo-data-source';
 import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
+import moment from 'moment-timezone';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS } = ApollosConfig;
+const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -394,5 +395,36 @@ export default class ContentItem extends oldContentItem.dataSource {
     if (appImage) return { ...appImage, __typename: 'ImageMedia' };
 
     return this.corePickBestImage({ images });
+  };
+
+  coreActiveLiveContent = this.getActiveLiveStreamContent;
+
+  getActiveLiveStreamContent = async () => {
+    // this is the most recent sermon content item published
+    // only if the live stream endpoint is active
+    const liveContent = await this.coreActiveLiveContent();
+
+    // loop over valid live stream schedules and see if
+    // one of them is active
+    let content = [];
+    ROCK_MAPPINGS.LIVE_STREAM_SCHEDULE_IDS.forEach(async (id) => {
+      const { iCalendarContent: iCal } = await this.request('Schedules')
+        .find(id)
+        .get();
+      const times = iCal.match(/DTEND:(\w+).*DTSTART:(\w+)/s);
+      const [now, start, end] = [
+        moment(),
+        moment
+          .tz(times[2], ApollosConfig.ROCK.TIMEZONE)
+          .utc()
+          .format(),
+        moment
+          .tz(times[1], ApollosConfig.ROCK.TIMEZONE)
+          .utc()
+          .format(),
+      ];
+      if (now > start && now < end) content = liveContent;
+    });
+    return content;
   };
 }
