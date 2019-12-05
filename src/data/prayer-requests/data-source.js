@@ -232,15 +232,15 @@ export default class PrayerRequest extends RockApolloDataSource {
     const {
       dataSources: { Auth },
     } = this.context;
-    try {
-      const {
-        primaryAliasId,
-        nickName,
-        firstName,
-        lastName,
-        primaryCampusId,
-      } = await Auth.getCurrentPerson();
+    const {
+      primaryAliasId,
+      nickName,
+      firstName,
+      lastName,
+      primaryCampusId,
+    } = await Auth.getCurrentPerson();
 
+    try {
       const prayerId = await this.post('/PrayerRequests', {
         FirstName: nickName || firstName, // Required by Rock
         LastName: lastName,

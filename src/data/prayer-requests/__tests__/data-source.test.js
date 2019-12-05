@@ -1,11 +1,14 @@
-import { dataSource as Prayer } from '../index';
+import PrayerDataSource from '../data-source';
 import { threeSortedPrayers, threeUnsortedPrayers } from '../../mocks/prayer';
 
 describe('PrayerRequest data sources', () => {
+  let Prayer;
+  beforeEach(() => {
+    Prayer = new PrayerDataSource();
+  });
   it('sorts prayers by count and date', () => {
-    const dataSource = new Prayer();
     expect(threeSortedPrayers).toEqual(
-      dataSource.sortPrayers(threeUnsortedPrayers)
+      Prayer.sortPrayers(threeUnsortedPrayers)
     );
   });
 });
