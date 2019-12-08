@@ -22,5 +22,7 @@ jobs:
         - travis_wait yarn codecov
     - stage: Publish Schema
       script:
+        - yarn start &
+        - sleep 20
         - yarn apollo schema:check --key $ENGINE_API_KEY
         - yarn apollo schema:publish --key $ENGINE_API_KEY
