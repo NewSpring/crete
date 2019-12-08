@@ -230,7 +230,6 @@ describe('UniversalContentItem', () => {
     `;
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);
-    console.log('result = ', result);
     expect(result).toMatchSnapshot();
   });
 });
