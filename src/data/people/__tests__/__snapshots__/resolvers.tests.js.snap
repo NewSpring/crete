@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the Person resolver gets a person 1`] = `
+Object {
+  "errors": Array [
+    [GraphQLError: Syntax Error: Unexpected }],
+  ],
+}
+`;
+
+exports[`the Person resolver gets all public prayer requests 1`] = `
+Object {
+  "errors": Array [
+    [GraphQLError: Unknown type "AuthenticatedUser".],
+  ],
+}
+`;
