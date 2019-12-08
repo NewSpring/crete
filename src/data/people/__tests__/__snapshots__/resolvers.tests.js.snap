@@ -2,16 +2,15 @@
 
 exports[`the Person resolver gets a person 1`] = `
 Object {
-  "errors": Array [
-    [GraphQLError: Syntax Error: Unexpected }],
-  ],
-}
-`;
-
-exports[`the Person resolver gets all public prayer requests 1`] = `
-Object {
-  "errors": Array [
-    [GraphQLError: Unknown type "AuthenticatedUser".],
-  ],
+  "data": Object {
+    "currentUser": Object {
+      "id": "AuthenticatedUser:057b0758543270d1cb21784cac4d3f5c",
+      "profile": Object {
+        "photo": Object {
+          "uri": "https://fakeimages.com/image.jpg",
+        },
+      },
+    },
+  },
 }
 `;
