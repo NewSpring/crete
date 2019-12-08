@@ -13,7 +13,6 @@ module.exports = {
     'prettier',
     'jest',
     'react',
-    'react-native',
   ],
   rules: {
     'prettier/prettier': [
