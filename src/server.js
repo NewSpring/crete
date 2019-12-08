@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server-express';
-import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
 import Config from '@apollosproject/config';
@@ -32,7 +31,7 @@ const cacheOptions = isDev
       },
     };
 
-const { ENGINE } = ApollosConfig;
+const { ENGINE } = Config;
 
 const apolloServer = new ApolloServer({
   typeDefs: schema,
