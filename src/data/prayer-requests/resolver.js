@@ -17,10 +17,8 @@ export default {
   Mutation: {
     addPrayer: (root, args, { dataSources }) =>
       dataSources.PrayerRequest.add(args),
-    deletePrayer: (root, { nodeId }, { dataSources }) => {
-      const { id: parsedId } = parseGlobalId(nodeId);
-      return dataSources.PrayerRequest.deletePrayer(parsedId);
-    },
+    deletePrayer: (root, { nodeId }, { dataSources }) =>
+      dataSources.PrayerRequest.deletePrayer(parseGlobalId(nodeId)),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
       const { id: prayerId } = parseGlobalId(nodeId);
 
@@ -30,16 +28,9 @@ export default {
       // does 10 data calls and sometimes it times out
       //
       // create the interaction to trigger a notification
-      try {
-        await dataSources.PrayerRequest.createInteraction({
-          prayerId,
-        });
-      } catch (e) {
-        console.warn(
-          'Error, interaction and notification may not have been sent'
-        );
-        console.warn(e);
-      }
+      await dataSources.PrayerRequest.createInteraction({
+        prayerId,
+      });
 
       return prayer;
     },
@@ -76,8 +67,12 @@ export default {
     startTime: ({ enteredDateTime }) => enteredDateTime,
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
-    isAnonymous: ({ attributeValues: { isAnonymous: { value } = {} } = {} }) =>
-      value === 'True',
+    isAnonymous: ({
+      attributeValues: {
+        isAnonymous: { value },
+      },
+    }) => value === 'True',
+    // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Person.getFromAliasId(requestedByPersonAliasId),
     requestor: ({ requestedByPersonAliasId }, args, { dataSources }) =>
