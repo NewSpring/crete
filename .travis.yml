@@ -20,3 +20,7 @@ jobs:
     - script:
         - travis_wait yarn test
         - travis_wait yarn codecov
+    - stage: Publish Schema
+      script:
+        - yarn apollo schema:check --key $ENGINE_API_KEY
+        - yarn apollo schema:publish --key $ENGINE_API_KEY
