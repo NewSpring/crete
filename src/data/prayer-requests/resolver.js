@@ -68,10 +68,10 @@ export default {
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
     isAnonymous: ({
-      attributeValues: {
+      isPublic, attributeValues: {
         isAnonymous: { value },
       },
-    }) => value === 'True',
+    }) => !isPublic || value === 'True',
     // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Person.getFromAliasId(requestedByPersonAliasId),

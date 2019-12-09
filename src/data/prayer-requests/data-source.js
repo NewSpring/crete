@@ -96,7 +96,7 @@ export default class PrayerRequest extends RockApolloDataSource {
 
     const { primaryAliasId } = await Auth.getCurrentPerson();
 
-    const prayers = await this.request('PrayerRequests/Public')
+    const prayers = await this.request()
       .filter(`RequestedByPersonAliasId ne ${primaryAliasId}`)
       .get();
     return this.sortPrayers(prayers);
