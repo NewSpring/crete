@@ -69,6 +69,7 @@ export default {
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
     isAnonymous: ({
       isPublic,
+      // TODO: once we confirm IsPublic is enough, remove use of custom attribute
       attributeValues: {
         isAnonymous: { value },
       },
