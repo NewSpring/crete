@@ -250,9 +250,10 @@ export default class PrayerRequest extends RockApolloDataSource {
         CategoryId: ROCK_MAPPINGS.GENERAL_PRAYER_CATEGORY_ID,
         // default to web campus
         CampusId: primaryCampusId || ROCK_MAPPINGS.WEB_CAMPUS_ID,
-        IsPublic: isAnonymous,
+        IsPublic: !isAnonymous,
         RequestedByPersonAliasId: primaryAliasId,
         IsApproved: true,
+        IsActive: true,
         EnteredDateTime: moment()
           .tz(ROCK.TIMEZONE)
           .format(), // Required by Rock
