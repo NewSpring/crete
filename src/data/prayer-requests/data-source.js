@@ -100,6 +100,11 @@ export default class PrayerRequest extends RockApolloDataSource {
       .filter(`RequestedByPersonAliasId ne ${primaryAliasId}`)
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
+      .andFilter(
+        `ExpirationDate gt datetime'${moment
+          .tz(ROCK.TIMEZONE)
+          .format()}' or ExpirationDate eq null`
+      )
       .get();
     return this.sortPrayers(prayers);
   };
