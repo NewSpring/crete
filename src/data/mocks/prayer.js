@@ -9,11 +9,7 @@ export default {
   categoryId: 2,
   flagCount: 0,
   prayerCount: 4,
-  attributeValues: {
-    isAnonymous: {
-      value: 'True',
-    },
-  },
+  isPublic: true,
 };
 
 export const twoRockPrayers = [
@@ -28,11 +24,7 @@ export const twoRockPrayers = [
     categoryId: 2,
     flagCount: 0,
     prayerCount: 4,
-    attributeValues: {
-      isAnonymous: {
-        value: 'True',
-      },
-    },
+    isPublic: true,
   },
   {
     id: 2,
@@ -45,11 +37,7 @@ export const twoRockPrayers = [
     categoryId: 2,
     flagCount: 1,
     prayerCount: 0,
-    attributeValues: {
-      isAnonymous: {
-        value: 'False',
-      },
-    },
+    isPublic: false,
   },
 ];
 

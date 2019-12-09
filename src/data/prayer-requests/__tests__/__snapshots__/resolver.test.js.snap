@@ -80,7 +80,7 @@ Object {
         },
         "flagCount": 0,
         "id": "PrayerRequest:559b23fd0aa90e81b1c023e72e230fa1",
-        "isAnonymous": true,
+        "isAnonymous": false,
         "isSaved": true,
         "person": Object {
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",
@@ -98,7 +98,7 @@ Object {
         "campus": null,
         "flagCount": 1,
         "id": "PrayerRequest:965b6e6d7046a885bea4e300b5c0400d",
-        "isAnonymous": false,
+        "isAnonymous": true,
         "isSaved": true,
         "person": Object {
           "id": "Person:057b0758543270d1cb21784cac4d3f5c",

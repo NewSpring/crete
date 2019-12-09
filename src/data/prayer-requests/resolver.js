@@ -3,22 +3,22 @@ import { isNumber } from 'lodash';
 
 export default {
   Query: {
-    prayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getAll(),
+    prayers: (root, { type }, { dataSources }) =>
+      dataSources.PrayerRequest.getPrayers(type),
     campusPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getAllByCampus(),
+      dataSources.PrayerRequest.getPrayers('CAMPUS'),
     userPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getFromCurrentPerson(),
+      dataSources.PrayerRequest.getPrayers('USER'),
     groupPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getFromGroups(),
+      dataSources.PrayerRequest.getPrayers('GROUP'),
     savedPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getSavedPrayers(),
+      dataSources.PrayerRequest.getPrayers('SAVED'),
   },
   Mutation: {
     addPrayer: (root, args, { dataSources }) =>
       dataSources.PrayerRequest.add(args),
     deletePrayer: (root, { nodeId }, { dataSources }) =>
-      dataSources.PrayerRequest.deletePrayer(parseGlobalId(nodeId)),
+      dataSources.PrayerRequest.delete(parseGlobalId(nodeId)),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
       const { id: prayerId } = parseGlobalId(nodeId);
 
@@ -70,8 +70,8 @@ export default {
     isAnonymous: ({
       isPublic,
       // TODO: once we confirm IsPublic is enough, remove use of custom attribute
-      attributeValues: {
-        isAnonymous: { value },
+      attributeValues: { isAnonymous: { value } } = {
+        isAnonymous: { value: true },
       },
     }) => !isPublic || value === 'True',
     // deprecated

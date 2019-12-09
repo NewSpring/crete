@@ -4,9 +4,11 @@ const prayerRequestSchema = gql`
   extend type Query {
     prayers(type: PrayerType): [PrayerRequest]
     campusPrayers: [PrayerRequest]
-    userPrayers: [PrayerRequest]
-    groupPrayers: [PrayerRequest]
+      @deprecated(reason: "Use prayers(type:SAVED)")
+    userPrayers: [PrayerRequest] @deprecated(reason: "Use prayers(type:USER)")
+    groupPrayers: [PrayerRequest] @deprecated(reason: "Use prayers(type:GROUP)")
     savedPrayers: [PrayerRequest]
+      @deprecated(reason: "Use prayers(type:CAMPUS)")
   }
   extend type Mutation {
     addPrayer(text: String!, isAnonymous: Boolean): PrayerRequest

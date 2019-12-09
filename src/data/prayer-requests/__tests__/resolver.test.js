@@ -67,7 +67,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getAll = jest.fn(() =>
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     context.dataSources.Campus.getFromId = jest.fn(() =>
@@ -96,7 +96,7 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.getAllByCampus = jest.fn(() =>
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     context.dataSources.Campus.getFromId = jest.fn(() =>
@@ -117,7 +117,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromCurrentPerson = jest.fn(() =>
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -134,7 +134,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromGroups = jest.fn(() =>
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -150,7 +150,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getSavedPrayers = jest.fn(() =>
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -186,7 +186,7 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.deletePrayer = jest.fn(() =>
+    context.dataSources.PrayerRequest.delete = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
