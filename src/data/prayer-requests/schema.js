@@ -28,21 +28,18 @@ const prayerRequestSchema = gql`
 
   type PrayerRequest implements Node {
     id: ID!
-    firstName: String
-      @deprecated(reason: "Not supported. Use requestor.firstName")
-    lastName: String
-      @deprecated(reason: "Not supported. Use requestor.lastName.")
+    firstName: String @deprecated(reason: "Use requestor.firstName")
+    lastName: String @deprecated(reason: "Use requestor.lastName.")
     text: String!
-    enteredDateTime: String!
-      @deprecated(reason: "Not supported. Use startTime.")
+    enteredDateTime: String! @deprecated(reason: "Use startTime")
     startTime: String!
     flagCount: Int
     prayerCount: Int
     categoryId: Int @deprecated(reason: "Not supported")
-    campus: Campus @deprecated(reason: "Not supported")
-    createdByPersonAliasId: Int @deprecated(reason: "Not supported")
-    requestedByPersonAliasId: Int @deprecated(reason: "Not supported")
-    person: Person @deprecated(reason: "Not supported. Use requestor.")
+    campus: Campus @deprecated(reason: "Use requestor.campus")
+    createdByPersonAliasId: Int @deprecated(reason: "Use requestor")
+    requestedByPersonAliasId: Int @deprecated(reason: "Use requestor")
+    person: Person @deprecated(reason: "Use requestor")
     requestor: Person
     isAnonymous: Boolean
     isSaved: Boolean

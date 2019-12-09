@@ -65,6 +65,7 @@ export default {
     id: ({ id }, args, context, { parentType }) =>
       createGlobalId(id, parentType.name),
     startTime: ({ enteredDateTime }) => enteredDateTime,
+    // deprecated
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
     isAnonymous: ({
