@@ -37,10 +37,6 @@ const resolver = {
       return channels;
     },
   },
-  // ContentItem: {
-  // __resolveType: (root, { dataSources: { ContentItem } }) =>
-  // ContentItem.resolveType(root),
-  // },
   DevotionalContentItem: {
     ...defaultResolvers,
     sharing: (root, args, { dataSources: { ContentItem } }) => ({
