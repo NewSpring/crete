@@ -213,24 +213,35 @@ export default class PrayerRequest extends RockApolloDataSource {
       nickName,
       firstName,
       lastName,
+      email,
       primaryCampusId,
     } = await Auth.getCurrentPerson();
 
     try {
       const prayerId = await this.post('/PrayerRequests', {
-        FirstName: nickName || firstName, // Required by Rock
+        FirstName: nickName || firstName,
         LastName: lastName,
+        Email: email,
         Text: text,
         CategoryId: ROCK_MAPPINGS.GENERAL_PRAYER_CATEGORY_ID,
-        // default to web campus
         CampusId: primaryCampusId || ROCK_MAPPINGS.WEB_CAMPUS_ID,
         IsPublic: !isAnonymous,
         RequestedByPersonAliasId: primaryAliasId,
+        CreatedByPersonAliasId: primaryAliasId,
         IsApproved: true,
         IsActive: true,
+        AllowComments: false,
+        IsUrgent: false,
         EnteredDateTime: moment()
           .tz(ROCK.TIMEZONE)
-          .format(), // Required by Rock
+          .format(),
+        ApprovedOnDateTime: moment()
+          .tz(ROCK.TIMEZONE)
+          .format(),
+        ExpirationDate: moment()
+          .tz(ROCK.TIMEZONE)
+          .add(2, 'weeks')
+          .format(),
       });
       return this.getFromId(prayerId);
     } catch (e) {
