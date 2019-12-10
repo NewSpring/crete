@@ -37,36 +37,10 @@ const resolver = {
       return channels;
     },
   },
-  ContentItem: {
-    // __resolveType: async (
-    // { attributeValues, attributes, contentChannelId },
-    // { dataSources: { ContentItem } }
-    // ) => {
-    // // if we have defined an ContentChannelId based maping in the YML file, use it!
-    // if (
-    // Object.values(ROCK_MAPPINGS.CONTENT_ITEM).some(
-    // ({ ContentChannelId }) =>
-    // ContentChannelId && ContentChannelId.includes(contentChannelId)
-    // )
-    // ) {
-    // return Object.keys(ROCK_MAPPINGS.CONTENT_ITEM).find((key) => {
-    // const value = ROCK_MAPPINGS.CONTENT_ITEM[key];
-    // return (
-    // value.ContentChannelId &&
-    // value.ContentChannelId.includes(contentChannelId)
-    // );
-    // });
-    // }
-
-    // if (ContentItem.hasMedia({ attributeValues, attributes })) {
-    // return 'MediaContentItem';
-    // }
-
-    // return 'UniversalContentItem';
-    // },
-    __resolveType: (root, { dataSources: { ContentItem } }) =>
-      ContentItem.resolveType(root),
-  },
+  // ContentItem: {
+  // __resolveType: (root, { dataSources: { ContentItem } }) =>
+  // ContentItem.resolveType(root),
+  // },
   DevotionalContentItem: {
     ...defaultResolvers,
     sharing: (root, args, { dataSources: { ContentItem } }) => ({
