@@ -3,24 +3,22 @@ import { isNumber } from 'lodash';
 
 export default {
   Query: {
-    prayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getAll(),
+    prayers: (root, { type }, { dataSources }) =>
+      dataSources.PrayerRequest.getPrayers(type),
     campusPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getAllByCampus(),
+      dataSources.PrayerRequest.getPrayers('CAMPUS'),
     userPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getFromCurrentPerson(),
+      dataSources.PrayerRequest.getPrayers('USER'),
     groupPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getFromGroups(),
+      dataSources.PrayerRequest.getPrayers('GROUP'),
     savedPrayers: (root, args, { dataSources }) =>
-      dataSources.PrayerRequest.getSavedPrayers(),
+      dataSources.PrayerRequest.getPrayers('SAVED'),
   },
   Mutation: {
     addPrayer: (root, args, { dataSources }) =>
       dataSources.PrayerRequest.add(args),
-    deletePrayer: (root, { nodeId }, { dataSources }) => {
-      const { id: parsedId } = parseGlobalId(nodeId);
-      return dataSources.PrayerRequest.deletePrayer(parsedId);
-    },
+    deletePrayer: (root, { nodeId }, { dataSources }) =>
+      dataSources.PrayerRequest.delete(parseGlobalId(nodeId)),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
       const { id: prayerId } = parseGlobalId(nodeId);
 
@@ -30,16 +28,9 @@ export default {
       // does 10 data calls and sometimes it times out
       //
       // create the interaction to trigger a notification
-      try {
-        await dataSources.PrayerRequest.createInteraction({
-          prayerId,
-        });
-      } catch (e) {
-        console.warn(
-          'Error, interaction and notification may not have been sent'
-        );
-        console.warn(e);
-      }
+      await dataSources.PrayerRequest.createInteraction({
+        prayerId,
+      });
 
       return prayer;
     },
@@ -74,10 +65,17 @@ export default {
     id: ({ id }, args, context, { parentType }) =>
       createGlobalId(id, parentType.name),
     startTime: ({ enteredDateTime }) => enteredDateTime,
+    // deprecated
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
-    isAnonymous: ({ attributeValues: { isAnonymous: { value } = {} } = {} }) =>
-      value === 'True',
+    isAnonymous: ({
+      isPublic,
+      // TODO: once we confirm IsPublic is enough, remove use of custom attribute
+      attributeValues: { isAnonymous: { value } } = {
+        isAnonymous: { value: true },
+      },
+    }) => !isPublic || value === 'True',
+    // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Person.getFromAliasId(requestedByPersonAliasId),
     requestor: ({ requestedByPersonAliasId }, args, { dataSources }) =>

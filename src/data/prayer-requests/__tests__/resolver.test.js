@@ -1,97 +1,42 @@
 import { graphql } from 'graphql';
-import { fetch } from 'apollo-server-env';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
+import { Followings } from '@apollosproject/data-connector-rock';
+import {
+  contentItemSchema,
+  contentChannelSchema,
+  themeSchema,
+  scriptureSchema,
+} from '@apollosproject/data-schema';
 
-import { peopleSchema, campusSchema } from '@apollosproject/data-schema';
 import * as PrayerRequest from '../index';
+import * as Person from '../../people';
+import * as Campus from '../../campuses';
 
-import prayerRequestSchema from '../schema';
-import authMock from '../../authMock';
-import campusMock from '../../campusMock';
+import oneRockPrayer, { twoRockPrayers } from '../../mocks/prayer';
+import oneRockPerson from '../../mocks/person';
+import oneRockCampus from '../../mocks/campus';
 
+// define here any classes with dataSource functions you need to overwrite
 const { getSchema, getContext } = createTestHelpers({
   PrayerRequest,
-  Auth: { dataSource: authMock },
-  Person: { dataSource: authMock },
-  Campus: { dataSource: campusMock },
+  Person,
+  Campus,
+  Followings,
 });
 
-const currentPersonResMock = jest.fn(() =>
-  Promise.resolve({
-    id: 1,
-    firstName: 'Isaac',
-    lastName: 'Hardy',
-  })
-);
-
-const onePrayerResMock = jest.fn(() =>
-  Promise.resolve({
-    id: 'PrayerRequest:b36e55d803443431e96bb4b5068147ec',
-    firstName: 'Isaac',
-    lastName: 'Hardy',
-    text: 'Pray this works.',
-    requestedByPersonAliasId: 447217,
-    campusId: 16,
-    categoryId: 2,
-    flagCount: 0,
-    prayerCount: 4,
-    attributeValues: {
-      isAnonymous: {
-        value: 'True',
-      },
-    },
-  })
-);
-
-const twoPrayerResMock = jest.fn(() =>
-  Promise.resolve([
-    {
-      id: 'PrayerRequest:b36e55d803443431e96bb4b5068147ec',
-      firstName: 'Isaac',
-      lastName: 'Hardy',
-      text: 'Pray this works.',
-      requestedByPersonAliasId: 447217,
-      enteredDateTime: '2019-07-02T13:08:02.035',
-      campusId: 16,
-      categoryId: 2,
-      flagCount: 0,
-      prayerCount: 4,
-      attributeValues: {
-        isAnonymous: {
-          value: 'True',
-        },
-      },
-    },
-    {
-      id: 'PrayerRequest:57c465ee3cd69524d729569b338607de',
-      firstName: 'Rich',
-      lastName: 'Dubee',
-      text: 'Help me',
-      requestedByPersonAliasId: 447217,
-      enteredDateTime: '2019-07-03T13:08:02.035',
-      campusId: 16,
-      categoryId: 2,
-      flagCount: 0,
-      prayerCount: 4,
-      attributeValues: {
-        isAnonymous: {
-          value: 'True',
-        },
-      },
-    },
-  ])
-);
 describe('PrayerRequest resolver', () => {
   let schema;
   let context;
   let rootValue;
   beforeEach(() => {
-    fetch.resetMocks();
-    fetch.mockRockDataSourceAPI();
-    schema = getSchema([prayerRequestSchema, peopleSchema, campusSchema]);
+    // any extra schemas necessary
+    schema = getSchema([
+      contentItemSchema,
+      contentChannelSchema,
+      themeSchema,
+      scriptureSchema,
+    ]);
     context = getContext();
-    context.dataSources.Person.getFromAliasId = currentPersonResMock;
-    context.dataSources.PrayerRequest.createInteraction = jest.fn(() => null);
     rootValue = {};
   });
 
@@ -100,28 +45,40 @@ describe('PrayerRequest resolver', () => {
       query {
         prayers {
           id
-          firstName
-          lastName
           text
-          requestedByPersonAliasId
           campus {
             id
             name
           }
-          categoryId
+          startTime
           flagCount
           prayerCount
           isAnonymous
-          person {
+          isSaved
+          requestor {
             id
             firstName
             lastName
+          }
+          person {
+            id
           }
         }
       }
     `;
 
-    context.dataSources.PrayerRequest.getAll = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
+    context.dataSources.Campus.getFromId = jest.fn(() =>
+      Promise.resolve(oneRockCampus)
+    );
+    context.dataSources.Person.getFromAliasId = jest.fn(() =>
+      Promise.resolve(oneRockPerson)
+    );
+    context.dataSources.Followings.getFollowingsForCurrentUserAndNode = jest.fn(
+      () => Promise.resolve([{ text: 'fake prayer' }])
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -131,7 +88,6 @@ describe('PrayerRequest resolver', () => {
       query {
         campusPrayers {
           id
-          firstName
           text
           campus {
             id
@@ -140,7 +96,12 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.getAllByCampus = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
+    context.dataSources.Campus.getFromId = jest.fn(() =>
+      Promise.resolve(oneRockCampus)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -156,7 +117,9 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromCurrentPerson = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -166,13 +129,30 @@ describe('PrayerRequest resolver', () => {
       query {
         groupPrayers {
           id
-          firstName
           text
         }
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromGroups = twoPrayerResMock;
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('gets all saved prayers', async () => {
+    const query = `
+      query {
+        savedPrayers {
+          id
+          text
+        }
+      }
+    `;
+
+    context.dataSources.PrayerRequest.getPrayers = jest.fn(() =>
+      Promise.resolve(twoRockPrayers)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -181,20 +161,34 @@ describe('PrayerRequest resolver', () => {
     const query = `
       mutation {
         addPrayer(
-          firstName: "Test"
-          lastName: "Bro"
           text: "Jesus Rocks"
-          campusId: "Campus:4f68015ba18662a7409d1219a4ce013e"
-          categoryId: 1
           isAnonymous: true
         ) {
           id
-          firstName
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.add = onePrayerResMock;
+    context.dataSources.PrayerRequest.add = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('deletes a prayer', async () => {
+    const query = `
+      mutation {
+        deletePrayer(
+          nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec"
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.PrayerRequest.delete = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -206,12 +200,14 @@ describe('PrayerRequest resolver', () => {
           nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec"
         ) {
           id
-          firstName
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.incrementPrayed = onePrayerResMock;
+    context.dataSources.PrayerRequest.createInteraction = jest.fn(() => null);
+    context.dataSources.PrayerRequest.incrementPrayed = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
@@ -221,12 +217,41 @@ describe('PrayerRequest resolver', () => {
       mutation {
         flagPrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
           id
-          firstName
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.flag = onePrayerResMock;
+    context.dataSources.PrayerRequest.flag = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('saves a prayer', async () => {
+    const query = `
+      mutation {
+        savePrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Followings.followNode = jest.fn(() => null);
+    context.models.Node.get = jest.fn(() => Promise.resolve(oneRockPrayer));
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('unsaves a prayer', async () => {
+    const query = `
+      mutation {
+        unSavePrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Followings.unFollowNode = jest.fn(() => null);
+    context.models.Node.get = jest.fn(() => Promise.resolve(oneRockPrayer));
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });

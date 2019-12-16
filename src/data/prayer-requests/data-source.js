@@ -2,13 +2,25 @@ import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
 import moment from 'moment-timezone';
 import { uniq } from 'lodash';
-import { parseGlobalId } from '@apollosproject/server-core';
+import bugsnagClient from '../../bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
 export default class PrayerRequest extends RockApolloDataSource {
   resource = 'PrayerRequests';
 
   expanded = true;
+
+  getFromId = (id) =>
+    this.request()
+      .find(id)
+      .get();
+
+  getFromIds = (ids) => {
+    const idsFilter = ids.map((id) => `Id eq ${id}`);
+    return this.request()
+      .filterOneOf(idsFilter)
+      .get();
+  };
 
   sortPrayers = (prayers) =>
     prayers.sort((a, b) => {
@@ -30,9 +42,7 @@ export default class PrayerRequest extends RockApolloDataSource {
       entityTypeId,
     });
     return RockConstants.createOrFindInteractionComponent({
-      componentName: `${
-        ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST
-      } - ${prayerId}`,
+      componentName: `${ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST} - ${prayerId}`,
       channelId: channel.id,
       entityId: parseInt(prayerId, 10),
     });
@@ -53,16 +63,28 @@ export default class PrayerRequest extends RockApolloDataSource {
     // if it's older than 2 hours ago
     // TODO this check is taking on average 2.5 sec and will only get slower
     // we need a better algorithm
-    const { interactionDateTime: time } = await this.request('Interactions')
-      .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
-      .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
-      .orderBy('InteractionDateTime', 'desc')
-      .select('InteractionDateTime')
-      .first();
-    const summary =
-      !time || moment(time).add(2, 'hours') < moment()
-        ? 'PrayerNotificationSent'
-        : '';
+    let time;
+    let summary;
+    try {
+      const { interactionDateTime } = await this.request('Interactions')
+        .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
+        .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
+        .orderBy('InteractionDateTime', 'desc')
+        .select('InteractionDateTime')
+        .first();
+      time = interactionDateTime;
+      summary =
+        moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
+    } catch (e) {
+      bugsnagClient.notify(
+        new Error('Sorting interactions failed, did not send notification.'),
+        {
+          metaData: { prayerId },
+          severity: 'warning',
+        }
+      );
+      summary = '';
+    }
 
     this.post('/Interactions', {
       PersonAliasId: currentUser.primaryAliasId,
@@ -75,88 +97,47 @@ export default class PrayerRequest extends RockApolloDataSource {
     });
   };
 
-  // QUERY ALL PrayerRequests
-  getAll = async () => {
-    const {
-      dataSources: { Auth },
-    } = this.context;
-
-    const { primaryAliasId } = await Auth.getCurrentPerson();
-
-    const prayers = await this.request('PrayerRequests/Public')
-      .filter(`RequestedByPersonAliasId ne ${primaryAliasId}`)
-      .get();
-    return this.sortPrayers(prayers);
-  };
-
-  getAllByCampus = async (id = '') => {
-    const {
-      dataSources: { Auth, Campus },
-    } = this.context;
-
-    const { id: personId, primaryAliasId } = await Auth.getCurrentPerson();
-
-    let campusID;
-    if (id === '') {
-      campusID = (await Campus.getForPerson({ personId })).id;
-    } else {
-      campusID = parseGlobalId(id).id;
-    }
-
-    const prayers = await this.request('PrayerRequests/Public')
-      .filter(
-        `(CampusId eq ${campusID}) and (RequestedByPersonAliasId ne ${primaryAliasId})`
-      )
-      .get();
-    return this.sortPrayers(prayers);
-  };
-
-  // QUERY PrayerRequests from Current Person
-  getFromCurrentPerson = async () => {
-    try {
-      const {
-        dataSources: { Auth },
-      } = this.context;
-
-      const { primaryAliasId } = await Auth.getCurrentPerson();
-
-      const prayers = await this.request('PrayerRequests/Public')
-        .filter(`RequestedByPersonAliasId eq ${primaryAliasId}`)
-        .get();
-      // Sort user prayers by date - newest first
-      return prayers.sort((a, b) =>
-        moment(a.createdDateTime) < moment(b.createdDateTime) ? 1 : -1
-      );
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
-  // QUERY PrayerRequests from groups
-  getFromGroups = async () => {
+  getPrayers = async (type) => {
     const {
       dataSources: { Auth, Group },
     } = this.context;
 
-    const groupTypeIds = Group.getGroupTypeIds();
-    const { id } = await Auth.getCurrentPerson();
+    if (type === 'SAVED') return this.getSavedPrayers();
 
-    const prayers = await this.request(
-      `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${id}?groupTypeIds=${groupTypeIds}&excludePerson=true`
-    ).get();
+    const {
+      id: personId,
+      primaryAliasId,
+      primaryCampusId,
+    } = await Auth.getCurrentPerson();
+
+    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
+    if (type === 'GROUP')
+      return this.getFromGroups(Group.getGroupTypeIds(), personId);
+
+    const prayers = await this.request()
+      .filter(
+        `RequestedByPersonAliasId ${
+          type === 'USER' ? 'eq' : 'ne'
+        } ${primaryAliasId}`
+      )
+      .andFilter(`IsActive eq true`)
+      .andFilter(`IsApproved eq true`)
+      .andFilter(
+        `ExpirationDate gt datetime'${moment
+          .tz(ROCK.TIMEZONE)
+          .format()}' or ExpirationDate eq null`
+      )
+      .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
+      .get();
+
     return this.sortPrayers(prayers);
   };
 
-  getFromId = (id) =>
-    this.request()
-      .find(id)
-      .get();
-
-  getFromIds = (ids) => {
-    const idsFilter = ids.map((id) => `Id eq ${id}`);
-    return this.request()
-      .filterOneOf(idsFilter)
-      .get();
+  getFromGroups = async (groupTypeIds, personId) => {
+    const prayers = await this.request(
+      `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
+    ).get();
+    return this.sortPrayers(prayers);
   };
 
   getSavedPrayers = async () => {
@@ -182,77 +163,93 @@ export default class PrayerRequest extends RockApolloDataSource {
     );
   };
 
-  // MUTATION increment prayed, for a request
-  incrementPrayed = async (parsedId) => {
+  incrementPrayed = async (id) => {
     try {
-      await this.put(`PrayerRequests/Prayed/${parsedId}`, {});
-      return this.getFromId(parsedId);
+      await this.put(`PrayerRequests/Prayed/${id}`, {});
+      return this.getFromId(id);
     } catch (e) {
-      throw new Error(`Unable to increment prayer!`);
+      bugsnagClient.notify(new Error('Increment prayer failed.'), {
+        metaData: { id },
+        severity: 'warning',
+      });
+      return null;
     }
   };
 
-  // MUTATION flag a prayer request
-  flag = async (parsedId) => {
+  flag = async (id) => {
     try {
-      await this.put(`PrayerRequests/Flag/${parsedId}`, {});
-      return this.getFromId(parsedId);
+      await this.put(`PrayerRequests/Flag/${id}`, {});
+      return this.getFromId(id);
     } catch (e) {
-      throw new Error(`Unable to flag prayer!`);
+      bugsnagClient.notify(new Error('Flag prayer failed.'), {
+        metaData: { id },
+        severity: 'warning',
+      });
+      return null;
     }
   };
 
-  // MUTATION Delete a prayer request
-  deletePrayer = async (parsedId) => {
+  delete = async (id) => {
     try {
       this.expanded = false;
-      const deletedPrayer = await this.getFromId(parsedId);
-      await this.delete(`PrayerRequests/${parsedId}`);
+      const deletedPrayer = await this.getFromId(id);
+      await this.delete(`PrayerRequests/${id}`);
       return deletedPrayer;
     } catch (e) {
-      throw new Error(`Unable to delete prayer!`);
+      bugsnagClient.notify(new Error('Delete prayer failed.'), {
+        metaData: { id },
+        severity: 'warning',
+      });
+      return null;
     }
   };
 
-  // MUTATION add public prayer request
   add = async ({ text, isAnonymous }) => {
     const {
       dataSources: { Auth },
     } = this.context;
-    try {
-      const {
-        primaryAliasId,
-        nickName,
-        firstName,
-        lastName,
-        primaryCampusId,
-      } = await Auth.getCurrentPerson();
+    const {
+      primaryAliasId,
+      nickName,
+      firstName,
+      lastName,
+      email,
+      primaryCampusId,
+    } = await Auth.getCurrentPerson();
 
+    try {
       const prayerId = await this.post('/PrayerRequests', {
-        FirstName: nickName || firstName, // Required by Rock
+        FirstName: nickName || firstName,
         LastName: lastName,
-        Text: text, // Required by Rock
+        Email: email,
+        Text: text,
         CategoryId: ROCK_MAPPINGS.GENERAL_PRAYER_CATEGORY_ID,
-        // default to web campus
         CampusId: primaryCampusId || ROCK_MAPPINGS.WEB_CAMPUS_ID,
-        IsPublic: true,
+        IsPublic: !isAnonymous,
         RequestedByPersonAliasId: primaryAliasId,
-        IsActive: true,
+        CreatedByPersonAliasId: primaryAliasId,
         IsApproved: true,
+        IsActive: true,
+        AllowComments: false,
+        IsUrgent: false,
         EnteredDateTime: moment()
           .tz(ROCK.TIMEZONE)
-          .format(), // Required by Rock
+          .format(),
+        ApprovedOnDateTime: moment()
+          .tz(ROCK.TIMEZONE)
+          .format(),
+        ExpirationDate: moment()
+          .tz(ROCK.TIMEZONE)
+          .add(2, 'weeks')
+          .format(),
       });
-      // Sets the attribute value "IsAnonymous" on newly created prayer request
-      // TODO: we should combine this so network doesn't die and someone's prayer is left un-anonymous
-      await this.post(
-        `/PrayerRequests/AttributeValue/${prayerId}?attributeKey=IsAnonymous&attributeValue=${
-          isAnonymous ? 'True' : 'False'
-        }`
-      );
       return this.getFromId(prayerId);
     } catch (e) {
-      throw new Error(`Unable to create prayer request!`);
+      bugsnagClient.notify(new Error('Adding prayer failed.'), {
+        metaData: { primaryAliasId, text, isAnonymous },
+        severity: 'warning',
+      });
+      return null;
     }
   };
 }
