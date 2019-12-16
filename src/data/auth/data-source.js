@@ -21,7 +21,7 @@ export default class Auth extends baseAuth.dataSource {
         return request;
       } catch (e) {
         throw new AuthenticationError(
-          `Invalid user cookie. User cookie: ${cookie}. Rock error: ${e.message}`
+          `Invalid user cookie. New cookie: ${cookie}. Existing cookie: ${rockCookie}. Rock error: ${e.message}`
         );
       }
     }
