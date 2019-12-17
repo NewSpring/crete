@@ -5,7 +5,7 @@ import { uniq } from 'lodash';
 import bugsnagClient from '../../bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
-export default class PrayerRequest extends RockApolloDataSource {
+export default class Prayer extends RockApolloDataSource {
   resource = 'PrayerRequests';
 
   expanded = true;
@@ -29,6 +29,34 @@ export default class PrayerRequest extends RockApolloDataSource {
         return moment(a.createdDateTime) > moment(b.createdDateTime) ? 1 : -1;
       return -1;
     });
+
+  getPrayerMenuCategories = async () => {
+    const {
+      dataSources: { Auth, Campus },
+    } = this.context;
+
+    const allCategories = await this.request('ContentChannelItems')
+      .filter(
+        `ContentChannelId eq ${ROCK_MAPPINGS.PRAYER_MENU_CATEGORIES_CHANNEL_ID}`
+      )
+      .orderBy('Order')
+      .get();
+    let filteredCategories = allCategories || [];
+
+    const { id } = await Auth.getCurrentPerson();
+
+    // filter out campus
+    const campus = await Campus.getForPerson({ personId: id });
+    if (campus && campus.name === 'Web')
+      filteredCategories = allCategories.filter(
+        (category) =>
+          category.attributeValues.requiresCampusMembership.value === 'False'
+      );
+    // filter out groups
+    // TODO: need a GraphQL enpoint that says if I'm in any groups
+    // https://github.com/ApollosProject/apollos-prototype/issues/676
+    return filteredCategories;
+  };
 
   getInteractionComponent = async ({ prayerId }) => {
     const { RockConstants } = this.context.dataSources;
