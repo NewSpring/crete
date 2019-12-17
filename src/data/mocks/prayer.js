@@ -76,3 +76,16 @@ export const threeSortedPrayers = [
     createdDateTime: '2019-05-30T09:41:44.607',
   },
 ];
+
+export const menuCategories = [
+  {
+    id: 1,
+    key: 'campus',
+    attributeValues: { requiresCampusMembership: { value: 'True' } },
+  },
+  {
+    id: 2,
+    key: 'community',
+    attributeValues: { requiresCampusMembership: { value: 'False' } },
+  },
+];
