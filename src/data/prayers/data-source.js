@@ -91,16 +91,14 @@ export default class Prayer extends RockApolloDataSource {
     // if it's older than 2 hours ago
     // TODO this check is taking on average 2.5 sec and will only get slower
     // we need a better algorithm
-    let time;
     let summary;
     try {
-      const { interactionDateTime } = await this.request('Interactions')
+      const { interactionDateTime: time } = await this.request('Interactions')
         .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
         .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
         .orderBy('InteractionDateTime', 'desc')
         .select('InteractionDateTime')
         .first();
-      time = interactionDateTime;
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
