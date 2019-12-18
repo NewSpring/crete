@@ -2,30 +2,29 @@ import { Auth as baseAuth } from '@apollosproject/data-connector-rock';
 import { AuthenticationError } from 'apollo-server';
 
 export default class Auth extends baseAuth.dataSource {
-  getCurrentPerson = async ({ cookie = null } = { cookie: null }) => {
-    const { rockCookie, currentPerson } = this.context;
-    const userCookie = cookie || rockCookie;
-
-    if (currentPerson) {
-      return currentPerson;
-    }
-
-    if (userCookie) {
-      try {
-        const request = await this.request('People/GetCurrentPerson').get({
-          options: {
-            headers: { cookie: userCookie, 'Authorization-Token': null },
+  fetchUserCookie = async (Username, Password) => {
+    try {
+      // We use `new Response` rather than string/options b/c if conforms more closely with ApolloRESTDataSource
+      // (makes mocking in tests WAY easier to use `new Request` as an input in both places)
+      const response = await fetch(
+        new Request(`${this.baseURL}/Auth/Login`, {
+          method: 'POST',
+          body: JSON.stringify({
+            Username,
+            Password,
+            Persisted: true,
+          }),
+          headers: {
+            'Content-Type': 'Application/Json',
           },
-        });
-        this.context.currentPerson = request;
-        return request;
-      } catch (e) {
-        throw new AuthenticationError(
-          `Invalid user cookie. New cookie: ${cookie}. Existing cookie: ${rockCookie}. Rock error: ${e.message}`
-        );
-      }
+        })
+      );
+      if (response.status >= 400) throw new AuthenticationError();
+      const cookie = response.headers.get('set-cookie');
+      return cookie;
+    } catch (err) {
+      throw new AuthenticationError('Invalid Credentials');
     }
-    throw new AuthenticationError('Must be logged in');
   };
 
   authenticate = async ({ identity, password }) => {
