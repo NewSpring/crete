@@ -29,7 +29,7 @@ describe('Prayer resolver', () => {
   let context;
   let rootValue;
   beforeEach(() => {
-    // any extra schemas necessary
+    // define here any extra schemas necessary
     schema = getSchema([
       contentItemSchema,
       contentChannelSchema,
