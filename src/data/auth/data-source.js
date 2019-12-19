@@ -1,4 +1,5 @@
 import { Auth as baseAuth } from '@apollosproject/data-connector-rock';
+import { fetch, Request } from 'apollo-server-env';
 import { AuthenticationError } from 'apollo-server';
 
 export default class Auth extends baseAuth.dataSource {
