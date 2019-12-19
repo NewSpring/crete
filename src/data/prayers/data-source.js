@@ -79,11 +79,11 @@ export default class Prayer extends RockApolloDataSource {
   createInteraction = async ({ prayerId }) => {
     const { Auth } = this.context.dataSources;
 
-    const interactionComponent = await this.getInteractionComponent({
+    const { id: interactionId } = await this.getInteractionComponent({
       prayerId,
     });
 
-    const currentUser = await Auth.getCurrentPerson();
+    const { primaryAliasId } = await Auth.getCurrentPerson();
     const { requestedByPersonAliasId } = await this.getFromId(prayerId);
 
     // determine whether to send notification
@@ -113,14 +113,28 @@ export default class Prayer extends RockApolloDataSource {
     }
 
     this.post('/Interactions', {
-      PersonAliasId: currentUser.primaryAliasId,
-      InteractionComponentId: interactionComponent.id,
+      PersonAliasId: primaryAliasId,
+      InteractionComponentId: interactionId,
       InteractionSessionId: this.context.sessionId,
       Operation: 'Pray',
       InteractionDateTime: new Date().toJSON(),
       InteractionSummary: summary,
       InteractionData: `${requestedByPersonAliasId}`,
     });
+  };
+
+  isInteractedWith = async (prayerId) => {
+    const { Auth } = this.context.dataSources;
+    const { id } = await this.getInteractionComponent({
+      prayerId,
+    });
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+    const interaction = await this.request('Interactions')
+      .filter(`InteractionComponentId eq ${id}`)
+      .andFilter(`PersonAliasId eq ${primaryAliasId}`)
+      .select('Id')
+      .first();
+    return !!interaction;
   };
 
   getPrayers = async (type) => {

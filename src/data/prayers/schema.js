@@ -51,6 +51,7 @@ const prayerSchema = gql`
     requestor: Person
     isAnonymous: Boolean
     isSaved: Boolean @cacheControl(maxAge: 0)
+    isPrayedFor: Boolean
   }
 `;
 

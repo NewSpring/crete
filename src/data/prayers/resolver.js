@@ -94,6 +94,8 @@ export default {
       );
       return followings.length > 0;
     },
+    isPrayedFor: ({ id }, args, { dataSources }) =>
+      dataSources.Prayer.isInteractedWith(id),
   },
   PrayerMenuCategory: {
     key: ({ itemGlobalKey }) => itemGlobalKey,
