@@ -76,7 +76,6 @@ export const threeSortedPrayers = [
     createdDateTime: '2019-05-30T09:41:44.607',
   },
 ];
-<<<<<<< HEAD
 
 export const menuCategories = [
   {
@@ -90,5 +89,3 @@ export const menuCategories = [
     attributeValues: { requiresCampusMembership: { value: 'False' } },
   },
 ];
-=======
->>>>>>> staging
