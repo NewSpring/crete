@@ -5,7 +5,7 @@ import { uniq } from 'lodash';
 import bugsnagClient from '../../bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
-export default class PrayerRequest extends RockApolloDataSource {
+export default class Prayer extends RockApolloDataSource {
   resource = 'PrayerRequests';
 
   expanded = true;
@@ -30,6 +30,34 @@ export default class PrayerRequest extends RockApolloDataSource {
       return -1;
     });
 
+  getPrayerMenuCategories = async () => {
+    const {
+      dataSources: { Auth, Campus },
+    } = this.context;
+
+    const allCategories = await this.request('ContentChannelItems')
+      .filter(
+        `ContentChannelId eq ${ROCK_MAPPINGS.PRAYER_MENU_CATEGORIES_CHANNEL_ID}`
+      )
+      .orderBy('Order')
+      .get();
+    let filteredCategories = allCategories || [];
+
+    const { id } = await Auth.getCurrentPerson();
+
+    // filter out campus
+    const campus = await Campus.getForPerson({ personId: id });
+    if (campus && campus.name === 'Web')
+      filteredCategories = allCategories.filter(
+        (category) =>
+          category.attributeValues.requiresCampusMembership.value === 'False'
+      );
+    // filter out groups
+    // TODO: need a GraphQL enpoint that says if I'm in any groups
+    // https://github.com/ApollosProject/apollos-prototype/issues/676
+    return filteredCategories;
+  };
+
   getInteractionComponent = async ({ prayerId }) => {
     const { RockConstants } = this.context.dataSources;
     const { id: entityTypeId } = await this.request('EntityTypes')
@@ -51,11 +79,11 @@ export default class PrayerRequest extends RockApolloDataSource {
   createInteraction = async ({ prayerId }) => {
     const { Auth } = this.context.dataSources;
 
-    const interactionComponent = await this.getInteractionComponent({
+    const { id: interactionId } = await this.getInteractionComponent({
       prayerId,
     });
 
-    const currentUser = await Auth.getCurrentPerson();
+    const { primaryAliasId } = await Auth.getCurrentPerson();
     const { requestedByPersonAliasId } = await this.getFromId(prayerId);
 
     // determine whether to send notification
@@ -63,16 +91,14 @@ export default class PrayerRequest extends RockApolloDataSource {
     // if it's older than 2 hours ago
     // TODO this check is taking on average 2.5 sec and will only get slower
     // we need a better algorithm
-    let time;
     let summary;
     try {
-      const { interactionDateTime } = await this.request('Interactions')
+      const { interactionDateTime: time } = await this.request('Interactions')
         .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
         .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
         .orderBy('InteractionDateTime', 'desc')
         .select('InteractionDateTime')
         .first();
-      time = interactionDateTime;
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
@@ -87,14 +113,28 @@ export default class PrayerRequest extends RockApolloDataSource {
     }
 
     this.post('/Interactions', {
-      PersonAliasId: currentUser.primaryAliasId,
-      InteractionComponentId: interactionComponent.id,
+      PersonAliasId: primaryAliasId,
+      InteractionComponentId: interactionId,
       InteractionSessionId: this.context.sessionId,
       Operation: 'Pray',
       InteractionDateTime: new Date().toJSON(),
       InteractionSummary: summary,
       InteractionData: `${requestedByPersonAliasId}`,
     });
+  };
+
+  isInteractedWith = async (prayerId) => {
+    const { Auth } = this.context.dataSources;
+    const { id } = await this.getInteractionComponent({
+      prayerId,
+    });
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+    const interaction = await this.request('Interactions')
+      .filter(`InteractionComponentId eq ${id}`)
+      .andFilter(`PersonAliasId eq ${primaryAliasId}`)
+      .select('Id')
+      .first();
+    return !!interaction;
   };
 
   getPrayers = async (type) => {

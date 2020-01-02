@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrayerRequest data sources gets prayer menu categories 1`] = `
+Array [
+  Object {
+    "attributeValues": Object {
+      "requiresCampusMembership": Object {
+        "value": "False",
+      },
+    },
+    "id": 2,
+    "key": "community",
+  },
+]
+`;
+
+exports[`PrayerRequest data sources gets prayer menu categories 2`] = `
+Array [
+  Object {
+    "attributeValues": Object {
+      "requiresCampusMembership": Object {
+        "value": "True",
+      },
+    },
+    "id": 1,
+    "key": "campus",
+  },
+  Object {
+    "attributeValues": Object {
+      "requiresCampusMembership": Object {
+        "value": "False",
+      },
+    },
+    "id": 2,
+    "key": "community",
+  },
+]
+`;
