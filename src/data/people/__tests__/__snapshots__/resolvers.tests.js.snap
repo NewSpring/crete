@@ -1,20 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Campus gets campuses 1`] = `
-Object {
-  "data": Object {
-    "node": Object {
-      "id": "Person:559b23fd0aa90e81b1c023e72e230fa1",
-    },
-  },
-}
-`;
-
 exports[`Person resolver gets a person 1`] = `
 Object {
-  "errors": Array [
-    [GraphQLError: Cannot query field "isGroupLeader" on type "Node". Did you mean to use an inline fragment on "Person"?],
-    [GraphQLError: Cannot query field "isStaff" on type "Node". Did you mean to use an inline fragment on "Person"?],
-  ],
+  "data": Object {
+    "currentUser": Object {
+      "profile": Object {
+        "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+        "isGroupLeader": true,
+        "isStaff": true,
+      },
+    },
+  },
 }
 `;
