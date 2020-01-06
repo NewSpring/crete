@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prayer resolver creates a new prayer 1`] = `
+Object {
+  "data": Object {
+    "addPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver deletes a prayer 1`] = `
+Object {
+  "data": Object {
+    "deletePrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver flags a prayer request 1`] = `
+Object {
+  "data": Object {
+    "flagPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver gets all prayers from current person 1`] = `
+Object {
+  "data": Object {
+    "userPrayers": Array [
+      Object {
+        "firstName": "Isaac",
+        "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+        "text": "Pray this works.",
+      },
+      Object {
+        "firstName": "Rich",
+        "id": "Prayer:965b6e6d7046a885bea4e300b5c0400d",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Prayer resolver gets all prayers from groups 1`] = `
+Object {
+  "data": Object {
+    "groupPrayers": Array [
+      Object {
+        "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+        "text": "Pray this works.",
+      },
+      Object {
+        "id": "Prayer:965b6e6d7046a885bea4e300b5c0400d",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Prayer resolver gets all public prayer requests 1`] = `
+Object {
+  "data": Object {
+    "prayers": Array [
+      Object {
+        "campus": Object {
+          "id": "Campus:be35f49307d7297989d3514be788ef2d",
+          "name": "Anderson",
+        },
+        "flagCount": 0,
+        "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+        "isAnonymous": false,
+        "isSaved": true,
+        "person": Object {
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+        },
+        "prayerCount": 4,
+        "requestor": Object {
+          "firstName": "Isaac",
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+          "lastName": "Hardy",
+        },
+        "startTime": "2019-07-02T13:08:02.035",
+        "text": "Pray this works.",
+      },
+      Object {
+        "campus": null,
+        "flagCount": 1,
+        "id": "Prayer:965b6e6d7046a885bea4e300b5c0400d",
+        "isAnonymous": true,
+        "isSaved": true,
+        "person": Object {
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+        },
+        "prayerCount": 0,
+        "requestor": Object {
+          "firstName": "Isaac",
+          "id": "Person:057b0758543270d1cb21784cac4d3f5c",
+          "lastName": "Hardy",
+        },
+        "startTime": "2019-07-03T13:08:02.035",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Prayer resolver gets all public prayer requests by campus 1`] = `
+Object {
+  "data": Object {
+    "campusPrayers": Array [
+      Object {
+        "campus": Object {
+          "id": "Campus:be35f49307d7297989d3514be788ef2d",
+          "name": "Anderson",
+        },
+        "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+        "text": "Pray this works.",
+      },
+      Object {
+        "campus": null,
+        "id": "Prayer:965b6e6d7046a885bea4e300b5c0400d",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Prayer resolver gets all saved prayers 1`] = `
+Object {
+  "data": Object {
+    "savedPrayers": Array [
+      Object {
+        "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+        "text": "Pray this works.",
+      },
+      Object {
+        "id": "Prayer:965b6e6d7046a885bea4e300b5c0400d",
+        "text": "Help me",
+      },
+    ],
+  },
+}
+`;
+
+exports[`Prayer resolver increments prayed for a request 1`] = `
+Object {
+  "data": Object {
+    "incrementPrayerCount": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver saves a prayer 1`] = `
+Object {
+  "data": Object {
+    "savePrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver unsaves a prayer 1`] = `
+Object {
+  "data": Object {
+    "unSavePrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
