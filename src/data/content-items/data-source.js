@@ -41,14 +41,18 @@ export default class ContentItem extends oldContentItem.dataSource {
       .select('MediaData')
       .get();
 
+    console.log(videoData[0].mediaData);
     const assetUrls = { video: '', thumbnail: '' };
     if (!videoData.length) return assetUrls;
     JSON.parse(videoData[0].mediaData).assets.forEach((asset) => {
       if (asset.type === 'HlsVideoFile' && asset.height === 720)
         assetUrls.video = asset.url.replace('.bin', '.m3u8');
+      else if (asset.type === 'IphoneVideoFile')
+        assetUrls.video = asset.url.replace('.bin', '/file.mp4');
       if (asset.type === 'StillImageFile')
         assetUrls.thumbnail = asset.url.replace('.bin', '/file.jpeg');
     });
+    console.log(assetUrls);
     return assetUrls;
   };
 
