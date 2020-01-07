@@ -29,8 +29,7 @@ import * as Campus from './campuses';
 import * as Group from './groups';
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
-import * as PrayerRequest from './prayer-requests';
-import * as PrayerMenuCategory from './prayer-menu-categories';
+import * as Prayer from './prayers';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
@@ -62,8 +61,7 @@ const data = {
   Cache,
   Features,
   Person,
-  PrayerRequest,
-  PrayerMenuCategory,
+  Prayer,
   MatrixItem,
 };
 
