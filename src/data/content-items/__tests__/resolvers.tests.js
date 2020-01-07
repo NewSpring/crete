@@ -7,7 +7,6 @@ import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
 import {
   featuresSchema,
   mediaSchema,
-  themeSchema,
   scriptureSchema,
   liveSchema,
   peopleSchema,
@@ -16,6 +15,7 @@ import {
 import { ContentChannel, Sharable } from '@apollosproject/data-connector-rock';
 
 import * as ContentItem from '../index';
+import { schema as themeSchema } from '../../theme';
 
 class Cache {
   get = () => Promise.resolve(null);
