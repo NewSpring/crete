@@ -41,7 +41,6 @@ export default class ContentItem extends oldContentItem.dataSource {
       .select('MediaData')
       .get();
 
-    console.log(videoData[0].mediaData);
     const assetUrls = { video: '', thumbnail: '' };
     if (!videoData.length) return assetUrls;
     JSON.parse(videoData[0].mediaData).assets.forEach((asset) => {
@@ -52,7 +51,6 @@ export default class ContentItem extends oldContentItem.dataSource {
       if (asset.type === 'StillImageFile')
         assetUrls.thumbnail = asset.url.replace('.bin', '/file.jpeg');
     });
-    console.log(assetUrls);
     return assetUrls;
   };
 
