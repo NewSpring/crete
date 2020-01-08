@@ -10,9 +10,8 @@ describe('Person resolver', () => {
   const context = getContext();
   context.dataSources.Person.isStaff = () => true;
   context.dataSources.Group.getByPerson = () => [{ id: 1, name: 'Group1' }];
-  context.dataSources.Auth.getCurrentPerson = jest.fn(() =>
-    Promise.resolve(oneRockPerson)
-  );
+  context.dataSources.Auth.getCurrentPerson = () =>
+    Promise.resolve(oneRockPerson);
   const schema = getSchema();
 
   it('gets a person', async () => {
@@ -23,6 +22,9 @@ describe('Person resolver', () => {
             id
             isGroupLeader
             isStaff
+            photo {
+              uri
+            }
           }
         }
       }
