@@ -20,7 +20,7 @@ export default {
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
     deletePrayer: (root, { nodeId }, { dataSources }) =>
-      dataSources.Prayer.delete(parseGlobalId(nodeId)),
+      dataSources.Prayer.deletePrayer(parseGlobalId(nodeId).id),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
       const { id: prayerId } = parseGlobalId(nodeId);
 
@@ -70,13 +70,7 @@ export default {
     // deprecated
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
-    isAnonymous: ({
-      isPublic,
-      // TODO: once we confirm IsPublic is enough, remove use of custom attribute
-      attributeValues: { isAnonymous: { value } } = {
-        isAnonymous: { value: true },
-      },
-    }) => !isPublic || value === 'True',
+    isAnonymous: ({ isPublic }) => !isPublic,
     // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Person.getFromAliasId(requestedByPersonAliasId),
