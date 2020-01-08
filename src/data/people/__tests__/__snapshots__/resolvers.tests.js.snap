@@ -8,6 +8,9 @@ Object {
         "id": "Person:057b0758543270d1cb21784cac4d3f5c",
         "isGroupLeader": true,
         "isStaff": true,
+        "photo": Object {
+          "uri": "https://fakeimages.com/image.jpg",
+        },
       },
     },
   },
