@@ -229,7 +229,7 @@ export default class Prayer extends RockApolloDataSource {
     }
   };
 
-  deletePrayer = async (id) => {
+  delete = async (id) => {
     try {
       this.expanded = false;
       const deletedPrayer = await this.getFromId(id);
