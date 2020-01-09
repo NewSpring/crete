@@ -16,7 +16,7 @@ const resolver = {
       return groups.length > 0;
     },
     isStaff: ({ id }, args, { dataSources: { Person } }) => Person.isStaff(id),
-    photo: ({ photo }) => ({ uri: photo ? photo.path : '' }),
+    photo: ({ photo: { path } }) => ({ uri: path }),
   },
 };
 export default resolverMerge(resolver, originalPerson);

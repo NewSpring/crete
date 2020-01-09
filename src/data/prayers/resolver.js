@@ -20,7 +20,7 @@ export default {
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
     deletePrayer: (root, { nodeId }, { dataSources }) =>
-      dataSources.Prayer.deletePrayer(parseGlobalId(nodeId).id),
+      dataSources.Prayer.delete(parseGlobalId(nodeId)),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
       const { id: prayerId } = parseGlobalId(nodeId);
 
