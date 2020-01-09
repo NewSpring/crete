@@ -13,7 +13,8 @@
     "lint": "eslint ./src --ext .js",
     "fixlint": "eslint ./src --ext .js --fix",
     "postinstall": "yarn build",
-    "codecov": "cat ./coverage/lcov.info | codecov"
+    "codecov": "cat ./coverage/lcov.info | codecov",
+    "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net"
   },
   "engines": {
     "node": ">=8.11.x"
