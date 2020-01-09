@@ -41,7 +41,7 @@ const apolloServer = new ApolloServer({
   introspection: true,
   extensions,
   debug: true,
-   formatError: (error) => {
+  formatError: (error) => {
     const productionError = error;
     const {
       extensions: {
@@ -52,7 +52,7 @@ const apolloServer = new ApolloServer({
       error,
       {
         metadata: {
-          Rock: { rockUrl: Config.ROCK.API_URL },
+          Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
           'GraphQL Info': { path: error.path },
           'Custom Stacktrace': {
             trace: stacktrace.join('\n'),
