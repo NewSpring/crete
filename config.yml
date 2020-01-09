@@ -98,6 +98,8 @@ ROCK_MAPPINGS:
       EntityType: ContentChannelItem
     ContentItem:
       EntityType: ContentChannelItem
+    Prayer:
+      EntityType: PrayerRequest
 
   DATAVIEW_CATEGORIES:
     # Id of the category used to store all persona dataviews
