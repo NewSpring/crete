@@ -186,7 +186,7 @@ describe('Prayer resolver', () => {
         }
       }
     `;
-    context.dataSources.Prayer.deletePrayer = jest.fn(() =>
+    context.dataSources.Prayer.delete = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);

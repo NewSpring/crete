@@ -10,6 +10,7 @@ const bugsnagClient = bugsnag({
     : process.env.BUGSNAG_API_KEY,
   notifyReleaseStages: ['production', 'staging'],
   releaseStage: process.env.BUGSNAG_STAGE || 'development',
+  appVersion: process.env.npm_package_version,
 });
 
 bugsnagClient.use(bugsnagExpress);
