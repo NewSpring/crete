@@ -42,7 +42,7 @@ const apolloServer = new ApolloServer({
   extensions,
   formatError: (error) => {
     bugsnag.notify(error);
-    console.error(error.extensions.exception.stacktrace.join('\n'));
+    // console.error(error.extensions.exception.stacktrace.join('\n'));
     return error;
   },
   playground: {
