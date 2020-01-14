@@ -14,6 +14,7 @@
     "fixlint": "eslint ./src --ext .js --fix",
     "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov",
+    "schema:publish": "apollo schema:publish",
     "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net"
   },
   "engines": {
