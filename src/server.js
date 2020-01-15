@@ -40,10 +40,33 @@ const apolloServer = new ApolloServer({
   context,
   introspection: true,
   extensions,
+  debug: true,
   formatError: (error) => {
-    bugsnag.notify(error);
-    // console.error(error.extensions.exception.stacktrace.join('\n'));
-    return error;
+    const productionError = error;
+    const {
+      extensions: {
+        exception: { stacktrace = '' },
+      },
+    } = error;
+    bugsnag.notify(
+      error,
+      {
+        metadata: {
+          Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
+          'GraphQL Info': { path: error.path },
+          'Custom Stacktrace': {
+            trace: stacktrace.join('\n'),
+          },
+        },
+      },
+      (e) => {
+        productionError.errorClass = e.message;
+      }
+    );
+    if (stacktrace) {
+      delete productionError.extensions.exception.stacktrace;
+    }
+    return productionError;
   },
   playground: {
     settings: {
