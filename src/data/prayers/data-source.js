@@ -15,13 +15,6 @@ export default class Prayer extends RockApolloDataSource {
       .find(id)
       .get();
 
-  getFromIds = (ids) => {
-    const idsFilter = ids.map((id) => `Id eq ${id}`);
-    return this.request()
-      .filterOneOf(idsFilter)
-      .get();
-  };
-
   sortPrayers = (prayers) =>
     prayers.sort((a, b) => {
       if (!b.prayerCount || a.prayerCount > b.prayerCount) return 1;
@@ -137,24 +130,17 @@ export default class Prayer extends RockApolloDataSource {
     return !!interaction;
   };
 
-  getPrayers = async (type) => {
+  byPrayerFeed = async (type) => {
     const {
       dataSources: { Auth, Group },
     } = this.context;
 
-    if (type === 'SAVED') return this.getSavedPrayers();
+    const { primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
 
-    const {
-      id: personId,
-      primaryAliasId,
-      primaryCampusId,
-    } = await Auth.getCurrentPerson();
+    if (type === 'SAVED') return this.bySaved();
+    if (type === 'GROUP') return this.byGroups(Group.getGroupTypeIds());
 
-    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
-    if (type === 'GROUP')
-      return this.getFromGroups(Group.getGroupTypeIds(), personId);
-
-    const prayers = await this.request()
+    return this.request()
       .filter(
         `RequestedByPersonAliasId ${
           type === 'USER' ? 'eq' : 'ne'
@@ -168,19 +154,38 @@ export default class Prayer extends RockApolloDataSource {
           .format()}' or ExpirationDate eq null`
       )
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .get();
+      .orderBy('PrayerCount', 'asc');
+    // TODO: need to use orderBy to sort SQL side
+    // PrayerCount asc, EnteredDateTime asc
+    // need to wait for core functionality
+    // to use multiple orderBy statements
+  };
 
+  // deprecated
+  getPrayers = async (type) => {
+    const {
+      dataSources: { Group },
+    } = this.context;
+    let prayers = [];
+    if (type === 'SAVED') return this.bySaved().get();
+    if (type === 'GROUP')
+      prayers = this.byGroups(Group.getGroupTypeIds()).get();
+    else prayers = await this.byPrayerFeed(type).get();
     return this.sortPrayers(prayers);
   };
 
-  getFromGroups = async (groupTypeIds, personId) => {
-    const prayers = await this.request(
+  byGroups = async (groupTypeIds) => {
+    const {
+      dataSources: { Auth },
+    } = this.context;
+    const { id: personId } = await Auth.getCurrentPerson();
+    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
+    return this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
-    ).get();
-    return this.sortPrayers(prayers);
+    );
   };
 
-  getSavedPrayers = async () => {
+  bySaved = async () => {
     const {
       dataSources: { Followings },
     } = this.context;
@@ -195,12 +200,10 @@ export default class Prayer extends RockApolloDataSource {
     if (!entities.length) return [];
 
     const entityIds = entities.map((entity) => entity.entityId);
-    const prayers = await this.getFromIds(uniq(entityIds));
-
-    // filter out flagged prayers
-    return prayers.filter(
-      (prayer) => !prayer.flagCount || prayer.flagCount === 0
-    );
+    return this.request()
+      .filterOneOf(uniq(entityIds).map((id) => `Id eq ${id}`))
+      .andFilter(`IsActive eq true`)
+      .andFilter(`IsApproved eq true`);
   };
 
   incrementPrayed = async (id) => {

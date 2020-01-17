@@ -1,11 +1,21 @@
-import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
+import {
+  createGlobalId,
+  parseGlobalId,
+  withEdgePagination,
+} from '@apollosproject/server-core';
 import { isNumber } from 'lodash';
 import { createAssetUrl } from '../utils';
 
 export default {
   Query: {
+    // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
+    prayerFeed: (root, args, { dataSources }) =>
+      dataSources.Prayer.paginate({
+        cursor: dataSources.Prayer.byPrayerFeed(),
+        args,
+      }),
     prayerMenuCategories: (root, args, { dataSources }) =>
       dataSources.Prayer.getPrayerMenuCategories(),
     campusPrayers: (root, args, { dataSources }) =>
@@ -99,5 +109,9 @@ export default {
     overlayColor: ({
       attributeValues: { overlayColor: { value } = {} } = {},
     }) => value,
+  },
+  PrayerConnection: {
+    totalCount: ({ getTotalCount }) => getTotalCount(),
+    pageInfo: withEdgePagination,
   },
 };
