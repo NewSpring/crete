@@ -63,7 +63,7 @@ describe('Prayer resolver', () => {
 
     context.dataSources.Prayer.paginate = jest.fn(() =>
       Promise.resolve({
-        edges: [{ node: { id: 'Prayer123', text: 'very serious prayer' } }],
+        edges: [{ node: { id: 1, text: 'very serious prayer' } }],
       })
     );
     context.dataSources.Auth.getCurrentPerson = jest.fn(() =>
