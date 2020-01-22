@@ -1,5 +1,4 @@
 import { graphql } from 'graphql';
-import { fetch } from 'apollo-server-env';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
 import { Followings, Auth } from '@apollosproject/data-connector-rock';
 import {
