@@ -42,7 +42,7 @@ export default {
       // does 10 data calls and sometimes it times out
       //
       // create the interaction to trigger a notification
-      await dataSources.Prayer.createInteraction({
+      dataSources.Prayer.createInteraction({
         prayerId,
       });
 

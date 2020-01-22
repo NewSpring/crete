@@ -33,6 +33,23 @@ Object {
 }
 `;
 
+exports[`Prayer resolver gets a prayer feed 1`] = `
+Object {
+  "data": Object {
+    "prayerFeed": Object {
+      "edges": Array [
+        Object {
+          "node": Object {
+            "id": "Prayer:86c1f55a3874129ad25ba7e51fe0a23d",
+            "text": "very serious prayer",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`Prayer resolver gets all prayers from current person 1`] = `
 Object {
   "data": Object {

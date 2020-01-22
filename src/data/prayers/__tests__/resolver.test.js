@@ -1,6 +1,7 @@
 import { graphql } from 'graphql';
+import { fetch } from 'apollo-server-env';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
-import { Followings } from '@apollosproject/data-connector-rock';
+import { Followings, Auth } from '@apollosproject/data-connector-rock';
 import {
   contentItemSchema,
   contentChannelSchema,
@@ -19,6 +20,7 @@ import oneRockCampus from '../../mocks/campus';
 // define here any classes with dataSource functions you need to overwrite
 const { getSchema, getContext } = createTestHelpers({
   Prayer,
+  Auth,
   Person,
   Campus,
   Followings,
@@ -29,6 +31,9 @@ describe('Prayer resolver', () => {
   let context;
   let rootValue;
   beforeEach(() => {
+    fetch.resetMocks();
+    fetch.mockRockDataSourceAPI();
+
     // define here any extra schemas necessary
     schema = getSchema([
       contentItemSchema,
@@ -38,6 +43,34 @@ describe('Prayer resolver', () => {
     ]);
     context = getContext();
     rootValue = {};
+  });
+
+  it('gets a prayer feed', async () => {
+    const query = `
+      query {
+        prayerFeed {
+          edges {
+            node {
+              ... on Prayer {
+                id
+                text
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    context.dataSources.Prayer.paginate = jest.fn(() =>
+      Promise.resolve({
+        edges: [{ node: { id: 'Prayer123', text: 'very serious prayer' } }],
+      })
+    );
+    context.dataSources.Auth.getCurrentPerson = jest.fn(() =>
+      Promise.resolve(oneRockPerson)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
   });
 
   it('gets all public prayer requests', async () => {

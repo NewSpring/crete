@@ -98,6 +98,7 @@ ROCK_MAPPINGS:
       EntityType: ContentChannelItem
     ContentItem:
       EntityType: ContentChannelItem
+    # TODO: use the new ENTITY_TYPE mapper when it's released from core
     Prayer:
       EntityType: PrayerRequest
 
