@@ -31,9 +31,6 @@ describe('Prayer resolver', () => {
   let context;
   let rootValue;
   beforeEach(() => {
-    fetch.resetMocks();
-    fetch.mockRockDataSourceAPI();
-
     // define here any extra schemas necessary
     schema = getSchema([
       contentItemSchema,
