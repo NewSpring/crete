@@ -11,11 +11,13 @@ export default {
     // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
-    prayerFeed: (root, args, { dataSources }) =>
-      dataSources.Prayer.paginate({
-        cursor: dataSources.Prayer.byPrayerFeed(),
-        args,
-      }),
+    prayerFeed: async (root, { first, after, type }, { dataSources }) => {
+      const cursor = await dataSources.Prayer.byPrayerFeed(type);
+      return dataSources.Prayer.paginate({
+        cursor,
+        args: { first, after },
+      });
+    },
     prayerMenuCategories: (root, args, { dataSources }) =>
       dataSources.Prayer.getPrayerMenuCategories(),
     campusPrayers: (root, args, { dataSources }) =>
@@ -110,7 +112,7 @@ export default {
       attributeValues: { overlayColor: { value } = {} } = {},
     }) => value,
   },
-  PrayerConnection: {
+  PrayersConnection: {
     totalCount: ({ getTotalCount }) => getTotalCount(),
     pageInfo: withEdgePagination,
   },

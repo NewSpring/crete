@@ -166,11 +166,12 @@ export default class Prayer extends RockApolloDataSource {
     const {
       dataSources: { Group },
     } = this.context;
-    let prayers = [];
-    if (type === 'SAVED') return this.bySaved().get();
-    if (type === 'GROUP')
-      prayers = this.byGroups(Group.getGroupTypeIds()).get();
-    else prayers = await this.byPrayerFeed(type).get();
+    let prayersCursor;
+    if (type === 'SAVED') prayersCursor = await this.bySaved();
+    else if (type === 'GROUP')
+      prayersCursor = await this.byGroups(Group.getGroupTypeIds());
+    else prayersCursor = await this.byPrayerFeed(type);
+    const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
 
