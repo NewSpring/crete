@@ -45,7 +45,7 @@ const apolloServer = new ApolloServer({
     const productionError = error;
     const {
       extensions: {
-        exception: { stacktrace = '' },
+        exception: { stacktrace = [] },
       },
     } = error;
     bugsnag.notify(
