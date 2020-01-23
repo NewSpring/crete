@@ -59,8 +59,12 @@ const apolloServer = new ApolloServer({
           },
         },
       },
-      (e) => {
-        productionError.errorClass = e.message;
+      (err, report) => {
+        if (err) {
+          console.log(`Failed to send report because of:\n${err.stack}`);
+        } else {
+          console.log(`Successfully sent report "${report.errorMessage}"`);
+        }
       }
     );
     if (stacktrace) {
