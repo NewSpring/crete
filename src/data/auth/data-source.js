@@ -3,6 +3,32 @@ import { fetch, Request } from 'apollo-server-env';
 import { AuthenticationError } from 'apollo-server';
 
 export default class Auth extends baseAuth.dataSource {
+  getCurrentPerson = async ({ cookie = null } = { cookie: null }) => {
+    const { rockCookie, currentPerson } = this.context;
+    const userCookie = cookie || rockCookie;
+
+    if (currentPerson) {
+      return currentPerson;
+    }
+
+    if (userCookie) {
+      try {
+        const request = await this.request('People/GetCurrentPerson').get({
+          options: {
+            headers: { cookie: userCookie, 'Authorization-Token': null },
+          },
+        });
+        this.context.currentPerson = request;
+        return request;
+      } catch (e) {
+        throw new AuthenticationError(
+          `Invalid user cookie. New cookie: ${cookie}. Existing cookie: ${rockCookie}. Rock error: ${e.message}`
+        );
+      }
+    }
+    throw new AuthenticationError('Must be logged in');
+  };
+
   fetchUserCookie = async (Username, Password) => {
     try {
       // We use `new Response` rather than string/options b/c if conforms more closely with ApolloRESTDataSource
