@@ -26,7 +26,9 @@ export default class Auth extends baseAuth.dataSource {
         );
       }
     }
-    throw new AuthenticationError('Must be logged in');
+    throw new AuthenticationError(
+      `getCurrentPerson failed. No cookie. User token: ${this.context.userToken}, Session ID: ${this.context.sessionId}`
+    );
   };
 
   fetchUserCookie = async (Username, Password) => {
