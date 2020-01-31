@@ -8,7 +8,6 @@ const bugsnagClient = bugsnag({
   apiKey: isTest
     ? 'c9d60ae4c7e70c4b6c4ebd3e8056d2b8'
     : process.env.BUGSNAG_API_KEY,
-  notifyReleaseStages: ['production', 'staging'],
   releaseStage: process.env.BUGSNAG_STAGE || 'development',
 });
 
