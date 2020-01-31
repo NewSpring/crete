@@ -167,6 +167,7 @@ export default class Prayer extends RockApolloDataSource {
 
   byGroups = async (groupTypeIds, personId) => {
     // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
+    // right now I don't think it will pull any anonymous prayers
     return this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
     );
