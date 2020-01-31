@@ -135,11 +135,15 @@ export default class Prayer extends RockApolloDataSource {
       dataSources: { Auth, Group },
     } = this.context;
 
-
     if (type === 'SAVED') return this.bySaved();
 
-    const { id: personId, primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
-    if (type === 'GROUP') return this.byGroups(Group.getGroupTypeIds(), personId);
+    const {
+      id: personId,
+      primaryAliasId,
+      primaryCampusId,
+    } = await Auth.getCurrentPerson();
+    if (type === 'GROUP')
+      return this.byGroups(Group.getGroupTypeIds(), personId);
 
     return this.request()
       .filter(
@@ -155,7 +159,10 @@ export default class Prayer extends RockApolloDataSource {
           .format()}' or ExpirationDate eq null`
       )
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .sort([{field: "PrayerCount", direction: "asc"}, {field: "EnteredDateTime", direction: "asc"}])
+      .sort([
+        { field: 'PrayerCount', direction: 'asc' },
+        { field: 'EnteredDateTime', direction: 'asc' },
+      ]);
   };
 
   // deprecated
