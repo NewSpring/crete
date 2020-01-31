@@ -135,10 +135,10 @@ export default class Prayer extends RockApolloDataSource {
       dataSources: { Auth, Group },
     } = this.context;
 
-    const { primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
+    const { id: personId, primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
 
     if (type === 'SAVED') return this.bySaved();
-    if (type === 'GROUP') return this.byGroups(Group.getGroupTypeIds());
+    if (type === 'GROUP') return this.byGroups(Group.getGroupTypeIds(), personId);
 
     return this.request()
       .filter(
@@ -164,22 +164,20 @@ export default class Prayer extends RockApolloDataSource {
   // deprecated
   getPrayers = async (type) => {
     const {
-      dataSources: { Group },
+      dataSources: { Group, Auth },
     } = this.context;
     let prayersCursor;
     if (type === 'SAVED') prayersCursor = await this.bySaved();
-    else if (type === 'GROUP')
-      prayersCursor = await this.byGroups(Group.getGroupTypeIds());
+    else if (type === 'GROUP') {
+      const { id: personId } = await Auth.getCurrentPerson();
+      prayersCursor = await this.byGroups(Group.getGroupTypeIds(), personId);
+    }
     else prayersCursor = await this.byPrayerFeed(type);
     const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
 
-  byGroups = async (groupTypeIds) => {
-    const {
-      dataSources: { Auth },
-    } = this.context;
-    const { id: personId } = await Auth.getCurrentPerson();
+  byGroups = async (groupTypeIds, personId) => {
     // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
     return this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
