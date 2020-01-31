@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
+import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
-import Config from '@apollosproject/config';
 import bugsnag, { bugsnagMiddleware } from './bugsnag';
 
 import {
@@ -31,7 +31,7 @@ const cacheOptions = isDev
       },
     };
 
-const { ENGINE } = Config;
+const { ENGINE } = ApollosConfig;
 
 const apolloServer = new ApolloServer({
   typeDefs: schema,
@@ -45,22 +45,26 @@ const apolloServer = new ApolloServer({
     const productionError = error;
     const {
       extensions: {
-        exception: { stacktrace },
+        exception: { stacktrace = [] },
       },
     } = error;
     bugsnag.notify(
       error,
       {
         metadata: {
-          Rock: { rockUrl: Config.ROCK.API_URL },
+          Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
           'GraphQL Info': { path: error.path },
           'Custom Stacktrace': {
             trace: stacktrace.join('\n'),
           },
         },
       },
-      (e) => {
-        productionError.errorClass = e.message;
+      (err, report) => {
+        if (err) {
+          console.log(`Failed to send report because of:\n${err.stack}`);
+        } else {
+          console.log(`Successfully sent report "${report.errorMessage}"`);
+        }
       }
     );
     if (stacktrace) {

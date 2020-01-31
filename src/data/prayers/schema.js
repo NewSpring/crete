@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 const prayerSchema = gql`
   extend type Query {
     prayers(type: PrayerType): [Prayer]
+    prayerFeed(first: Int, after: String, type: PrayerType): PrayersConnection
     prayerMenuCategories: [PrayerMenuCategory]
     campusPrayers: [Prayer] @deprecated(reason: "Use prayers(type:SAVED)")
     userPrayers: [Prayer] @deprecated(reason: "Use prayers(type:USER)")
@@ -52,6 +53,17 @@ const prayerSchema = gql`
     isAnonymous: Boolean
     isSaved: Boolean @cacheControl(maxAge: 0)
     isPrayedFor: Boolean
+  }
+
+  type PrayersConnection {
+    edges: [PrayersConnectionEdge]
+    totalCount: Int
+    pageInfo: PaginationInfo
+  }
+
+  type PrayersConnectionEdge {
+    node: Prayer
+    cursor: String
   }
 `;
 
