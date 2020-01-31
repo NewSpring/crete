@@ -135,9 +135,10 @@ export default class Prayer extends RockApolloDataSource {
       dataSources: { Auth, Group },
     } = this.context;
 
-    const { id: personId, primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
 
     if (type === 'SAVED') return this.bySaved();
+
+    const { id: personId, primaryAliasId, primaryCampusId } = await Auth.getCurrentPerson();
     if (type === 'GROUP') return this.byGroups(Group.getGroupTypeIds(), personId);
 
     return this.request()
@@ -159,16 +160,7 @@ export default class Prayer extends RockApolloDataSource {
 
   // deprecated
   getPrayers = async (type) => {
-    const {
-      dataSources: { Group, Auth },
-    } = this.context;
-    let prayersCursor;
-    if (type === 'SAVED') prayersCursor = await this.bySaved();
-    else if (type === 'GROUP') {
-      const { id: personId } = await Auth.getCurrentPerson();
-      prayersCursor = await this.byGroups(Group.getGroupTypeIds(), personId);
-    }
-    else prayersCursor = await this.byPrayerFeed(type);
+    const prayersCursor = await this.byPrayerFeed(type);
     const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
