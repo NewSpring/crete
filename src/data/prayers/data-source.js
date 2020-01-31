@@ -154,11 +154,7 @@ export default class Prayer extends RockApolloDataSource {
           .format()}' or ExpirationDate eq null`
       )
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .orderBy('PrayerCount', 'asc');
-    // TODO: need to use orderBy to sort SQL side
-    // PrayerCount asc, EnteredDateTime asc
-    // need to wait for core functionality
-    // to use multiple orderBy statements
+      .sort([{field: "PrayerCount", direction: "asc"}, {field: "EnteredDateTime", direction: "asc"}])
   };
 
   // deprecated
