@@ -48,25 +48,15 @@ const apolloServer = new ApolloServer({
         exception: { stacktrace = [] },
       },
     } = error;
-    bugsnag.notify(
-      error,
-      {
-        metadata: {
-          Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
-          'GraphQL Info': { path: error.path },
-          'Custom Stacktrace': {
-            trace: stacktrace.join('\n'),
-          },
+    bugsnag.notify(error, {
+      metaData: {
+        Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
+        'GraphQL Info': { path: error.path },
+        'Custom Stacktrace': {
+          trace: stacktrace.join('\n'),
         },
       },
-      (err, report) => {
-        if (err) {
-          console.log(`Failed to send report because of:\n${err.stack}`);
-        } else {
-          console.log(`Successfully sent report "${report.errorMessage}"`);
-        }
-      }
-    );
+    });
     if (stacktrace) {
       delete productionError.extensions.exception.stacktrace;
     }
