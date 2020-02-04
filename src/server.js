@@ -51,7 +51,7 @@ const apolloServer = new ApolloServer({
     bugsnag.notify(
       error,
       {
-        metadata: {
+        metaData: {
           Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
           'GraphQL Info': { path: error.path },
           'Custom Stacktrace': {
