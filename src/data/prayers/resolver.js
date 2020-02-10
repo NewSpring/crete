@@ -13,6 +13,7 @@ export default {
       dataSources.Prayer.getPrayers(type),
     prayerFeed: async (root, { first, after, type }, { dataSources }) => {
       const cursor = await dataSources.Prayer.byPrayerFeed(type);
+      if (!cursor) return { edges: [] };
       return dataSources.Prayer.paginate({
         cursor,
         args: { first, after },
