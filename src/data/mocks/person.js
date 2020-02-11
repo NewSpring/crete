@@ -1,6 +1,7 @@
 export default {
   id: 51,
   primaryAliasId: 123,
+  primaryCampusId: 20,
   firstName: 'Isaac',
   lastName: 'Hardy',
   nickName: 'Isaac',
