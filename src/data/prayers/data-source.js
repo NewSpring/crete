@@ -86,12 +86,17 @@ export default class Prayer extends RockApolloDataSource {
     // we need a better algorithm
     let summary;
     try {
-      const { interactionDateTime: time } = await this.request('Interactions')
-        .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
-        .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
-        .orderBy('InteractionDateTime', 'desc')
-        .select('InteractionDateTime')
-        .first();
+      const { interactionDateTime: time } = await this.post('Lava/RenderTemplate', `{% sql %}
+      SELECT TOP 1 InteractionDateTime
+      FROM Interaction i
+      JOIN InteractionComponent ic
+      ON i.InteractionComponentId = ic.Id
+      JOIN PrayerRequest pr
+      ON ic.EntityId = pr.Id
+      WHERE pr.RequestedByPersonAliasId = '${requestedByPersonAliasId}'
+      AND i.InteractionSummary = 'PrayerNotificationSent'
+      ORDER BY InteractionDateTime DESC
+  {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`)
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
