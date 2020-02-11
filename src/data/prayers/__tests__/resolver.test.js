@@ -1,6 +1,6 @@
 import { graphql } from 'graphql';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
-import { Followings } from '@apollosproject/data-connector-rock';
+import { Followings, Auth } from '@apollosproject/data-connector-rock';
 import {
   contentItemSchema,
   contentChannelSchema,
@@ -8,7 +8,7 @@ import {
   scriptureSchema,
 } from '@apollosproject/data-schema';
 
-import * as PrayerRequest from '../index';
+import * as Prayer from '../index';
 import * as Person from '../../people';
 import * as Campus from '../../campuses';
 
@@ -18,18 +18,19 @@ import oneRockCampus from '../../mocks/campus';
 
 // define here any classes with dataSource functions you need to overwrite
 const { getSchema, getContext } = createTestHelpers({
-  PrayerRequest,
+  Prayer,
+  Auth,
   Person,
   Campus,
   Followings,
 });
 
-describe('PrayerRequest resolver', () => {
+describe('Prayer resolver', () => {
   let schema;
   let context;
   let rootValue;
   beforeEach(() => {
-    // any extra schemas necessary
+    // define here any extra schemas necessary
     schema = getSchema([
       contentItemSchema,
       contentChannelSchema,
@@ -38,6 +39,34 @@ describe('PrayerRequest resolver', () => {
     ]);
     context = getContext();
     rootValue = {};
+  });
+
+  it('gets a prayer feed', async () => {
+    const query = `
+      query {
+        prayerFeed {
+          edges {
+            node {
+              ... on Prayer {
+                id
+                text
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    context.dataSources.Prayer.paginate = jest.fn(() =>
+      Promise.resolve({
+        edges: [{ node: { id: 1, text: 'very serious prayer' } }],
+      })
+    );
+    context.dataSources.Auth.getCurrentPerson = jest.fn(() =>
+      Promise.resolve(oneRockPerson)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
   });
 
   it('gets all public prayer requests', async () => {
@@ -67,7 +96,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getAll = jest.fn(() =>
+    context.dataSources.Prayer.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     context.dataSources.Campus.getFromId = jest.fn(() =>
@@ -96,7 +125,7 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.getAllByCampus = jest.fn(() =>
+    context.dataSources.Prayer.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     context.dataSources.Campus.getFromId = jest.fn(() =>
@@ -117,7 +146,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromCurrentPerson = jest.fn(() =>
+    context.dataSources.Prayer.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -134,7 +163,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getFromGroups = jest.fn(() =>
+    context.dataSources.Prayer.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -150,7 +179,7 @@ describe('PrayerRequest resolver', () => {
       }
     `;
 
-    context.dataSources.PrayerRequest.getSavedPrayers = jest.fn(() =>
+    context.dataSources.Prayer.getPrayers = jest.fn(() =>
       Promise.resolve(twoRockPrayers)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -169,7 +198,7 @@ describe('PrayerRequest resolver', () => {
         }
       }
     `;
-    context.dataSources.PrayerRequest.add = jest.fn(() =>
+    context.dataSources.Prayer.add = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -179,14 +208,14 @@ describe('PrayerRequest resolver', () => {
     const query = `
       mutation {
         deletePrayer(
-          nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec"
+          nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec"
         ) {
           id
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.deletePrayer = jest.fn(() =>
+    context.dataSources.Prayer.deletePrayer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -197,15 +226,15 @@ describe('PrayerRequest resolver', () => {
     const query = `
       mutation {
         incrementPrayerCount(
-          nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec"
+          nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec"
         ) {
           id
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.createInteraction = jest.fn(() => null);
-    context.dataSources.PrayerRequest.incrementPrayed = jest.fn(() =>
+    context.dataSources.Prayer.createInteraction = jest.fn(() => null);
+    context.dataSources.Prayer.incrementPrayed = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -215,13 +244,13 @@ describe('PrayerRequest resolver', () => {
   it('flags a prayer request', async () => {
     const query = `
       mutation {
-        flagPrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
+        flagPrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
           id
           text
         }
       }
     `;
-    context.dataSources.PrayerRequest.flag = jest.fn(() =>
+    context.dataSources.Prayer.flag = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -230,7 +259,7 @@ describe('PrayerRequest resolver', () => {
   it('saves a prayer', async () => {
     const query = `
       mutation {
-        savePrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
+        savePrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
           id
           text
         }
@@ -244,7 +273,7 @@ describe('PrayerRequest resolver', () => {
   it('unsaves a prayer', async () => {
     const query = `
       mutation {
-        unSavePrayer(nodeId: "PrayerRequest:b36e55d803443431e96bb4b5068147ec") {
+        unSavePrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
           id
           text
         }

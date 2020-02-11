@@ -98,6 +98,9 @@ ROCK_MAPPINGS:
       EntityType: ContentChannelItem
     ContentItem:
       EntityType: ContentChannelItem
+    # TODO: use the new ENTITY_TYPE mapper when it's released from core
+    Prayer:
+      EntityType: PrayerRequest
 
   DATAVIEW_CATEGORIES:
     # Id of the category used to store all persona dataviews
@@ -115,13 +118,11 @@ ROCK_MAPPINGS:
   # Apollos will pull content items from these channels and expose them on the user feed
   # However, it will not expose the channel itself.
   FEED_CONTENT_CHANNEL_IDS:
-    - 27
-    - 16
-    - 17
-    - 18
-    - 19
-    - 20
-    - 28
+    - 27 # news
+    - 16 # articles
+    - 18 # studies
+    - 19 # sermons
+    - 28 # stories
 
   CAMPAIGN_CHANNEL_IDS:
     - 439
@@ -151,6 +152,7 @@ ROCK_MAPPINGS:
   FAMILY_GROUP_TYPE_ID: 10
   FUSE_GROUP_TYPE_ID: 60
   RALLY_GROUP_TYPE_ID: 141
+  MENTORING_GROUP_TYPE_ID: 149
 
 HOME_FEATURES:
   #- title: FOR YOU

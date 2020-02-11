@@ -9,11 +9,7 @@ export default {
   categoryId: 2,
   flagCount: 0,
   prayerCount: 4,
-  attributeValues: {
-    isAnonymous: {
-      value: 'True',
-    },
-  },
+  isPublic: true,
 };
 
 export const twoRockPrayers = [
@@ -28,11 +24,7 @@ export const twoRockPrayers = [
     categoryId: 2,
     flagCount: 0,
     prayerCount: 4,
-    attributeValues: {
-      isAnonymous: {
-        value: 'True',
-      },
-    },
+    isPublic: true,
   },
   {
     id: 2,
@@ -45,11 +37,7 @@ export const twoRockPrayers = [
     categoryId: 2,
     flagCount: 1,
     prayerCount: 0,
-    attributeValues: {
-      isAnonymous: {
-        value: 'False',
-      },
-    },
+    isPublic: false,
   },
 ];
 
@@ -86,5 +74,18 @@ export const threeSortedPrayers = [
     text: 'prayer1',
     prayerCount: 2,
     createdDateTime: '2019-05-30T09:41:44.607',
+  },
+];
+
+export const menuCategories = [
+  {
+    id: 1,
+    key: 'campus',
+    attributeValues: { requiresCampusMembership: { value: 'True' } },
+  },
+  {
+    id: 2,
+    key: 'community',
+    attributeValues: { requiresCampusMembership: { value: 'False' } },
   },
 ];
