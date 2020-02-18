@@ -16,7 +16,7 @@
     "codecov": "cat ./coverage/lcov.info | codecov",
     "schema:publish": "apollo schema:publish",
     "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
-    "translate": "scripts/translate.js"
+    "translate": "node scripts/translate.js"
   },
   "engines": {
     "node": ">=8.11.x"

@@ -11,5 +11,5 @@ if (!id) {
   process.exit(1);
 }
 
-if (id.includes(':')) console.log(parseGlobalId(id));
+if (id.includes(':')) console.log(parseGlobalId(id).id);
 else console.log(createGlobalId(id, 'Generic').split(':')[1]);
