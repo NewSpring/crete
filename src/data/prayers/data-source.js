@@ -86,7 +86,10 @@ export default class Prayer extends RockApolloDataSource {
     // we need a better algorithm
     let summary;
     try {
-      const { interactionDateTime: time } = await this.post('Lava/RenderTemplate', `{[ lastSentNotificationDateTime paid:'${requestedByPersonAliasId}' ]}`)
+      const { interactionDateTime: time } = await this.post(
+        'Lava/RenderTemplate',
+        `{[ lastSentNotificationDateTime paid:'${requestedByPersonAliasId}' ]}`
+      );
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
