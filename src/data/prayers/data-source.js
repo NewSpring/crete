@@ -86,7 +86,14 @@ export default class Prayer extends RockApolloDataSource {
     // we need a better algorithm
     let summary;
     try {
-      const { interactionDateTime: time } = await this.post('Lava/RenderTemplate', `{[ lastSentNotificationDateTime paid:'${requestedByPersonAliasId}' ]}`)
+      const { interactionDateTime: time } = await this.post('Lava/RenderTemplate', `{% sql %}
+      SELECT TOP 1 i.InteractionDateTime
+      FROM Interaction i
+      WHERE i.InteractionSummary = 'PrayerNotificationSent'
+      AND i.PersonAliasId = '${requestedByPersonAliasId}'
+      AND i.Operation = 'Pray'
+      ORDER BY i.InteractionDateTime DESC
+      {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`)
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
