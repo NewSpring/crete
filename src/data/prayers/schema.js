@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 const prayerSchema = gql`
   extend type Query {
     prayers(type: PrayerType): [Prayer]
+      @deprecated(reason: "Use paginated version: prayerFeed")
     prayerFeed(first: Int, after: String, type: PrayerType): PrayersConnection
     prayerMenuCategories: [PrayerMenuCategory]
     campusPrayers: [Prayer] @deprecated(reason: "Use prayers(type:SAVED)")
