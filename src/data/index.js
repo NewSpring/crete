@@ -20,6 +20,7 @@ import {
   BinaryFiles,
   RockConstants,
   Event,
+  Interactions,
 } from '@apollosproject/data-connector-rock';
 import * as Person from './people';
 import * as Auth from './auth';
@@ -63,6 +64,7 @@ const data = {
   Person,
   Prayer,
   MatrixItem,
+  Interactions,
 };
 
 const {
