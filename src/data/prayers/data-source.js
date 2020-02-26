@@ -82,8 +82,6 @@ export default class Prayer extends RockApolloDataSource {
     // determine whether to send notification
     // Rock is triggering the workflow based on the Summary field
     // if it's older than 2 hours ago
-    // TODO this check is taking on average 2.5 sec and will only get slower
-    // we need a better algorithm
     let summary;
     try {
       const { interactionDateTime: time } = await this.post(
