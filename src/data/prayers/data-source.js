@@ -15,13 +15,6 @@ export default class Prayer extends RockApolloDataSource {
       .find(id)
       .get();
 
-  getFromIds = (ids) => {
-    const idsFilter = ids.map((id) => `Id eq ${id}`);
-    return this.request()
-      .filterOneOf(idsFilter)
-      .get();
-  };
-
   sortPrayers = (prayers) =>
     prayers.sort((a, b) => {
       if (!b.prayerCount || a.prayerCount > b.prayerCount) return 1;
@@ -89,16 +82,19 @@ export default class Prayer extends RockApolloDataSource {
     // determine whether to send notification
     // Rock is triggering the workflow based on the Summary field
     // if it's older than 2 hours ago
-    // TODO this check is taking on average 2.5 sec and will only get slower
-    // we need a better algorithm
     let summary;
     try {
-      const { interactionDateTime: time } = await this.request('Interactions')
-        .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
-        .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
-        .orderBy('InteractionDateTime', 'desc')
-        .select('InteractionDateTime')
-        .first();
+      const { interactionDateTime: time } = await this.post(
+        'Lava/RenderTemplate',
+        `{% sql %}
+          SELECT TOP 1 i.InteractionDateTime
+          FROM Interaction i
+          WHERE i.InteractionSummary = 'PrayerNotificationSent'
+          AND i.PersonAliasId = '${requestedByPersonAliasId}'
+          AND i.Operation = 'Pray'
+          ORDER BY i.InteractionDateTime DESC
+        {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
+      );
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
@@ -137,24 +133,22 @@ export default class Prayer extends RockApolloDataSource {
     return !!interaction;
   };
 
-  getPrayers = async (type) => {
+  byPrayerFeed = async (type) => {
     const {
       dataSources: { Auth, Group },
     } = this.context;
 
-    if (type === 'SAVED') return this.getSavedPrayers();
+    if (type === 'SAVED') return this.bySaved();
 
     const {
       id: personId,
       primaryAliasId,
       primaryCampusId,
     } = await Auth.getCurrentPerson();
-
-    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
     if (type === 'GROUP')
-      return this.getFromGroups(Group.getGroupTypeIds(), personId);
+      return this.byGroups(Group.getGroupTypeIds(), personId);
 
-    const prayers = await this.request()
+    return this.request()
       .filter(
         `RequestedByPersonAliasId ${
           type === 'USER' ? 'eq' : 'ne'
@@ -168,19 +162,29 @@ export default class Prayer extends RockApolloDataSource {
           .format()}' or ExpirationDate eq null`
       )
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .get();
+      .sort([
+        { field: 'PrayerCount', direction: 'asc' },
+        { field: 'EnteredDateTime', direction: 'asc' },
+      ]);
+  };
 
+  // deprecated
+  getPrayers = async (type) => {
+    const prayersCursor = await this.byPrayerFeed(type);
+    if (!prayersCursor) return [];
+    const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
 
-  getFromGroups = async (groupTypeIds, personId) => {
-    const prayers = await this.request(
+  byGroups = async (groupTypeIds, personId) => {
+    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
+    // right now I don't think it will pull any anonymous prayers
+    return this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
-    ).get();
-    return this.sortPrayers(prayers);
+    );
   };
 
-  getSavedPrayers = async () => {
+  bySaved = async () => {
     const {
       dataSources: { Followings },
     } = this.context;
@@ -192,15 +196,13 @@ export default class Prayer extends RockApolloDataSource {
     );
 
     const entities = await followedPrayersRequest.get();
-    if (!entities.length) return [];
+    if (!entities.length) return null;
 
     const entityIds = entities.map((entity) => entity.entityId);
-    const prayers = await this.getFromIds(uniq(entityIds));
-
-    // filter out flagged prayers
-    return prayers.filter(
-      (prayer) => !prayer.flagCount || prayer.flagCount === 0
-    );
+    return this.request()
+      .filterOneOf(uniq(entityIds).map((id) => `Id eq ${id}`))
+      .andFilter(`IsActive eq true`)
+      .andFilter(`IsApproved eq true`);
   };
 
   incrementPrayed = async (id) => {

@@ -1,11 +1,24 @@
-import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
+import {
+  createGlobalId,
+  parseGlobalId,
+  withEdgePagination,
+} from '@apollosproject/server-core';
 import { isNumber } from 'lodash';
 import { createAssetUrl } from '../utils';
 
 export default {
   Query: {
+    // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
+    prayerFeed: async (root, { first, after, type }, { dataSources }) => {
+      const cursor = await dataSources.Prayer.byPrayerFeed(type);
+      if (!cursor) return { edges: [] };
+      return dataSources.Prayer.paginate({
+        cursor,
+        args: { first, after },
+      });
+    },
     prayerMenuCategories: (root, args, { dataSources }) =>
       dataSources.Prayer.getPrayerMenuCategories(),
     campusPrayers: (root, args, { dataSources }) =>
@@ -30,7 +43,7 @@ export default {
       // does 10 data calls and sometimes it times out
       //
       // create the interaction to trigger a notification
-      await dataSources.Prayer.createInteraction({
+      dataSources.Prayer.createInteraction({
         prayerId,
       });
 
@@ -99,5 +112,9 @@ export default {
     overlayColor: ({
       attributeValues: { overlayColor: { value } = {} } = {},
     }) => value,
+  },
+  PrayersConnection: {
+    totalCount: ({ getTotalCount }) => getTotalCount(),
+    pageInfo: withEdgePagination,
   },
 };
