@@ -15,14 +15,14 @@ export default class Group extends baseGroup.dataSource {
 
   getGroupTypeIds = () => Object.values(this.groupTypeMap);
 
-  getFeatureGroups = async (personID) => {
-    // all possible feature groups
-    const featureGroupFilters = ROCK_MAPPINGS.APP_FEATURE_GROUPS.map(
+  getTestGroups = async (personID) => {
+    // all possible test groups
+    const testGroupFilters = ROCK_MAPPINGS.APP_TEST_GROUPS.map(
       (group) => `GroupId eq ${Object.values(group)[0]}`
     );
-    // just the feature groups that the person is in
+    // just the test groups that the person is in
     const associations = await this.request('GroupMembers')
-      .filterOneOf(featureGroupFilters)
+      .filterOneOf(testGroupFilters)
       .andFilter(`PersonId eq ${personID}`)
       .get();
     if (!associations.length) return [];

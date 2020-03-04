@@ -20,7 +20,7 @@ export const groupSchema = gql`
 
   extend type Person {
     groups(type: GROUP_TYPE, asLeader: Boolean): [Group]
-    featureGroups: [Group]
+    testGroups: [Group]
     isGroupLeader: Boolean
   }
 `;

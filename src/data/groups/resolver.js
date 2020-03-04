@@ -3,8 +3,8 @@ import { resolverMerge } from '@apollosproject/server-core';
 
 const resolver = {
   Person: {
-    featureGroups: ({ id: personID }, args, { dataSources: { Group } }) =>
-      Group.getFeatureGroups(personID),
+    testGroups: ({ id: personID }, args, { dataSources: { Group } }) =>
+      Group.getTestGroups(personID),
   },
 };
 export default resolverMerge(resolver, baseGroup);
