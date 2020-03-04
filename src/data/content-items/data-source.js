@@ -6,7 +6,7 @@ import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS } = ApollosConfig;
+const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -157,6 +157,18 @@ export default class ContentItem extends oldContentItem.dataSource {
           ]
         : [],
     }));
+  };
+
+  CORE_LIVE_CONTENT = this.LIVE_CONTENT;
+
+  LIVE_CONTENT = async () => {
+    const { Auth } = this.context.dataSources;
+    const { id: personID } = await Auth.getCurrentPerson();
+    const groupID = ROCK_MAPPINGS.CONTENT_PREVIEWS_GROUP_ID;
+    const associations = await this.request('GroupMember')
+      .filter(`GroupId eq ${groupID} and PersonId eq ${personID}`)
+      .get();
+    return associations ? null : this.CORE_LIVE_CONTENT();
   };
 
   getShareUrl = async ({ id, contentChannelId }, parentChannelId) => {
