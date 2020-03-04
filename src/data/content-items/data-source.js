@@ -407,15 +407,4 @@ export default class ContentItem extends oldContentItem.dataSource {
     }
     return this.coreSummaryMethod(root);
   };
-
-  corePickBestImage = this.pickBestImage;
-
-  pickBestImage = ({ images }) => {
-    const appImage = images.find((image) =>
-      image.key.toLowerCase().includes('app')
-    );
-    if (appImage) return { ...appImage, __typename: 'ImageMedia' };
-
-    return this.corePickBestImage({ images });
-  };
 }
