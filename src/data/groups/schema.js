@@ -7,6 +7,7 @@ export const groupSchema = gql`
     Family
     Fuse
     Rally
+    Mentoring
   }
 
   type Group implements Node {
@@ -19,6 +20,8 @@ export const groupSchema = gql`
 
   extend type Person {
     groups(type: GROUP_TYPE, asLeader: Boolean): [Group]
+    featureGroups: [Group]
+    isGroupLeader: Boolean
   }
 `;
 
