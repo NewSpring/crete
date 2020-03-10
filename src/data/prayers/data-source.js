@@ -82,16 +82,19 @@ export default class Prayer extends RockApolloDataSource {
     // determine whether to send notification
     // Rock is triggering the workflow based on the Summary field
     // if it's older than 2 hours ago
-    // TODO this check is taking on average 2.5 sec and will only get slower
-    // we need a better algorithm
     let summary;
     try {
-      const { interactionDateTime: time } = await this.request('Interactions')
-        .filter(`InteractionData eq '${requestedByPersonAliasId}'`)
-        .andFilter(`InteractionSummary eq 'PrayerNotificationSent'`)
-        .orderBy('InteractionDateTime', 'desc')
-        .select('InteractionDateTime')
-        .first();
+      const { interactionDateTime: time } = await this.post(
+        'Lava/RenderTemplate',
+        `{% sql %}
+          SELECT TOP 1 i.InteractionDateTime
+          FROM Interaction i
+          WHERE i.InteractionSummary = 'PrayerNotificationSent'
+          AND i.PersonAliasId = '${requestedByPersonAliasId}'
+          AND i.Operation = 'Pray'
+          ORDER BY i.InteractionDateTime DESC
+        {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
+      );
       summary =
         moment(time).add(2, 'hours') < moment() ? 'PrayerNotificationSent' : '';
     } catch (e) {
