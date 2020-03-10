@@ -5,10 +5,6 @@ import ApollosConfig from '@apollosproject/config';
 const { CHURCH_ONLINE, ROCK_MAPPINGS } = ApollosConfig;
 
 export default class LiveStream extends RockApolloDataSource {
-  webViewUrl = () => {
-    return CHURCH_ONLINE.WEB_VIEW_URL;
-  };
-
   async getLiveStream() {
     return {
       isLive: async () =>
@@ -18,7 +14,7 @@ export default class LiveStream extends RockApolloDataSource {
         )) === 'true',
       eventStartTime: null,
       media: () => null,
-      webViewUrl: this.webViewUrl,
+      webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
     };
   }
 
