@@ -25,4 +25,4 @@ jobs:
     - stage: Publish Schema
       script:
         - NODE_ENV=test PORT=4000 TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX yarn start & sleep 10
-        - yarn schema:publish --tag=production
+        - yarn schema:publish

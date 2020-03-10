@@ -352,8 +352,17 @@ export default class ContentItem extends oldContentItem.dataSource {
   };
 
   getBySlug = async (slug) => {
+    // try to expand short link first
+    const link = await this.request('PageShortLinks')
+      .filter(`Token eq '${slug}'`)
+      .first();
+    const path = link
+      ? link.url.split('/')[link.url.split('/').length - 1]
+      : '';
+
+    // get content item
     const contentItemSlug = await this.request('ContentChannelItemSlugs')
-      .filter(`Slug eq '${slug}'`)
+      .filter(`Slug eq '${path !== '' ? path : null || slug}'`)
       .first();
     if (!contentItemSlug) throw new Error(`Slug "${slug}" does not exist.`);
 
@@ -403,16 +412,5 @@ export default class ContentItem extends oldContentItem.dataSource {
       });
     }
     return this.coreSummaryMethod(root);
-  };
-
-  corePickBestImage = this.pickBestImage;
-
-  pickBestImage = ({ images }) => {
-    const appImage = images.find((image) =>
-      image.key.toLowerCase().includes('app')
-    );
-    if (appImage) return { ...appImage, __typename: 'ImageMedia' };
-
-    return this.corePickBestImage({ images });
   };
 }
