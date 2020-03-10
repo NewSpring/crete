@@ -7,26 +7,19 @@ const { CHURCH_ONLINE, ROCK_MAPPINGS } = ApollosConfig;
 export default class LiveStream extends RockApolloDataSource {
   resource = 'LiveStream';
 
-  mediaUrls = () => {
-    return CHURCH_ONLINE.MEDIA_URLS;
-  };
-
   webViewUrl = () => {
     return CHURCH_ONLINE.WEB_VIEW_URL;
   };
 
   async getLiveStream() {
     return {
-      isLive: () => this.getIsLive(),
-      eventStartTime: new Date().toJSON(),
-      media: () =>
-        this.mediaUrls.length
-          ? {
-              sources: this.mediaUrls.map((uri) => ({
-                uri,
-              })),
-            }
-          : null,
+      isLive: async () =>
+        (await this.post(
+          `Lava/RenderTemplate`,
+          `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
+        )) === 'true',
+      eventStartTime: null,
+      media: () => null,
       webViewUrl: this.webViewUrl,
     };
   }
@@ -44,13 +37,5 @@ export default class LiveStream extends RockApolloDataSource {
         ...(await this.getLiveStream()),
       }))
     );
-  }
-
-  async getIsLive() {
-    const areWeLive = await this.post(
-      `Lava/RenderTemplate`,
-      `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
-    );
-    return areWeLive === 'true';
   }
 }
