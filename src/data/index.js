@@ -4,13 +4,13 @@ import { createApolloServerConfig } from '@apollosproject/server-core';
 
 import * as Analytics from '@apollosproject/data-connector-analytics';
 import * as Scripture from '@apollosproject/data-connector-bible';
-import * as LiveStream from '@apollosproject/data-connector-church-online';
 import * as OneSignal from '@apollosproject/data-connector-onesignal';
 import * as Search from '@apollosproject/data-connector-algolia-search';
 import * as Pass from '@apollosproject/data-connector-passes';
 import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
+  Auth,
   Followings,
   ContentChannel,
   Sharable,
@@ -22,8 +22,8 @@ import {
   Event,
   Interactions,
 } from '@apollosproject/data-connector-rock';
+import * as LiveStream from './live';
 import * as Person from './people';
-import * as Auth from './auth';
 import * as ContentItem from './content-items';
 import * as Features from './features';
 import * as Campus from './campuses';
