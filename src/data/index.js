@@ -10,6 +10,7 @@ import * as Pass from '@apollosproject/data-connector-passes';
 import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
+  Auth,
   Followings,
   ContentChannel,
   Sharable,
@@ -22,7 +23,6 @@ import {
 } from '@apollosproject/data-connector-rock';
 import * as LiveStream from './live';
 import * as Person from './people';
-import * as Auth from './auth';
 import * as ContentItem from './content-items';
 import * as Features from './features';
 import * as Campus from './campuses';
