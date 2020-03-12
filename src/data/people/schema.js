@@ -6,7 +6,6 @@ const peopleSchema = gql`
 
   extend type Person {
     impersonationParameter: String! @deprecated(reason: "No longer used.")
-    isGroupLeader: Boolean
     isStaff: Boolean
   }
 
