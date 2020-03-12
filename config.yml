@@ -43,11 +43,11 @@ ALGOLIA:
       - title
       - unordered(summary)
     #customRankings:
-    # NOT CURRENTLY INCLUDED
-    # This just demonstrates what's possible
-    # To include likedCount (or any other field) override search package
-    # and add field to config below
-    #- desc(likedCount)
+      # NOT CURRENTLY INCLUDED
+      # This just demonstrates what's possible
+      # To include likedCount (or any other field) override search package
+      # and add field to config below
+      #- desc(likedCount)
 TWILIO:
   ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
   AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
@@ -65,7 +65,6 @@ ANALYTICS:
   # on the accompanying service
   SEGMENT_KEY:
   GA_ID:
-  USE_ROCK: false
 BIBLE_API:
   KEY: ${BIBLE_API_KEY}
   BIBLE_ID:
@@ -166,6 +165,7 @@ ROCK_MAPPINGS:
   RALLY_GROUP_TYPE_ID: 141
   MENTORING_GROUP_TYPE_ID: 149
 
+  MOBILE_DEVICE_TYPE_ID: 919
   APP_TEST_GROUPS:
     - EXPERIMENTAL_GROUP_ID: 1932851
   SUNDAY_SERMON_SCHEDULE_CATEGORY_ID: 747
