@@ -11,9 +11,10 @@ export default {
     // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
-    prayerFeed: async (root, { first, after, type }, { dataSources }) => {
+    prayerFeed: async (root, { first, after, type }, { dataSources }, info) => {
       const cursor = await dataSources.Prayer.byPrayerFeed(type);
       if (!cursor) return { edges: [] };
+      if (type === 'SAVED') info.cacheControl.setCacheHint({ maxAge: 0 });
       return dataSources.Prayer.paginate({
         cursor,
         args: { first, after },
