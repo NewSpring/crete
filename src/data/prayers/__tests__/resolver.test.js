@@ -10,6 +10,7 @@ import {
 
 import * as Prayer from '../index';
 import * as Person from '../../people';
+import * as Group from '../../groups';
 import * as Campus from '../../campuses';
 
 import oneRockPrayer, { twoRockPrayers } from '../../mocks/prayer';
@@ -21,6 +22,7 @@ const { getSchema, getContext } = createTestHelpers({
   Prayer,
   Auth,
   Person,
+  Group,
   Campus,
   Followings,
 });

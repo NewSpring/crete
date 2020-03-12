@@ -1,7 +1,8 @@
 import { graphql } from 'graphql';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
-import { Group, Auth } from '@apollosproject/data-connector-rock';
+import { Auth } from '@apollosproject/data-connector-rock';
 import * as Person from '../index';
+import * as Group from '../../groups';
 import oneRockPerson from '../../mocks/person';
 
 const { getSchema, getContext } = createTestHelpers({ Person, Group, Auth });

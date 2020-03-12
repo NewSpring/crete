@@ -14,4 +14,22 @@ export default class Group extends baseGroup.dataSource {
   };
 
   getGroupTypeIds = () => Object.values(this.groupTypeMap);
+
+  getTestGroups = async (personID) => {
+    // all possible test groups
+    const testGroupFilters = ROCK_MAPPINGS.APP_TEST_GROUPS.map(
+      (group) => `GroupId eq ${Object.values(group)[0]}`
+    );
+    // just the test groups that the person is in
+    const associations = await this.request('GroupMembers')
+      .filterOneOf(testGroupFilters)
+      .andFilter(`PersonId eq ${personID}`)
+      .get();
+    if (!associations.length) return [];
+    // assemble the OData filter
+    const groupFilters = associations.map(({ groupId }) => `Id eq ${groupId}`);
+    return this.request()
+      .filterOneOf(groupFilters)
+      .get();
+  };
 }
