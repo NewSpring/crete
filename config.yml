@@ -15,7 +15,7 @@ APP:
   JOBS_USERNAME: ${JOBS_USERNAME}
   JOBS_PASSWORD: ${JOBS_PASSWORD}
 ROCK:
-  API_URL: https://alpha-rock.newspring.cc/api
+  API_URL: ${ROCK_API}
   API_TOKEN: ${ROCK_TOKEN}
   IMAGE_URL: https://s3.amazonaws.com
   SHARE_URL: https://newspring.cc
