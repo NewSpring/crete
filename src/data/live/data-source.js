@@ -6,12 +6,13 @@ const { CHURCH_ONLINE, ROCK_MAPPINGS } = ApollosConfig;
 
 export default class LiveStream extends RockApolloDataSource {
   async getLiveStream() {
+    const stream =
+      (await this.post(
+        `Lava/RenderTemplate`,
+        `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
+      )) === 'true';
     return {
-      isLive: async () =>
-        (await this.post(
-          `Lava/RenderTemplate`,
-          `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
-        )) === 'true',
+      isLive: stream,
       eventStartTime: null,
       media: () => null,
       webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
@@ -25,11 +26,10 @@ export default class LiveStream extends RockApolloDataSource {
     // If we have data in the sermon feed, and the `getLiveStream.isLive` is true
     // this returns an array of livestreams
     const liveItems = await ContentItem.getActiveLiveStreamContent();
-    const liveStream = await this.getLiveStream();
     return Promise.all(
       liveItems.map(async (item) => ({
-        contentItem: (await liveStream.isLive()) ? item : null,
-        ...liveStream,
+        contentItem: item,
+        ...(await this.getLiveStream()),
       }))
     );
   }
