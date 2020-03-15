@@ -12,7 +12,8 @@ export default class LiveStream extends RockApolloDataSource {
         `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
       )) === 'true';
     return {
-      isLive: stream,
+      // isLive: stream,
+      isLive: true,
       eventStartTime: null,
       media: () => null,
       webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
