@@ -31,6 +31,8 @@ CHURCH_ONLINE:
   URL: https://live.newspring.cc/api/v1/
   MEDIA_URLS: []
   WEB_VIEW_URL: https://live.newspring.cc
+LIVING_AS_ONE:
+  STREAM_URL: https://control.livingasone.com/ns/Manifest.m3u8
 ALGOLIA:
   APPLICATION_ID: ${ALGOLIA_APP_ID}
   API_KEY: ${ALGOLIA_API_KEY}
