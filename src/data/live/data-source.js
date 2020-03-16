@@ -2,7 +2,7 @@
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
 
-const { CHURCH_ONLINE, ROCK_MAPPINGS } = ApollosConfig;
+const { CHURCH_ONLINE, ROCK_MAPPINGS, LIVING_AS_ONE } = ApollosConfig;
 
 export default class LiveStream extends RockApolloDataSource {
   async getLiveStream() {
@@ -14,7 +14,7 @@ export default class LiveStream extends RockApolloDataSource {
     return {
       isLive: stream,
       eventStartTime: null,
-      media: () => null,
+      media: { sources: [{ uri: LIVING_AS_ONE.STREAM_URL }] },
       webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
     };
   }
