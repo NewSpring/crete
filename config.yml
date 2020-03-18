@@ -45,11 +45,11 @@ ALGOLIA:
       - title
       - unordered(summary)
     #customRankings:
-      # NOT CURRENTLY INCLUDED
-      # This just demonstrates what's possible
-      # To include likedCount (or any other field) override search package
-      # and add field to config below
-      #- desc(likedCount)
+    # NOT CURRENTLY INCLUDED
+    # This just demonstrates what's possible
+    # To include likedCount (or any other field) override search package
+    # and add field to config below
+    #- desc(likedCount)
 TWILIO:
   ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
   AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
@@ -72,6 +72,7 @@ BIBLE_API:
   BIBLE_ID:
     ESV: 'f421fe261da7624f-01'
     NIV: '71c6eab17ae5b667-01'
+    CSB: 'a556c5305ee15c3f-01'
     WEB: '9879dbb7cfe39e4d-01'
 CLOUDINARY:
   # Cloudinary is used to improve image loading
