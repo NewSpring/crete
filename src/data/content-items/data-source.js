@@ -39,8 +39,8 @@ export default class ContentItem extends oldContentItem.dataSource {
     const media = await this.request(
       `${WISTIA.API_URL}/${wistiaHashedId}.json?access_token=${WISTIA.API_KEY}`
     ).get();
-
     const assetUrls = { video: '', thumbnail: '' };
+
     if (!media) return assetUrls;
     media.assets.forEach((asset) => {
       if (asset.type === 'HlsVideoFile' && asset.height === 720)
@@ -118,18 +118,18 @@ export default class ContentItem extends oldContentItem.dataSource {
 
     return Promise.all(
       videoKeys.map(async (key) => {
-        const urls = await this.getWistiaAssetUrls(attributeValues[key].value);
+        let urls = {};
+        if (attributeValues[key].value)
+          urls = await this.getWistiaAssetUrls(attributeValues[key].value);
         return {
           __typename: 'VideoMedia',
           key,
           name: attributes[key].name,
           embedHtml: get(attributeValues, 'videoEmbed.value', null),
-          sources: attributeValues[key].value ? [{ uri: urls.video }] : [],
+          sources: urls.video ? [{ uri: urls.video }] : [],
           thumbnail: {
             __typename: 'ImageMedia',
-            sources: attributeValues[key].value
-              ? [{ uri: urls.thumbnail }]
-              : [],
+            sources: urls.thumbnail ? [{ uri: urls.thumbnail }] : [],
           },
         };
       })
