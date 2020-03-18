@@ -81,6 +81,9 @@ CLOUDINARY:
 ENGINE:
   API_KEY: ${ENGINE_API_KEY}
   SCHEMA_TAG: ${ENGINE_SCHEMA_TAG}
+WISTIA:
+  API_URL: https://api.wistia.com/v1/medias
+  API_KEY: ${WISTIA_API_KEY}
 
 # This key holds various properties that allow our GraphQL server to map to your Rock Instance
 ROCK_MAPPINGS:
