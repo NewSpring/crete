@@ -90,7 +90,7 @@ export default class Prayer extends RockApolloDataSource {
           SELECT TOP 1 i.InteractionDateTime
           FROM Interaction i
           WHERE i.InteractionSummary = 'PrayerNotificationSent'
-          AND i.PersonAliasId = '${requestedByPersonAliasId}'
+          AND i.InteractionData = '${requestedByPersonAliasId}'
           AND i.Operation = 'Pray'
           ORDER BY i.InteractionDateTime DESC
         {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
