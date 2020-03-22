@@ -1,3 +1,18 @@
+/* eslint-disable import/first */
+// appdynamics metrics
+require('appdynamics').profile({
+  controllerHostName: 'heroku-8597.saas.appdynamics.com',
+  controllerPort: 443,
+  // If SSL, be sure to enable the next line
+  controllerSslEnabled: true,
+  accountName: 'heroku-8597',
+  accountAccessKey: process.env.APPDYNAMICS_KEY,
+  applicationName: 'crete-staging',
+  tierName: 'graphql',
+  nodeName: 'web', // The controller will automatically append the node name with a unique number
+  debug: true,
+});
+
 import dotenv from 'dotenv/config'; // eslint-disable-line
 import config from './config'; // eslint-disable-line
 import server from './server';
