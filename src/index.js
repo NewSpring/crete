@@ -1,9 +1,4 @@
-import dotenv from 'dotenv/config'; // eslint-disable-line
-import config from './config'; // eslint-disable-line
-import server from './server';
-
-export { testSchema } from './server'; // eslint-disable-line import/prefer-default-export
-
+/* eslint-disable import/first */
 // appdynamics metrics
 require('appdynamics').profile({
   controllerHostName: 'heroku-8597.saas.appdynamics.com',
@@ -14,8 +9,15 @@ require('appdynamics').profile({
   accountAccessKey: process.env.APPDYNAMICS_KEY,
   applicationName: 'crete-staging',
   tierName: 'graphql',
-  nodeName: 'process', // The controller will automatically append the node name with a unique number
+  nodeName: 'web', // The controller will automatically append the node name with a unique number
+  debug: true,
 });
+
+import dotenv from 'dotenv/config'; // eslint-disable-line
+import config from './config'; // eslint-disable-line
+import server from './server';
+
+export { testSchema } from './server'; // eslint-disable-line import/prefer-default-export
 
 // Use the port, if provided.
 const { PORT } = process.env;
