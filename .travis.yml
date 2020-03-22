@@ -1,5 +1,5 @@
 language: node_js
-node_js: '8.11.2'
+node_js: '10.19.0'
 cache:
   yarn: true
   directories:
@@ -24,5 +24,5 @@ jobs:
         - travis_wait yarn codecov
     - stage: Publish Schema
       script:
-        - NODE_ENV=test PORT=4000 TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX yarn start & sleep 10
+        - NODE_ENV=test PORT=4000 TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX yarn start:dev & sleep 10
         - yarn schema:publish

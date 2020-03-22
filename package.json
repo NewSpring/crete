@@ -4,9 +4,10 @@
   "private": true,
   "main": "lib/index.js",
   "scripts": {
-    "start": "yarn start:dev",
+    "start": "yarn start:prod",
     "start:dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start:prod": "NODE_ENV=production node ./lib/index.js",
+    "restart": "yarn && yarn start:dev",
     "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
@@ -19,7 +20,7 @@
     "translate": "node scripts/translate.js"
   },
   "engines": {
-    "node": ">=8.11.x"
+    "node": "10.19.0"
   },
   "jest": {
     "collectCoverage": true,
