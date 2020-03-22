@@ -4,6 +4,19 @@ import server from './server';
 
 export { testSchema } from './server'; // eslint-disable-line import/prefer-default-export
 
+// appdynamics metrics
+require('appdynamics').profile({
+  controllerHostName: 'heroku-8597.saas.appdynamics.com',
+  controllerPort: 443,
+  // If SSL, be sure to enable the next line
+  controllerSslEnabled: true,
+  accountName: 'heroku-8597',
+  accountAccessKey: process.env.APPDYNAMICS_KEY,
+  applicationName: 'crete-staging',
+  tierName: 'graphql',
+  nodeName: 'process', // The controller will automatically append the node name with a unique number
+});
+
 // Use the port, if provided.
 const { PORT } = process.env;
 if (!PORT && process.env.NODE_ENV !== 'test')
