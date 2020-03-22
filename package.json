@@ -20,7 +20,7 @@
     "translate": "node scripts/translate.js"
   },
   "engines": {
-    "node": ">=10.19.0"
+    "node": "10.19.0"
   },
   "jest": {
     "collectCoverage": true,
