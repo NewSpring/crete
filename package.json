@@ -19,9 +19,6 @@
     "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
     "translate": "node scripts/translate.js"
   },
-  "engines": {
-    "node": "10.19.0"
-  },
   "jest": {
     "collectCoverage": true,
     "collectCoverageFrom": [
