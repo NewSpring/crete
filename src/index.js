@@ -1,18 +1,3 @@
-/* eslint-disable import/first */
-// appdynamics metrics
-require('appdynamics').profile({
-  controllerHostName: 'audrey202003220506028.saas.appdynamics.com',
-  controllerPort: 443,
-
-  // If SSL, be sure to enable the next line
-  controllerSslEnabled: true,
-  accountName: 'audrey202003220506028',
-  accountAccessKey: process.env.APPDYNAMICS_KEY,
-  applicationName: 'ns-crete-staging',
-  tierName: 'graphql',
-  nodeName: 'process', // The controller will automatically append the node name with a unique number
-});
-
 import dotenv from 'dotenv/config'; // eslint-disable-line
 import config from './config'; // eslint-disable-line
 import server from './server';
