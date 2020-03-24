@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "main": "lib/index.js",
+  "engines": {
+    "node": "10.19.0"
+  },
   "scripts": {
     "start": "yarn start:prod",
     "start:dev": "nodemon ./src/index.js --exec babel-node --delay 2",
