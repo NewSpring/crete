@@ -6,7 +6,7 @@ import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS } = ApollosConfig;
+const { ROCK, ROCK_CONSTANTS, WISTIA } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -54,14 +54,13 @@ export default class ContentItem extends oldContentItem.dataSource {
   };
 
   getWistiaAssetUrls = async (wistiaHashedId) => {
-    const videoData = await this.request('WistiaMedias')
-      .filter(`WistiaHashedId eq '${wistiaHashedId}'`)
-      .select('MediaData')
-      .get();
-
+    const media = await this.request(
+      `${WISTIA.API_URL}/${wistiaHashedId}.json?access_token=${WISTIA.API_KEY}`
+    ).get();
     const assetUrls = { video: '', thumbnail: '' };
-    if (!videoData.length) return assetUrls;
-    JSON.parse(videoData[0].mediaData).assets.forEach((asset) => {
+
+    if (!media) return assetUrls;
+    media.assets.forEach((asset) => {
       if (asset.type === 'HlsVideoFile' && asset.height === 720)
         assetUrls.video = asset.url.replace('.bin', '.m3u8');
       else if (asset.type === 'IphoneVideoFile')
@@ -137,18 +136,18 @@ export default class ContentItem extends oldContentItem.dataSource {
 
     return Promise.all(
       videoKeys.map(async (key) => {
-        const urls = await this.getWistiaAssetUrls(attributeValues[key].value);
+        let urls = {};
+        if (attributeValues[key].value)
+          urls = await this.getWistiaAssetUrls(attributeValues[key].value);
         return {
           __typename: 'VideoMedia',
           key,
           name: attributes[key].name,
           embedHtml: get(attributeValues, 'videoEmbed.value', null),
-          sources: attributeValues[key].value ? [{ uri: urls.video }] : [],
+          sources: urls.video ? [{ uri: urls.video }] : [],
           thumbnail: {
             __typename: 'ImageMedia',
-            sources: attributeValues[key].value
-              ? [{ uri: urls.thumbnail }]
-              : [],
+            sources: urls.thumbnail ? [{ uri: urls.thumbnail }] : [],
           },
         };
       })

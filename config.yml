@@ -31,6 +31,8 @@ CHURCH_ONLINE:
   URL: https://live.newspring.cc/api/v1/
   MEDIA_URLS: []
   WEB_VIEW_URL: https://live.newspring.cc
+LIVING_AS_ONE:
+  STREAM_URL: https://control.livingasone.com/ns/Manifest.m3u8
 ALGOLIA:
   APPLICATION_ID: ${ALGOLIA_APP_ID}
   API_KEY: ${ALGOLIA_API_KEY}
@@ -65,12 +67,12 @@ ANALYTICS:
   # on the accompanying service
   SEGMENT_KEY:
   GA_ID:
-  USE_ROCK: false
 BIBLE_API:
   KEY: ${BIBLE_API_KEY}
   BIBLE_ID:
     ESV: 'f421fe261da7624f-01'
     NIV: '71c6eab17ae5b667-01'
+    CSB: 'a556c5305ee15c3f-01'
     WEB: '9879dbb7cfe39e4d-01'
 CLOUDINARY:
   # Cloudinary is used to improve image loading
@@ -80,6 +82,9 @@ CLOUDINARY:
 ENGINE:
   API_KEY: ${ENGINE_API_KEY}
   SCHEMA_TAG: ${ENGINE_SCHEMA_TAG}
+WISTIA:
+  API_URL: https://api.wistia.com/v1/medias
+  API_KEY: ${WISTIA_API_KEY}
 
 # This key holds various properties that allow our GraphQL server to map to your Rock Instance
 ROCK_MAPPINGS:
@@ -165,6 +170,11 @@ ROCK_MAPPINGS:
   FUSE_GROUP_TYPE_ID: 60
   RALLY_GROUP_TYPE_ID: 141
   MENTORING_GROUP_TYPE_ID: 149
+
+  MOBILE_DEVICE_TYPE_ID: 919
+  APP_TEST_GROUPS:
+    - EXPERIMENTAL_GROUP_ID: 1932851
+  SUNDAY_SERMON_SCHEDULE_CATEGORY_ID: 747
 
 HOME_FEATURES:
   #- title: FOR YOU
