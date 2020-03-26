@@ -3,24 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "main": "lib/index.js",
+  "engines": {
+    "node": "10.19.0"
+  },
   "scripts": {
-    "start": "yarn start:prod",
-    "start:dev": "nodemon ./src/index.js --exec babel-node --delay 2",
-    "start:prod": "NODE_ENV=production node ./lib/index.js",
-    "restart": "yarn && yarn start:dev",
+    "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
+    "start": "NODE_ENV=production node ./lib/index.js",
+    "restart": "yarn && yarn dev",
     "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
-    "fixlint": "eslint ./src --ext .js --fix",
     "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "schema:publish": "apollo schema:publish",
     "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
     "translate": "node scripts/translate.js"
-  },
-  "engines": {
-    "node": "10.19.0"
   },
   "jest": {
     "collectCoverage": true,
