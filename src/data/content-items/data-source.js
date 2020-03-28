@@ -1,12 +1,13 @@
 import { ContentItem as oldContentItem } from '@apollosproject/data-connector-rock';
 import { get, flatten } from 'lodash';
 import ApollosConfig from '@apollosproject/config';
+import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
 import { parseKeyValueAttribute } from '@apollosproject/rock-apollo-data-source';
 import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS, WISTIA } = ApollosConfig;
+const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS, WISTIA } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -273,7 +274,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           features.push(
             Features.createNoteFeature({
               placeholder: value,
-              id: `${attributeValues.features.id}-${i}`,
+              id: `${attributeValues.features.id}-${parseInt(modifier, 10)}`,
             })
           );
           break;
@@ -393,5 +394,66 @@ export default class ContentItem extends oldContentItem.dataSource {
       });
     }
     return this.coreSummaryMethod(root);
+  };
+
+  getUserNotes = async (contentID) => {
+    const { Auth } = this.context.dataSources;
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+    const rockNotes = await this.request('Notes')
+      .filter(
+        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`
+      )
+      .get();
+
+    return rockNotes.map(({ id, text: data }) => {
+      const { apollosFeatureID, text } = JSON.parse(data);
+      return {
+        id: createGlobalId(id, 'Note'),
+        featureID: apollosFeatureID,
+        text,
+      };
+    });
+  };
+
+  saveSermonNote = async (contentID, featureID, text) => {
+    const { Auth } = this.context.dataSources;
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+    const data = JSON.stringify({
+      apollosFeatureID: featureID,
+      text,
+    });
+    // find a saved note for the feature
+    const contentNotes = await this.request('Notes')
+      .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
+      .andFilter(`EntityId eq ${parseGlobalId(contentID).id}`)
+      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`)
+      .get();
+    const featureNotes = contentNotes.filter((note) => {
+      const { apollosFeatureID } = JSON.parse(note.text);
+      return apollosFeatureID === featureID;
+    });
+    // if there's already a saved note, simply overwrite
+    let noteID;
+    if (featureNotes.length)
+      noteID = await this.patch(`Notes/${featureNotes[0].id}`, {
+        Text: data,
+      });
+    else
+      noteID = await this.post('Notes', {
+        IsSystem: false,
+        NoteTypeId: 46,
+        EntityId: parseGlobalId(contentID).id,
+        IsPrivateNote: true,
+        Text: data,
+        CreatedByPersonAliasId: primaryAliasId,
+      });
+    const note = await this.request('Notes')
+      .find(noteID)
+      .get();
+    return {
+      id: createGlobalId(note.id, 'Note'),
+      featureID,
+      text,
+    };
   };
 }

@@ -37,6 +37,10 @@ const resolver = {
       return channels;
     },
   },
+  Mutation: {
+    saveSermonNote: (root, { contentID, featureID, text }, { dataSources }) =>
+      dataSources.ContentItem.saveSermonNote(contentID, featureID, text),
+  },
   DevotionalContentItem: {
     ...defaultResolvers,
     sharing: (root, args, { dataSources: { ContentItem } }) => ({
@@ -132,6 +136,9 @@ const resolver = {
           startDateTime
         ),
       };
+    },
+    userSermonNotes: ({ id }, args, { dataSources: { ContentItem } }) => {
+      return ContentItem.getUserNotes(id);
     },
   },
   UniversalContentItem: {

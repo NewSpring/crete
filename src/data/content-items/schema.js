@@ -10,6 +10,12 @@ export default gql`
     itemIndex(id: String): Int
   }
 
+  type SermonNote {
+    id: ID!
+    featureID: String
+    text: String
+  }
+
   extend type WeekendContentItem {
     communicator: Person @deprecated(reason: "Use communicators")
     communicators: [Person]
@@ -17,6 +23,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
+    userSermonNotes: [SermonNote] @cacheControl(maxAge: 0)
   }
 
   extend type DevotionalContentItem {
@@ -30,5 +37,9 @@ export default gql`
 
   extend type Query {
     contentItemFromSlug(slug: String!): ContentItem
+  }
+
+  extend type Mutation {
+    saveSermonNote(contentID: ID!, featureID: ID!, text: String): SermonNote
   }
 `;
