@@ -16,6 +16,8 @@ import { ContentChannel, Sharable } from '@apollosproject/data-connector-rock';
 
 import * as ContentItem from '../index';
 import { schema as themeSchema } from '../../theme';
+import personMock from '../../mocks/person';
+import notesMock from '../../mocks/notes';
 
 class Cache {
   get = () => Promise.resolve(null);
@@ -224,11 +226,6 @@ describe('UniversalContentItem', () => {
                 body
               }
             }
-            userSermonNotes {
-              id
-              featureID
-              text
-            }
           }
         }
       }
@@ -240,6 +237,39 @@ describe('UniversalContentItem', () => {
         text: 'hello',
       },
     ]);
+    const rootValue = {};
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('gets sermon notes', async () => {
+    const query = `
+      query {
+        node(id: "${createGlobalId(1, 'WeekendContentItem')}") {
+          id
+          ... on WeekendContentItem {
+            userSermonNotes {
+              id
+              featureID
+              text
+            }
+          }
+        }
+      }
+    `;
+    context.dataSources = {
+      Auth: { getCurrentPerson: jest.fn(() => personMock) },
+      ...context.dataSources,
+    };
+    context.dataSources.ContentItem.request = () => ({
+      filter: jest.fn(() => ({ get: () => notesMock })),
+    });
+    // context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
+    // {
+    // id: 'Note:123',
+    // featureID: 'NoteFeature:456',
+    // text: 'hello',
+    // },
+    // ]);
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();

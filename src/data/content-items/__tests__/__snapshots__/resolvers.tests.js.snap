@@ -190,14 +190,18 @@ Object {
       "id": "WeekendContentItem:559b23fd0aa90e81b1c023e72e230fa1",
       "sermonDate": null,
       "title": "SAMPLE: Easter",
-      "userSermonNotes": Array [
-        Object {
-          "featureID": "NoteFeature:456",
-          "id": "Note:123",
-          "text": "hello",
-        },
-      ],
     },
   },
+}
+`;
+
+exports[`UniversalContentItem gets sermon notes 1`] = `
+Object {
+  "data": Object {
+    "node": null,
+  },
+  "errors": Array [
+    [GraphQLError: this.request(...).find is not a function],
+  ],
 }
 `;
