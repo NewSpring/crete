@@ -235,8 +235,8 @@ describe('UniversalContentItem', () => {
     `;
     context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
       {
-        id: 'Note:b73a5c5a17a662812fc3f074becbed22',
-        featureID: 'NoteFeature:f690b5379eff177c5e34075ff824bd6b',
+        id: 'Note:123',
+        featureID: 'NoteFeature:456',
         text: 'hello',
       },
     ]);
