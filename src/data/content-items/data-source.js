@@ -396,7 +396,7 @@ export default class ContentItem extends oldContentItem.dataSource {
     return this.coreSummaryMethod(root);
   };
 
-  getUserNotes = async (contentID) => {
+  getUserSermonNotes = async (contentID) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
     const rockNotes = await this.request('Notes')

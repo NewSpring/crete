@@ -138,7 +138,7 @@ const resolver = {
       };
     },
     userSermonNotes: ({ id }, args, { dataSources: { ContentItem } }) => {
-      return ContentItem.getUserNotes(id);
+      return ContentItem.getUserSermonNotes(id);
     },
   },
   UniversalContentItem: {
