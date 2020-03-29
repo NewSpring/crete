@@ -224,10 +224,22 @@ describe('UniversalContentItem', () => {
                 body
               }
             }
+            userSermonNotes {
+              id
+              featureID
+              text
+            }
           }
         }
       }
     `;
+    context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
+      {
+        id: 'Note:b73a5c5a17a662812fc3f074becbed22',
+        featureID: 'NoteFeature:f690b5379eff177c5e34075ff824bd6b',
+        text: 'hello',
+      },
+    ]);
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();

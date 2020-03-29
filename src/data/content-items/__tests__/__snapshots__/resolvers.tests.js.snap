@@ -180,6 +180,13 @@ Object {
       "id": "WeekendContentItem:559b23fd0aa90e81b1c023e72e230fa1",
       "sermonDate": null,
       "title": "SAMPLE: Easter",
+      "userSermonNotes": Array [
+        Object {
+          "featureID": "NoteFeature:f690b5379eff177c5e34075ff824bd6b",
+          "id": "Note:b73a5c5a17a662812fc3f074becbed22",
+          "text": "hello",
+        },
+      ],
     },
   },
 }
