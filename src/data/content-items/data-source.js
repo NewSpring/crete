@@ -434,16 +434,16 @@ export default class ContentItem extends oldContentItem.dataSource {
     });
     // if there's already a saved note, simply overwrite
     let noteID;
-    if (featureNotes.length)
-      noteID = await this.patch(`Notes/${featureNotes[0].id}`, {
+    if (featureNotes.length) {
+      await this.patch(`Notes/${featureNotes[0].id}`, {
         Text: data,
       });
-    else
+      noteID = featureNotes[0].id;
+    } else
       noteID = await this.post('Notes', {
         IsSystem: false,
         NoteTypeId: 46,
         EntityId: parseGlobalId(contentID).id,
-        IsPrivateNote: true,
         Text: data,
         CreatedByPersonAliasId: primaryAliasId,
       });
