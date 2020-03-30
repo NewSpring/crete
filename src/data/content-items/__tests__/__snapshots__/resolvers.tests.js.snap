@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UniversalContentItem adds a sermon note 1`] = `
+exports[`ContentItem adds a sermon note 1`] = `
 Object {
   "data": Object {
     "saveSermonNote": Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets a newspring ContentSeriesContentItem item 1`] = `
+exports[`ContentItem gets a newspring ContentSeriesContentItem item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -59,7 +59,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets a newspring MediaContentItem item 1`] = `
+exports[`ContentItem gets a newspring MediaContentItem item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -108,7 +108,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets a newspring content item 1`] = `
+exports[`ContentItem gets a newspring content item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -157,7 +157,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets a newspring devotional item 1`] = `
+exports[`ContentItem gets a newspring devotional item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -173,7 +173,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets a newspring weekend content item 1`] = `
+exports[`ContentItem gets a newspring weekend content item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -195,7 +195,7 @@ Object {
 }
 `;
 
-exports[`UniversalContentItem gets sermon notes 1`] = `
+exports[`ContentItem gets sermon notes 1`] = `
 Object {
   "data": Object {
     "node": null,

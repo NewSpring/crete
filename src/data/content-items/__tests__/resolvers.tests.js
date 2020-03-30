@@ -104,7 +104,7 @@ const contentItemFragment = `
   }
 `;
 
-describe('UniversalContentItem', () => {
+describe('ContentItem', () => {
   let schema;
   let context;
   beforeEach(() => {
@@ -245,7 +245,6 @@ describe('UniversalContentItem', () => {
     const query = `
       query {
         node(id: "${createGlobalId(1, 'WeekendContentItem')}") {
-          id
           ... on WeekendContentItem {
             userSermonNotes {
               id
