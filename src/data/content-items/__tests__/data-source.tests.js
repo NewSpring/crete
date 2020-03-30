@@ -3,17 +3,19 @@ import notesMock from '../../mocks/notes';
 import ContentItem from '../data-source';
 
 describe('Content data source', () => {
-  let ContentItemDataSource;
+  let DataSource;
   beforeEach(() => {
-    ContentItemDataSource = new ContentItem();
-    ContentItemDataSource.context = {
-      dataSources: { Auth: { getCurrentPerson: () => personMock } },
+    DataSource = new ContentItem();
+    DataSource.context = {
+      dataSources: {
+        Auth: { getCurrentPerson: () => personMock },
+      },
     };
   });
-  it('gets sermon notes', () => {
-    ContentItemDataSource.request = () => ({
-      filter: jest.fn(() => ({ get: () => notesMock })),
+  it('gets sermon notes', async () => {
+    DataSource.request = () => ({
+      filter: () => ({ get: () => notesMock }),
     });
-    expect(ContentItemDataSource.getUserSermonNotes()).toMatchSnapshot();
+    expect(await DataSource.getUserSermonNotes()).toMatchSnapshot();
   });
 });
