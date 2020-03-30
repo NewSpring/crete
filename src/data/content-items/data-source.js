@@ -271,6 +271,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           );
           break;
         case 'note':
+          // TODO check for no modifier or duplicates and don't return feature if so
           features.push(
             Features.createNoteFeature({
               placeholder: value,
