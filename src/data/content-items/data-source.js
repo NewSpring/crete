@@ -404,7 +404,6 @@ export default class ContentItem extends oldContentItem.dataSource {
         `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`
       )
       .get();
-    console.log(rockNotes);
 
     return rockNotes.map(({ id, text: data }) => {
       const { apollosFeatureID, text } = JSON.parse(data);
