@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Content data source gets sermon notes 1`] = `Promise {}`;
+exports[`Content data source gets sermon notes 1`] = `
+Array [
+  Object {
+    "featureID": "NoteFeature:123",
+    "id": "Note:559b23fd0aa90e81b1c023e72e230fa1",
+    "text": "hello",
+  },
+]
+`;
