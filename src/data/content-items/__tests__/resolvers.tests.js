@@ -16,8 +16,6 @@ import { ContentChannel, Sharable } from '@apollosproject/data-connector-rock';
 
 import * as ContentItem from '../index';
 import { schema as themeSchema } from '../../theme';
-import personMock from '../../mocks/person';
-import notesMock from '../../mocks/notes';
 
 class Cache {
   get = () => Promise.resolve(null);
@@ -104,7 +102,7 @@ const contentItemFragment = `
   }
 `;
 
-describe('ContentItem', () => {
+describe('UniversalContentItem', () => {
   let schema;
   let context;
   beforeEach(() => {
@@ -226,6 +224,11 @@ describe('ContentItem', () => {
                 body
               }
             }
+            userSermonNotes {
+              id
+              featureID
+              text
+            }
           }
         }
       }
@@ -245,7 +248,27 @@ describe('ContentItem', () => {
     const query = `
       query {
         node(id: "${createGlobalId(1, 'WeekendContentItem')}") {
+          id
           ... on WeekendContentItem {
+            title
+            communicators {
+              firstName
+              lastName
+            }
+            guestCommunicators
+            sermonDate
+            features {
+              __typename
+              id
+              ... on ScriptureFeature {
+                scriptures {
+                  reference
+                }
+              }
+              ... on TextFeature {
+                body
+              }
+            }
             userSermonNotes {
               id
               featureID
@@ -255,20 +278,13 @@ describe('ContentItem', () => {
         }
       }
     `;
-    context.dataSources = {
-      Auth: { getCurrentPerson: jest.fn(() => personMock) },
-      ...context.dataSources,
-    };
-    context.dataSources.ContentItem.request = () => ({
-      filter: jest.fn(() => ({ get: () => notesMock })),
-    });
-    // context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
-    // {
-    // id: 'Note:123',
-    // featureID: 'NoteFeature:456',
-    // text: 'hello',
-    // },
-    // ]);
+    context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
+      {
+        id: 'Note:123',
+        featureID: 'NoteFeature:456',
+        text: 'hello',
+      },
+    ]);
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContentItem adds a sermon note 1`] = `
+exports[`UniversalContentItem adds a sermon note 1`] = `
 Object {
   "data": Object {
     "saveSermonNote": Object {
@@ -10,7 +10,7 @@ Object {
 }
 `;
 
-exports[`ContentItem gets a newspring ContentSeriesContentItem item 1`] = `
+exports[`UniversalContentItem gets a newspring ContentSeriesContentItem item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -59,7 +59,7 @@ Object {
 }
 `;
 
-exports[`ContentItem gets a newspring MediaContentItem item 1`] = `
+exports[`UniversalContentItem gets a newspring MediaContentItem item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -108,7 +108,7 @@ Object {
 }
 `;
 
-exports[`ContentItem gets a newspring content item 1`] = `
+exports[`UniversalContentItem gets a newspring content item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -157,7 +157,7 @@ Object {
 }
 `;
 
-exports[`ContentItem gets a newspring devotional item 1`] = `
+exports[`UniversalContentItem gets a newspring devotional item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -173,7 +173,7 @@ Object {
 }
 `;
 
-exports[`ContentItem gets a newspring weekend content item 1`] = `
+exports[`UniversalContentItem gets a newspring weekend content item 1`] = `
 Object {
   "data": Object {
     "node": Object {
@@ -190,18 +190,43 @@ Object {
       "id": "WeekendContentItem:559b23fd0aa90e81b1c023e72e230fa1",
       "sermonDate": null,
       "title": "SAMPLE: Easter",
+      "userSermonNotes": Array [
+        Object {
+          "featureID": "NoteFeature:456",
+          "id": "Note:123",
+          "text": "hello",
+        },
+      ],
     },
   },
 }
 `;
 
-exports[`ContentItem gets sermon notes 1`] = `
+exports[`UniversalContentItem gets sermon notes 1`] = `
 Object {
   "data": Object {
-    "node": null,
+    "node": Object {
+      "communicators": Array [
+        Object {
+          "firstName": "first",
+          "lastName": "last",
+        },
+      ],
+      "features": null,
+      "guestCommunicators": Array [
+        "guest communicator",
+      ],
+      "id": "WeekendContentItem:559b23fd0aa90e81b1c023e72e230fa1",
+      "sermonDate": null,
+      "title": "SAMPLE: Easter",
+      "userSermonNotes": Array [
+        Object {
+          "featureID": "NoteFeature:456",
+          "id": "Note:123",
+          "text": "hello",
+        },
+      ],
+    },
   },
-  "errors": Array [
-    [GraphQLError: this.request(...).find is not a function],
-  ],
 }
 `;
