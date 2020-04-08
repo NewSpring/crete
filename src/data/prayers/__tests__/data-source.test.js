@@ -37,4 +37,12 @@ describe('PrayerRequest data sources', () => {
     };
     expect(await Prayer.getPrayerMenuCategories()).toMatchSnapshot();
   });
+  it('gets an empty list of saved prayers', async () => {
+    Prayer.context.dataSources.Followings = {
+      getFollowingsForCurrentUser: () => ({ get: () => [] }),
+    };
+    const cursor = await Prayer.bySaved();
+    expect(await cursor.get()).toMatchSnapshot();
+    expect(await cursor.count()).toMatchSnapshot();
+  });
 });

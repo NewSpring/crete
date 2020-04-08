@@ -173,7 +173,6 @@ export default class Prayer extends RockApolloDataSource {
   // deprecated
   getPrayers = async (type) => {
     const prayersCursor = await this.byPrayerFeed(type);
-    if (!prayersCursor) return [];
     const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
@@ -198,7 +197,7 @@ export default class Prayer extends RockApolloDataSource {
     );
 
     const entities = await followedPrayersRequest.get();
-    if (!entities.length) return null;
+    if (!entities.length) return this.request().empty();
 
     const entityIds = entities.map((entity) => entity.entityId);
     return this.request()
