@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Prayer resolver answers a prayer 1`] = `
+Object {
+  "data": Object {
+    "answerPrayer": null,
+  },
+  "errors": Array [
+    [GraphQLError: Error parsing ID],
+  ],
+}
+`;
+
 exports[`Prayer resolver creates a new prayer 1`] = `
 Object {
   "data": Object {
