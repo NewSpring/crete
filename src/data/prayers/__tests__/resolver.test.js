@@ -206,6 +206,24 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+  it('answers a prayer', async () => {
+    const query = `
+      mutation {
+        answerPrayer(
+          id: "Prayer:123"
+          answer: "This is the answer"
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Prayer.answer = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
   it('deletes a prayer (deprecated)', async () => {
     const query = `
       mutation {

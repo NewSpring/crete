@@ -13,6 +13,7 @@ const prayerSchema = gql`
   }
   extend type Mutation {
     addPrayer(text: String!, isAnonymous: Boolean): Prayer
+    answerPrayer(id: ID!, answer: String!): Prayer
     interactWithPrayer(id: ID!, action: PrayerAction!): Prayer
     deletePrayer(nodeId: String!): Prayer
       @deprecated(reason: "Use interactWithPrayer(action:DELETE)")
@@ -55,6 +56,7 @@ const prayerSchema = gql`
     firstName: String @deprecated(reason: "Use requestor.firstName")
     lastName: String @deprecated(reason: "Use requestor.lastName.")
     text: String!
+    answer: String
     enteredDateTime: String! @deprecated(reason: "Use startTime")
     startTime: String!
     flagCount: Int
