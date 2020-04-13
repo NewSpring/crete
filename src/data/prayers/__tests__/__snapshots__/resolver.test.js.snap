@@ -3,11 +3,11 @@
 exports[`Prayer resolver answers a prayer 1`] = `
 Object {
   "data": Object {
-    "answerPrayer": null,
+    "answerPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
   },
-  "errors": Array [
-    [GraphQLError: Error parsing ID],
-  ],
 }
 `;
 

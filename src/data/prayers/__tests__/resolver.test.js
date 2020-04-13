@@ -210,7 +210,7 @@ describe('Prayer resolver', () => {
     const query = `
       mutation {
         answerPrayer(
-          id: "Prayer:123"
+          id: "Prayer:7b9330c299577990e03e637e876f0aa3"
           answer: "This is the answer"
         ) {
           id
