@@ -133,6 +133,11 @@ const resolver = {
         ),
       };
     },
+    sermonNotes: (
+      { attributeValues: { sermonNotes } },
+      args,
+      { dataSources: { ContentItem } }
+    ) => (sermonNotes ? ContentItem.getSermonNotes(sermonNotes) : []),
   },
   UniversalContentItem: {
     ...defaultResolvers,
@@ -142,6 +147,10 @@ const resolver = {
   },
   ContentSeriesContentItem: {
     ...defaultResolvers,
+  },
+  SermonNote: {
+    // Implementors must attach __typename to root.
+    __resolveType: ({ __typename }) => __typename,
   },
 };
 
