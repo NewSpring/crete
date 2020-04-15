@@ -149,7 +149,6 @@ const resolver = {
     ...defaultResolvers,
   },
   SermonNote: {
-    // Implementors must attach __typename to root.
     __resolveType: ({ __typename }) => __typename,
   },
 };
