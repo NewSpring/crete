@@ -110,14 +110,15 @@ ROCK_MAPPINGS:
       EntityType: ContentChannelItem
     UniversalContentItem:
       EntityType: ContentChannelItem
+      ContentChannelId: [16, 28]
     WeekendContentItem:
       ContentChannelId: [19]
       EntityType: ContentChannelItem
     ContentItem:
       EntityType: ContentChannelItem
-    # TODO: use the new ENTITY_TYPE mapper when it's released from core
-    Prayer:
-      EntityType: PrayerRequest
+
+  ENTITY_TYPES:
+    Prayer: PrayerRequest
 
   DATAVIEW_CATEGORIES:
     # Id of the category used to store all persona dataviews
