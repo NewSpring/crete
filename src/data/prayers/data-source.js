@@ -96,7 +96,7 @@ export default class Prayer extends RockApolloDataSource {
         {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
       );
       summary =
-        moment(result).add(2, 'hours') < moment()
+        moment(result, 'MM/DD/YYYY HH:mm:ss a').add(2, 'hours') < moment()
           ? 'PrayerNotificationSent'
           : '';
     } catch (e) {
@@ -115,7 +115,7 @@ export default class Prayer extends RockApolloDataSource {
       InteractionComponentId: interactionId,
       InteractionSessionId: this.context.sessionId,
       Operation: 'Pray',
-      InteractionDateTime: new Date().toJSON(),
+      InteractionDateTime: moment().format('MM/DD/YYYY HH:mm:ss'),
       InteractionSummary: summary,
       InteractionData: `${requestedByPersonAliasId}`,
     });
