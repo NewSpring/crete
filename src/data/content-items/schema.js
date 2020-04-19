@@ -10,6 +10,26 @@ export default gql`
     itemIndex(id: String): Int
   }
 
+  interface SermonNote {
+    id: ID!
+    allowsCustomNote: Boolean
+  }
+
+  type TextNote implements SermonNote {
+    id: ID!
+    allowsCustomNote: Boolean
+
+    text: String
+    isHeader: Boolean
+  }
+
+  type ScriptureNote implements SermonNote {
+    id: ID!
+    allowsCustomNote: Boolean
+
+    scripture: Scripture
+  }
+
   extend type WeekendContentItem {
     communicator: Person @deprecated(reason: "Use communicators")
     communicators: [Person]
@@ -17,6 +37,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
+    sermonNotes: [SermonNote]
   }
 
   extend type DevotionalContentItem {
