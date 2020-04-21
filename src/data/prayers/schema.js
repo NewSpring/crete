@@ -13,11 +13,25 @@ const prayerSchema = gql`
   }
   extend type Mutation {
     addPrayer(text: String!, isAnonymous: Boolean): Prayer
+    interactWithPrayer(id: ID!, action: PrayerAction!): Prayer
     deletePrayer(nodeId: String!): Prayer
+      @deprecated(reason: "Use interactWithPrayer(action:DELETE)")
     incrementPrayerCount(nodeId: String!): Prayer
+      @deprecated(reason: "Use interactWithPrayer(action:INCREMENT)")
     flagPrayer(nodeId: String!): Prayer
+      @deprecated(reason: "Use interactWithPrayer(action:FLAG)")
     savePrayer(nodeId: String!): Prayer
+      @deprecated(reason: "Use interactWithPrayer(action:SAVE)")
     unSavePrayer(nodeId: String!): Prayer
+      @deprecated(reason: "Use interactWithPrayer(action:UNSAVE)")
+  }
+
+  enum PrayerAction {
+    DELETE
+    INCREMENT
+    FLAG
+    SAVE
+    UNSAVE
   }
 
   type PrayerMenuCategory implements Node {

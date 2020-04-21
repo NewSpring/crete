@@ -397,7 +397,7 @@ export default class ContentItem extends oldContentItem.dataSource {
     return this.coreSummaryMethod(root);
   };
 
-  getUserSermonNotes = async (contentID) => {
+  getSavedSermonNotes = async (contentID) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
     const rockNotes = await this.request('Notes')
@@ -456,5 +456,67 @@ export default class ContentItem extends oldContentItem.dataSource {
       featureID,
       text,
     };
+  };
+
+  getSermonNotes = async ({ value: guid }) => {
+    const { MatrixItem, Scripture } = this.context.dataSources;
+    const items = await MatrixItem.getItemsFromGuid(guid);
+    const notes = await Promise.all(
+      items.map(
+        async ({
+          id,
+          attributeValues: {
+            noteType: { value: type },
+            text: { value: text },
+            book: { value: bookGUID },
+            reference: { value: ref },
+            translation: { value: versionGUID },
+            addNoteField: { value: custom },
+          },
+        }) => {
+          let book;
+          let version;
+          let scriptures;
+          switch (type) {
+            case 'header':
+              return {
+                __typename: 'TextNote',
+                id: createGlobalId(id, 'TextNote'),
+                allowsCustomNote: custom === 'True',
+                text,
+                isHeader: true,
+              };
+            case 'text':
+              return {
+                __typename: 'TextNote',
+                id: createGlobalId(id, 'TextNote'),
+                allowsCustomNote: custom === 'True',
+                text,
+                isHeader: false,
+              };
+            case 'scripture':
+              book = await this.request('/DefinedValues')
+                .filter(`Guid eq guid'${bookGUID}'`)
+                .first();
+              version = await this.request('/DefinedValues')
+                .filter(`Guid eq guid'${versionGUID}'`)
+                .first();
+              scriptures = await Scripture.getScriptures(
+                `${book.value} ${ref}`,
+                version.value
+              );
+              return {
+                __typename: 'ScriptureNote',
+                id: createGlobalId(id, 'ScriptureNote'),
+                allowsCustomNote: custom === 'True',
+                scripture: scriptures[0],
+              };
+            default:
+              return null;
+          }
+        }
+      )
+    );
+    return notes;
   };
 }

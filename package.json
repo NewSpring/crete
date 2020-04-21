@@ -44,7 +44,7 @@
     "@apollosproject/data-connector-rock": "^1.3.0",
     "@apollosproject/data-connector-twilio": "^1.3.0",
     "@apollosproject/data-schema": "^1.3.0",
-    "@apollosproject/rock-apollo-data-source": "^1.3.0",
+    "@apollosproject/rock-apollo-data-source": "^1.3.0-alpha.35",
     "@apollosproject/server-core": "^1.3.0",
     "@bugsnag/js": "^6.2.0",
     "@bugsnag/plugin-express": "^6.2.0",

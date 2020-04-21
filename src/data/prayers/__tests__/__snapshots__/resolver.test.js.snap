@@ -11,7 +11,7 @@ Object {
 }
 `;
 
-exports[`Prayer resolver deletes a prayer 1`] = `
+exports[`Prayer resolver deletes a prayer (deprecated) 1`] = `
 Object {
   "data": Object {
     "deletePrayer": Object {
@@ -22,10 +22,32 @@ Object {
 }
 `;
 
-exports[`Prayer resolver flags a prayer request 1`] = `
+exports[`Prayer resolver deletes a prayer 1`] = `
+Object {
+  "data": Object {
+    "interactWithPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver flags a prayer request (deprecated) 1`] = `
 Object {
   "data": Object {
     "flagPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver flags a prayer request 1`] = `
+Object {
+  "data": Object {
+    "interactWithPrayer": Object {
       "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
       "text": "Pray this works.",
     },
@@ -173,7 +195,7 @@ Object {
 }
 `;
 
-exports[`Prayer resolver increments prayed for a request 1`] = `
+exports[`Prayer resolver increments prayed for a request (deprecated) 1`] = `
 Object {
   "data": Object {
     "incrementPrayerCount": Object {
@@ -184,7 +206,18 @@ Object {
 }
 `;
 
-exports[`Prayer resolver saves a prayer 1`] = `
+exports[`Prayer resolver increments prayed for a request 1`] = `
+Object {
+  "data": Object {
+    "interactWithPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver saves a prayer (deprecated) 1`] = `
 Object {
   "data": Object {
     "savePrayer": Object {
@@ -195,10 +228,32 @@ Object {
 }
 `;
 
-exports[`Prayer resolver unsaves a prayer 1`] = `
+exports[`Prayer resolver saves a prayer 1`] = `
+Object {
+  "data": Object {
+    "interactWithPrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver unsaves a prayer (deprecated) 1`] = `
 Object {
   "data": Object {
     "unSavePrayer": Object {
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
+exports[`Prayer resolver unsaves a prayer 1`] = `
+Object {
+  "data": Object {
+    "interactWithPrayer": Object {
       "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
       "text": "Pray this works.",
     },

@@ -38,8 +38,8 @@ const resolver = {
     },
   },
   Mutation: {
-    saveSermonNote: (root, { contentID, featureID, text }, { dataSources }) =>
-      dataSources.ContentItem.saveSermonNote(contentID, featureID, text),
+    saveSermonNote: (root, { contentID, parentID, text }, { dataSources }) =>
+      dataSources.ContentItem.saveSermonNote(contentID, parentID, text),
   },
   DevotionalContentItem: {
     ...defaultResolvers,
@@ -137,9 +137,13 @@ const resolver = {
         ),
       };
     },
-    userSermonNotes: ({ id }, args, { dataSources: { ContentItem } }) => {
-      return ContentItem.getUserSermonNotes(id);
-    },
+    sermonNotes: (
+      { attributeValues: { sermonNotes } },
+      args,
+      { dataSources: { ContentItem } }
+    ) => (sermonNotes ? ContentItem.getSermonNotes(sermonNotes) : []),
+    savedSermonNotes: ({ id }, args, { dataSources: { ContentItem } }) =>
+      ContentItem.getSavedSermonNotes(id),
   },
   UniversalContentItem: {
     ...defaultResolvers,
@@ -149,6 +153,9 @@ const resolver = {
   },
   ContentSeriesContentItem: {
     ...defaultResolvers,
+  },
+  SermonNote: {
+    __resolveType: ({ __typename }) => __typename,
   },
 };
 

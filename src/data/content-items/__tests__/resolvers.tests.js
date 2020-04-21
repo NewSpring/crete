@@ -120,15 +120,6 @@ describe('UniversalContentItem', () => {
     context.dataSources.ContentItem.getShareUrl = jest.fn(
       () => 'https://newspring.cc/whatever'
     );
-    context.dataSources.ContentItem.getCommunicators = jest.fn(() => [
-      {
-        firstName: 'first',
-        lastName: 'last',
-      },
-    ]);
-    context.dataSources.ContentItem.getGuestCommunicators = jest.fn(() => [
-      'guest communicator',
-    ]);
     context.dataSources.ContentItem.getContentItemScriptures = jest.fn(() => [
       {
         html: '<p><i>1</i>In the beginning...</p>',
@@ -224,64 +215,33 @@ describe('UniversalContentItem', () => {
                 body
               }
             }
-            userSermonNotes {
+            savedSermonNotes {
               id
-              featureID
+              parent {
+                id
+              }
               text
+            }
+            sermonNotes {
+              id
             }
           }
         }
       }
     `;
-    context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
+    context.dataSources.ContentItem.getCommunicators = jest.fn(() => [
       {
-        id: 'Note:123',
-        featureID: 'NoteFeature:456',
-        text: 'hello',
+        firstName: 'first',
+        lastName: 'last',
       },
     ]);
-    const rootValue = {};
-    const result = await graphql(schema, query, rootValue, context);
-    expect(result).toMatchSnapshot();
-  });
-  it('gets sermon notes', async () => {
-    const query = `
-      query {
-        node(id: "${createGlobalId(1, 'WeekendContentItem')}") {
-          id
-          ... on WeekendContentItem {
-            title
-            communicators {
-              firstName
-              lastName
-            }
-            guestCommunicators
-            sermonDate
-            features {
-              __typename
-              id
-              ... on ScriptureFeature {
-                scriptures {
-                  reference
-                }
-              }
-              ... on TextFeature {
-                body
-              }
-            }
-            userSermonNotes {
-              id
-              featureID
-              text
-            }
-          }
-        }
-      }
-    `;
-    context.dataSources.ContentItem.getUserSermonNotes = jest.fn(() => [
+    context.dataSources.ContentItem.getGuestCommunicators = jest.fn(() => [
+      'guest communicator',
+    ]);
+    context.dataSources.ContentItem.getSavedSermonNotes = jest.fn(() => [
       {
         id: 'Note:123',
-        featureID: 'NoteFeature:456',
+        parent: { id: 'SermonNote:456' },
         text: 'hello',
       },
     ]);
@@ -294,7 +254,7 @@ describe('UniversalContentItem', () => {
       mutation {
         saveSermonNote(
           contentID: "WeekendContentItem:123"
-          featureID: "NoteFeature:123"
+          parentID: "SermonNote:123"
           text: "hello"
         ) {
           id

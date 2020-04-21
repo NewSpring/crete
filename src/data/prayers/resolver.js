@@ -13,7 +13,6 @@ export default {
       dataSources.Prayer.getPrayers(type),
     prayerFeed: async (root, { first, after, type }, { dataSources }, info) => {
       const cursor = await dataSources.Prayer.byPrayerFeed(type);
-      if (!cursor) return { edges: [] };
       if (type === 'SAVED') info.cacheControl.setCacheHint({ maxAge: 0 });
       return dataSources.Prayer.paginate({
         cursor,
@@ -33,6 +32,39 @@ export default {
   },
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
+    interactWithPrayer: async (
+      root,
+      { id, action },
+      { dataSources, models: { Node } },
+      info
+    ) => {
+      const rockID = parseGlobalId(id).id;
+      let prayer = null;
+      switch (action) {
+        case 'DELETE':
+          return dataSources.Prayer.deletePrayer(rockID);
+        case 'INCREMENT':
+          prayer = await dataSources.Prayer.incrementPrayed(rockID);
+          dataSources.Prayer.createInteraction({
+            prayerId: rockID,
+          });
+          return prayer;
+        case 'FLAG':
+          return dataSources.Prayer.flag(rockID);
+        case 'SAVE':
+          await dataSources.Followings.followNode({
+            nodeId: id,
+          });
+          return Node.get(id, dataSources, info);
+        case 'UNSAVE':
+          await dataSources.Followings.unFollowNode({
+            nodeId: id,
+          });
+          return Node.get(id, dataSources, info);
+        default:
+          return null;
+      }
+    },
     deletePrayer: (root, { nodeId }, { dataSources }) =>
       dataSources.Prayer.deletePrayer(parseGlobalId(nodeId).id),
     incrementPrayerCount: async (root, { nodeId }, { dataSources }) => {
