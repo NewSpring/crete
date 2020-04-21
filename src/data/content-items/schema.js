@@ -10,9 +10,9 @@ export default gql`
     itemIndex(id: String): Int
   }
 
-  type SermonNote {
+  type SavedSermonNote {
     id: ID!
-    featureID: String
+    parent: SermonNote
     text: String
   }
 
@@ -23,7 +23,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
-    userSermonNotes: [SermonNote] @cacheControl(maxAge: 0)
+    userSermonNotes: [SavedSermonNote] @cacheControl(maxAge: 0)
   }
 
   extend type DevotionalContentItem {
