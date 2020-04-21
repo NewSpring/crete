@@ -407,43 +407,44 @@ export default class ContentItem extends oldContentItem.dataSource {
       .get();
 
     return rockNotes.map(({ id, text: data }) => {
-      const { apollosFeatureID, text } = JSON.parse(data);
+      const { apollosParentID, text } = JSON.parse(data);
       return {
         id: createGlobalId(id, 'Note'),
-        featureID: apollosFeatureID,
+        parent: this.getFromId(parseGlobalId(apollosParentID).id),
         text,
       };
     });
   };
 
-  saveSermonNote = async (contentID, featureID, text) => {
+  saveSermonNote = async (contentID, parentID, text) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
-    const data = JSON.stringify({
-      apollosFeatureID: featureID,
-      text,
-    });
-    // find a saved note for the feature
+
+    // find a saved note for the parent
     const contentNotes = await this.request('Notes')
       .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
       .andFilter(`EntityId eq ${parseGlobalId(contentID).id}`)
       .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`)
       .get();
-    const featureNotes = contentNotes.filter((note) => {
-      const { apollosFeatureID } = JSON.parse(note.text);
-      return apollosFeatureID === featureID;
+    const savedNotes = contentNotes.filter((note) => {
+      const { apollosParentID } = JSON.parse(note.text);
+      return apollosParentID === parentID;
     });
     // if there's already a saved note, simply overwrite
     let noteID;
-    if (featureNotes.length) {
-      await this.patch(`Notes/${featureNotes[0].id}`, {
+    const data = JSON.stringify({
+      apollosParentID: parentID,
+      text,
+    });
+    if (savedNotes.length) {
+      await this.patch(`Notes/${savedNotes[0].id}`, {
         Text: data,
       });
-      noteID = featureNotes[0].id;
+      noteID = savedNotes[0].id;
     } else
       noteID = await this.post('Notes', {
         IsSystem: false,
-        NoteTypeId: 46,
+        NoteTypeId: ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID,
         EntityId: parseGlobalId(contentID).id,
         Text: data,
         CreatedByPersonAliasId: primaryAliasId,
@@ -453,7 +454,7 @@ export default class ContentItem extends oldContentItem.dataSource {
       .get();
     return {
       id: createGlobalId(note.id, 'Note'),
-      featureID,
+      parent: this.getFromId(parseGlobalId(parentID).id),
       text,
     };
   };
