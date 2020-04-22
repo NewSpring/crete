@@ -215,13 +215,6 @@ describe('UniversalContentItem', () => {
                 body
               }
             }
-            savedSermonNotes {
-              id
-              parent {
-                id
-              }
-              text
-            }
             sermonNotes {
               id
             }
@@ -238,13 +231,6 @@ describe('UniversalContentItem', () => {
     context.dataSources.ContentItem.getGuestCommunicators = jest.fn(() => [
       'guest communicator',
     ]);
-    context.dataSources.ContentItem.getSavedSermonNotes = jest.fn(() => [
-      {
-        id: 'Note:123',
-        parent: { id: 'SermonNote:456' },
-        text: 'hello',
-      },
-    ]);
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
@@ -252,16 +238,16 @@ describe('UniversalContentItem', () => {
   it('adds a sermon note', async () => {
     const query = `
       mutation {
-        saveSermonNote(
+        saveSermonNoteComment(
           contentID: "WeekendContentItem:123"
-          parentID: "SermonNote:123"
+          parentID: "TextNote:123"
           text: "hello"
         ) {
           id
         }
       }
     `;
-    context.dataSources.ContentItem.saveSermonNote = jest.fn(() => ({
+    context.dataSources.ContentItem.saveSermonNoteComment = jest.fn(() => ({
       id: 'Note:456',
     }));
     const rootValue = {};

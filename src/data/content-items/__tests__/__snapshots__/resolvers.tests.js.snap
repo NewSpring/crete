@@ -3,7 +3,7 @@
 exports[`UniversalContentItem adds a sermon note 1`] = `
 Object {
   "data": Object {
-    "saveSermonNote": Object {
+    "saveSermonNoteComment": Object {
       "id": "Note:456",
     },
   },
@@ -191,42 +191,6 @@ Object {
       "sermonDate": null,
       "sermonNotes": Array [],
       "title": "SAMPLE: Easter",
-      "userSermonNotes": Array [
-        Object {
-          "featureID": "NoteFeature:456",
-          "id": "Note:123",
-          "text": "hello",
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`UniversalContentItem gets sermon notes 1`] = `
-Object {
-  "data": Object {
-    "node": Object {
-      "communicators": Array [
-        Object {
-          "firstName": "first",
-          "lastName": "last",
-        },
-      ],
-      "features": null,
-      "guestCommunicators": Array [
-        "guest communicator",
-      ],
-      "id": "WeekendContentItem:559b23fd0aa90e81b1c023e72e230fa1",
-      "sermonDate": null,
-      "title": "SAMPLE: Easter",
-      "userSermonNotes": Array [
-        Object {
-          "featureID": "NoteFeature:456",
-          "id": "Note:123",
-          "text": "hello",
-        },
-      ],
     },
   },
 }

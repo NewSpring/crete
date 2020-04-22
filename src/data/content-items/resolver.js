@@ -38,8 +38,12 @@ const resolver = {
     },
   },
   Mutation: {
-    saveSermonNote: (root, { contentID, parentID, text }, { dataSources }) =>
-      dataSources.ContentItem.saveSermonNote(contentID, parentID, text),
+    saveSermonNoteComment: (
+      root,
+      { contentID, parentID, text },
+      { dataSources }
+    ) =>
+      dataSources.ContentItem.saveSermonNoteComment(contentID, parentID, text),
   },
   DevotionalContentItem: {
     ...defaultResolvers,
@@ -138,12 +142,10 @@ const resolver = {
       };
     },
     sermonNotes: (
-      { attributeValues: { sermonNotes } },
+      { id, attributeValues: { sermonNotes } },
       args,
       { dataSources: { ContentItem } }
-    ) => (sermonNotes ? ContentItem.getSermonNotes(sermonNotes) : []),
-    savedSermonNotes: ({ id }, args, { dataSources: { ContentItem } }) =>
-      ContentItem.getSavedSermonNotes(id),
+    ) => (sermonNotes ? ContentItem.getSermonNotes(id, sermonNotes) : []),
   },
   UniversalContentItem: {
     ...defaultResolvers,

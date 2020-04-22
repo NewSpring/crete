@@ -10,14 +10,21 @@ export default gql`
     itemIndex(id: String): Int
   }
 
+  type SermonNoteComment {
+    id: ID!
+    text: String
+  }
+
   interface SermonNote {
     id: ID!
-    allowsCustomNote: Boolean
+    allowsComment: Boolean
+    comment: SermonNoteComment @cacheControl(maxAge: 0)
   }
 
   type TextNote implements SermonNote {
     id: ID!
-    allowsCustomNote: Boolean
+    allowsComment: Boolean
+    comment: SermonNoteComment @cacheControl(maxAge: 0)
 
     text: String
     isHeader: Boolean
@@ -25,15 +32,10 @@ export default gql`
 
   type ScriptureNote implements SermonNote {
     id: ID!
-    allowsCustomNote: Boolean
+    allowsComment: Boolean
+    comment: SermonNoteComment @cacheControl(maxAge: 0)
 
     scripture: Scripture
-  }
-
-  type SavedSermonNote {
-    id: ID!
-    parent: SermonNote
-    text: String
   }
 
   extend type WeekendContentItem {
@@ -44,7 +46,6 @@ export default gql`
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
     sermonNotes: [SermonNote]
-    savedSermonNotes: [SavedSermonNote] @cacheControl(maxAge: 0)
   }
 
   extend type DevotionalContentItem {
@@ -61,6 +62,10 @@ export default gql`
   }
 
   extend type Mutation {
-    saveSermonNote(contentID: ID!, parentID: ID!, text: String): SavedSermonNote
+    saveSermonNoteComment(
+      contentID: ID!
+      parentID: ID!
+      text: String
+    ): SermonNoteComment
   }
 `;

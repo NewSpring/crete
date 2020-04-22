@@ -275,7 +275,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           features.push(
             Features.createNoteFeature({
               placeholder: value,
-              id: `${attributeValues.features.id}-${parseInt(modifier, 10)}`,
+              id: `${attributeValues.features.id}-${i}`,
             })
           );
           break;
@@ -397,26 +397,27 @@ export default class ContentItem extends oldContentItem.dataSource {
     return this.coreSummaryMethod(root);
   };
 
-  getSavedSermonNotes = async (contentID) => {
+  getSermonNoteComments = async (contentID) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
-    const rockNotes = await this.request('Notes')
+    const comments = await this.request('Notes')
       .filter(
-        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`
+        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID}`
       )
       .get();
 
-    return rockNotes.map(({ id, text: data }) => {
+    const commentsHash = {};
+    comments.forEach(({ id, text: data }) => {
       const { apollosParentID, text } = JSON.parse(data);
-      return {
+      commentsHash[apollosParentID] = {
         id: createGlobalId(id, 'Note'),
-        parent: this.getFromId(parseGlobalId(apollosParentID).id),
         text,
       };
     });
+    return commentsHash;
   };
 
-  saveSermonNote = async (contentID, parentID, text) => {
+  saveSermonNoteComment = async (contentID, parentID, text) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
 
@@ -424,7 +425,7 @@ export default class ContentItem extends oldContentItem.dataSource {
     const contentNotes = await this.request('Notes')
       .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
       .andFilter(`EntityId eq ${parseGlobalId(contentID).id}`)
-      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SERMON_NOTE_TYPE_ID}`)
+      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID}`)
       .get();
     const savedNotes = contentNotes.filter((note) => {
       const { apollosParentID } = JSON.parse(note.text);
@@ -459,9 +460,10 @@ export default class ContentItem extends oldContentItem.dataSource {
     };
   };
 
-  getSermonNotes = async ({ value: guid }) => {
+  getSermonNotes = async (contentID, { value: guid }) => {
     const { MatrixItem, Scripture } = this.context.dataSources;
     const items = await MatrixItem.getItemsFromGuid(guid);
+    const comments = await this.getSermonNoteComments(contentID);
     const notes = await Promise.all(
       items.map(
         async ({
@@ -483,7 +485,8 @@ export default class ContentItem extends oldContentItem.dataSource {
               return {
                 __typename: 'TextNote',
                 id: createGlobalId(id, 'TextNote'),
-                allowsCustomNote: custom === 'True',
+                allowsComment: custom === 'True',
+                comment: comments[createGlobalId(id, 'TextNote')] || null,
                 text,
                 isHeader: true,
               };
@@ -491,7 +494,8 @@ export default class ContentItem extends oldContentItem.dataSource {
               return {
                 __typename: 'TextNote',
                 id: createGlobalId(id, 'TextNote'),
-                allowsCustomNote: custom === 'True',
+                allowsComment: custom === 'True',
+                comment: comments[createGlobalId(id, 'TextNote')] || null,
                 text,
                 isHeader: false,
               };
@@ -509,7 +513,8 @@ export default class ContentItem extends oldContentItem.dataSource {
               return {
                 __typename: 'ScriptureNote',
                 id: createGlobalId(id, 'ScriptureNote'),
-                allowsCustomNote: custom === 'True',
+                allowsComment: custom === 'True',
+                comment: comments[createGlobalId(id, 'ScriptureNote')] || null,
                 scripture: scriptures[0],
               };
             default:

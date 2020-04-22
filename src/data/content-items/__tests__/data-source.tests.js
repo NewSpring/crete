@@ -56,14 +56,14 @@ describe('ContentItem data sources', () => {
     ContentItem.context.dataSources.Scripture = {
       getScriptures: () => [{ ref: 'GEN.1.1' }],
     };
-    expect(
-      await ContentItem.getSermonNotes({ value: '235234-234234-234243' })
-    ).toMatchSnapshot();
-  });
-  it('gets saved sermon notes', async () => {
-    ContentItem.request = () => ({
-      filter: () => ({ get: () => notesMock }),
+    ContentItem.getSermonNoteComments = () => ({
+      'TextNote:559b23fd0aa90e81b1c023e72e230fa1': {
+        id: 'Note:123',
+        text: 'custom note comment',
+      },
     });
-    expect(await ContentItem.getSavedSermonNotes()).toMatchSnapshot();
+    expect(
+      await ContentItem.getSermonNotes(1, { value: '235234-234234-234243' })
+    ).toMatchSnapshot();
   });
 });
