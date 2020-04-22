@@ -11,6 +11,7 @@ const prayerSchema = gql`
     groupPrayers: [Prayer] @deprecated(reason: "Use prayers(type:GROUP)")
     savedPrayers: [Prayer] @deprecated(reason: "Use prayers(type:CAMPUS)")
   }
+
   extend type Mutation {
     addPrayer(text: String!, isAnonymous: Boolean): Prayer
     interactWithPrayer(id: ID!, action: PrayerAction!): Prayer
