@@ -63,7 +63,9 @@ export default class Prayer extends RockApolloDataSource {
       entityTypeId,
     });
     return RockConstants.createOrFindInteractionComponent({
-      componentName: `${ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST} - ${prayerId}`,
+      componentName: `${
+        ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST
+      } - ${prayerId}`,
       channelId: channel.id,
       entityId: parseInt(prayerId, 10),
     });
@@ -177,13 +179,12 @@ export default class Prayer extends RockApolloDataSource {
     return this.sortPrayers(prayers);
   };
 
-  byGroups = async (groupTypeIds, personId) => {
+  byGroups = async (groupTypeIds, personId) =>
     // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
     // right now I don't think it will pull any anonymous prayers
-    return this.request(
+    this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
     );
-  };
 
   bySaved = async () => {
     const {
