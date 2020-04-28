@@ -13,19 +13,23 @@ export default gql`
   interface SermonNote {
     id: ID!
     allowsCustomNote: Boolean
+    simpleText: String
   }
 
   type TextNote implements SermonNote {
     id: ID!
     allowsCustomNote: Boolean
+    simpleText: String
 
-    text: String
     isHeader: Boolean
+    hasBlanks: Boolean
+    hiddenText: String
   }
 
   type ScriptureNote implements SermonNote {
     id: ID!
     allowsCustomNote: Boolean
+    simpleText: String
 
     scripture: Scripture
   }

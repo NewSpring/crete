@@ -415,22 +415,22 @@ export default class ContentItem extends oldContentItem.dataSource {
           let book;
           let version;
           let scriptures;
+          const blanksRegEx = /__(.*)__/gm;
           switch (type) {
             case 'header':
-              return {
-                __typename: 'TextNote',
-                id: createGlobalId(id, 'TextNote'),
-                allowsCustomNote: custom === 'True',
-                text,
-                isHeader: true,
-              };
             case 'text':
               return {
                 __typename: 'TextNote',
                 id: createGlobalId(id, 'TextNote'),
                 allowsCustomNote: custom === 'True',
-                text,
-                isHeader: false,
+                simpleText: text.replace(blanksRegEx, (match, p1) => p1),
+                hasBlanks: !!text.match(blanksRegEx),
+                hiddenText: text.match(blanksRegEx)
+                  ? text.replace(blanksRegEx, (match, p1) =>
+                      '_'.repeat(p1.length)
+                    )
+                  : null,
+                isHeader: type === 'header',
               };
             case 'scripture':
               book = await this.request('/DefinedValues')
@@ -447,6 +447,11 @@ export default class ContentItem extends oldContentItem.dataSource {
                 __typename: 'ScriptureNote',
                 id: createGlobalId(id, 'ScriptureNote'),
                 allowsCustomNote: custom === 'True',
+                simpleText: `${scriptures[0].content
+                  .replace(/<[^>]*>?/gm, '')
+                  .replace(/(\d)(\D)/gm, (match, p1, p2) => `${p1}) ${p2}`)} ${
+                  scriptures[0].reference
+                }`,
                 scripture: scriptures[0],
               };
             default:

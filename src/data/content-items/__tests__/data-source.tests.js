@@ -48,7 +48,9 @@ describe('ContentItem data sources', () => {
       filter: () => ({ first: () => 'Genesis OR NIV' }),
     });
     ContentItem.context.dataSources.Scripture = {
-      getScriptures: () => [{ ref: 'GEN.1.1' }],
+      getScriptures: () => [
+        { content: '<p>verse<p>', reference: 'Genesis 1:1' },
+      ],
     };
     expect(
       await ContentItem.getSermonNotes({ value: '235234-234234-234243' })
