@@ -19,21 +19,25 @@ export default gql`
     id: ID!
     allowsComment: Boolean
     comment: SermonNoteComment @cacheControl(maxAge: 0)
+    simpleText: String
   }
 
   type TextNote implements SermonNote {
     id: ID!
     allowsComment: Boolean
     comment: SermonNoteComment @cacheControl(maxAge: 0)
+    simpleText: String
 
-    text: String
     isHeader: Boolean
+    hasBlanks: Boolean
+    hiddenText: String
   }
 
   type ScriptureNote implements SermonNote {
     id: ID!
     allowsComment: Boolean
     comment: SermonNoteComment @cacheControl(maxAge: 0)
+    simpleText: String
 
     scripture: Scripture
   }

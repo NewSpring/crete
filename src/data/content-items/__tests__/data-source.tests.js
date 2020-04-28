@@ -54,7 +54,9 @@ describe('ContentItem data sources', () => {
       filter: () => ({ first: () => 'Genesis OR NIV' }),
     });
     ContentItem.context.dataSources.Scripture = {
-      getScriptures: () => [{ ref: 'GEN.1.1' }],
+      getScriptures: () => [
+        { content: '<p>verse<p>', reference: 'Genesis 1:1' },
+      ],
     };
     ContentItem.getSermonNoteComments = () => ({
       'TextNote:559b23fd0aa90e81b1c023e72e230fa1': {
