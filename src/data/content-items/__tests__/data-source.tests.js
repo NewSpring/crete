@@ -1,5 +1,4 @@
 import personMock from '../../mocks/person';
-import notesMock from '../../mocks/notes';
 import ContentDataSource from '../data-source';
 
 describe('ContentItem data sources', () => {

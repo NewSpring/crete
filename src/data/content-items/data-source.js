@@ -402,7 +402,9 @@ export default class ContentItem extends oldContentItem.dataSource {
     const { primaryAliasId } = await Auth.getCurrentPerson();
     const comments = await this.request('Notes')
       .filter(
-        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID}`
+        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${
+          ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID
+        }`
       )
       .get();
 
