@@ -18,7 +18,6 @@ import {
   Template,
   AuthSms,
   BinaryFiles,
-  RockConstants,
   Event,
 } from '@apollosproject/data-connector-rock';
 import * as LiveStream from './live';
@@ -30,6 +29,7 @@ import * as Group from './groups';
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
+import * as RockConstants from './rock-constants';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
@@ -45,7 +45,6 @@ const data = {
   LiveStream,
   Theme,
   Scripture,
-  RockConstants,
   Sharable,
   Analytics,
   OneSignal,
@@ -63,6 +62,7 @@ const data = {
   Person,
   Prayer,
   MatrixItem,
+  RockConstants,
 };
 
 const {
