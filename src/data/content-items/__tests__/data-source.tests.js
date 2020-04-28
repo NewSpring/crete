@@ -67,4 +67,23 @@ describe('ContentItem data sources', () => {
       await ContentItem.getSermonNotes(1, { value: '235234-234234-234243' })
     ).toMatchSnapshot();
   });
+  it('gets sermon notes comments', async () => {
+    ContentItem.request = () => ({
+      filter: () => ({
+        get: () => [
+          {
+            id: 1,
+            text:
+              '{"apollosParentID": "TextFeature:123", "text": "this is a comment"}',
+          },
+          {
+            id: 2,
+            text:
+              '{"apollosParentID": "ScriptureFeature:123", "text": "this is another comment"}',
+          },
+        ],
+      }),
+    });
+    expect(await ContentItem.getSermonNoteComments(1)).toMatchSnapshot();
+  });
 });

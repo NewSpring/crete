@@ -38,3 +38,16 @@ Array [
   },
 ]
 `;
+
+exports[`ContentItem data sources gets sermon notes comments 1`] = `
+Object {
+  "ScriptureFeature:123": Object {
+    "id": "Note:965b6e6d7046a885bea4e300b5c0400d",
+    "text": "this is another comment",
+  },
+  "TextFeature:123": Object {
+    "id": "Note:559b23fd0aa90e81b1c023e72e230fa1",
+    "text": "this is a comment",
+  },
+}
+`;
