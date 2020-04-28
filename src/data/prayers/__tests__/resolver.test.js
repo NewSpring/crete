@@ -215,6 +215,7 @@ describe('Prayer resolver', () => {
         ) {
           id
           text
+          answer
         }
       }
     `;
