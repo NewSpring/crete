@@ -296,4 +296,19 @@ export default class Prayer extends RockApolloDataSource {
       return null;
     }
   };
+
+  answer = async (id, answer) => {
+    try {
+      await this.patch(`/PrayerRequests/${id}`, {
+        Answer: answer,
+      });
+      return this.getFromId(id);
+    } catch (e) {
+      bugsnagClient.notify(new Error('Answering prayer failed.'), {
+        metaData: { rockPrayerID: id, answer },
+        severity: 'warning',
+      });
+      return null;
+    }
+  };
 }
