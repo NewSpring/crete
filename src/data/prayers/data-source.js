@@ -10,10 +10,7 @@ export default class Prayer extends RockApolloDataSource {
 
   expanded = true;
 
-  getFromId = (id) =>
-    this.request()
-      .find(id)
-      .get();
+  getFromId = (id) => this.request().find(id).get();
 
   sortPrayers = (prayers) =>
     prayers.sort((a, b) => {
@@ -63,9 +60,7 @@ export default class Prayer extends RockApolloDataSource {
       entityTypeId,
     });
     return RockConstants.createOrFindInteractionComponent({
-      componentName: `${
-        ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST
-      } - ${prayerId}`,
+      componentName: `${ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST} - ${prayerId}`,
       channelId: channel.id,
       entityId: parseInt(prayerId, 10),
     });
@@ -161,15 +156,22 @@ export default class Prayer extends RockApolloDataSource {
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
       .andFilter(
-        `ExpirationDate gt datetime'${moment
-          .tz(ROCK.TIMEZONE)
-          .format()}' or ExpirationDate eq null`
+        type !== 'USER'
+          ? `ExpirationDate gt datetime'${moment
+              .tz(ROCK.TIMEZONE)
+              .format()}' or ExpirationDate eq null`
+          : ''
       )
+      .andFilter(type !== 'USER' ? `Answer eq null or Answer eq ''` : '')
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .sort([
-        { field: 'PrayerCount', direction: 'asc' },
-        { field: 'EnteredDateTime', direction: 'asc' },
-      ]);
+      .sort(
+        type === 'USER'
+          ? [{ field: 'EnteredDateTime', direction: 'desc' }]
+          : [
+              { field: 'PrayerCount', direction: 'asc' },
+              { field: 'EnteredDateTime', direction: 'asc' },
+            ]
+      );
   };
 
   // deprecated
@@ -276,16 +278,9 @@ export default class Prayer extends RockApolloDataSource {
         IsActive: true,
         AllowComments: false,
         IsUrgent: false,
-        EnteredDateTime: moment()
-          .tz(ROCK.TIMEZONE)
-          .format(),
-        ApprovedOnDateTime: moment()
-          .tz(ROCK.TIMEZONE)
-          .format(),
-        ExpirationDate: moment()
-          .tz(ROCK.TIMEZONE)
-          .add(2, 'weeks')
-          .format(),
+        EnteredDateTime: moment().tz(ROCK.TIMEZONE).format(),
+        ApprovedOnDateTime: moment().tz(ROCK.TIMEZONE).format(),
+        ExpirationDate: moment().tz(ROCK.TIMEZONE).add(2, 'weeks').format(),
       });
       return this.getFromId(prayerId);
     } catch (e) {
