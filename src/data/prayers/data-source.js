@@ -161,15 +161,22 @@ export default class Prayer extends RockApolloDataSource {
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
       .andFilter(
-        `ExpirationDate gt datetime'${moment
-          .tz(ROCK.TIMEZONE)
-          .format()}' or ExpirationDate eq null`
+        type !== 'USER'
+          ? `ExpirationDate gt datetime'${moment
+              .tz(ROCK.TIMEZONE)
+              .format()}' or ExpirationDate eq null`
+          : ''
       )
+      .andFilter(type !== 'USER' ? `Answer eq null or Answer eq ''` : '')
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .sort([
-        { field: 'PrayerCount', direction: 'asc' },
-        { field: 'EnteredDateTime', direction: 'asc' },
-      ]);
+      .sort(
+        type === 'USER'
+          ? [{ field: 'EnteredDateTime', direction: 'desc' }]
+          : [
+              { field: 'PrayerCount', direction: 'asc' },
+              { field: 'EnteredDateTime', direction: 'asc' },
+            ]
+      );
   };
 
   // deprecated
