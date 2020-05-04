@@ -32,6 +32,8 @@ export default {
   },
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
+    answerPrayer: (root, { id, answer }, { dataSources }) =>
+      dataSources.Prayer.answer(parseGlobalId(id).id, answer),
     interactWithPrayer: async (
       root,
       { id, action },

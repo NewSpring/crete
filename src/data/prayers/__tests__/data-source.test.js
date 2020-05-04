@@ -45,4 +45,9 @@ describe('PrayerRequest data sources', () => {
     expect(await cursor.get()).toMatchSnapshot();
     expect(await cursor.count()).toMatchSnapshot();
   });
+  it('answers a prayer', async () => {
+    Prayer.patch = () => null;
+    Prayer.getFromId = () => ({ id: 1, answer: 'answer' });
+    expect(await Prayer.answer(1, 'answer')).toMatchSnapshot();
+  });
 });

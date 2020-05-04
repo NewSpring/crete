@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Prayer resolver answers a prayer 1`] = `
+Object {
+  "data": Object {
+    "answerPrayer": Object {
+      "answer": "This is the answer",
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
 exports[`Prayer resolver creates a new prayer 1`] = `
 Object {
   "data": Object {
