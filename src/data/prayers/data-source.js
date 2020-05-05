@@ -304,29 +304,14 @@ export default class Prayer extends RockApolloDataSource {
     }
   };
 
-  answer = async (id, answer) => {
+  editAnswer = async (id, answer = null) => {
     try {
       await this.patch(`/PrayerRequests/${id}`, {
         Answer: answer,
       });
       return this.getFromId(id);
     } catch (e) {
-      bugsnagClient.notify(new Error('Answering prayer failed.'), {
-        metaData: { rockPrayerID: id, answer },
-        severity: 'warning',
-      });
-      return null;
-    }
-  };
-
-  removeAnswer = async (id) => {
-    try {
-      await this.patch(`/PrayerRequests/${id}`, {
-        Answer: null,
-      });
-      return this.getFromId(id);
-    } catch (e) {
-      bugsnagClient.notify(new Error('Removing prayer answer failed.'), {
+      bugsnagClient.notify(new Error('Editing prayer answer failed.'), {
         metaData: { rockPrayerID: id },
         severity: 'warning',
       });
