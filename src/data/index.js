@@ -10,10 +10,11 @@ import * as Pass from '@apollosproject/data-connector-passes';
 import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
-  Auth,
   Followings,
+  Interactions,
   ContentChannel,
   Sharable,
+  Auth,
   PersonalDevice,
   Template,
   AuthSms,
@@ -45,6 +46,7 @@ const data = {
   LiveStream,
   Theme,
   Scripture,
+  Interactions,
   Sharable,
   Analytics,
   OneSignal,
