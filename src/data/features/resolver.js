@@ -1,4 +1,4 @@
-import { Features as baseFeatures } from '@apollosproject/data-connector-rock';
+import { Feature as baseFeatures } from '@apollosproject/data-connector-rock';
 import { resolverMerge } from '@apollosproject/server-core';
 
 const resolver = {

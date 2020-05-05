@@ -1,4 +1,4 @@
-import { Features as baseFeatures } from '@apollosproject/data-connector-rock';
+import { Feature as baseFeatures } from '@apollosproject/data-connector-rock';
 import { createGlobalId } from '@apollosproject/server-core';
 import ApollosConfig from '@apollosproject/config';
 
