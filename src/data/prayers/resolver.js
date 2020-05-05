@@ -34,6 +34,8 @@ export default {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
     answerPrayer: (root, { id, answer }, { dataSources }) =>
       dataSources.Prayer.answer(parseGlobalId(id).id, answer),
+    removeAnswer: (root, { id }, { dataSources }) =>
+      dataSources.Prayer.removeAnswer(parseGlobalId(id).id),
     interactWithPrayer: async (
       root,
       { id, action },
