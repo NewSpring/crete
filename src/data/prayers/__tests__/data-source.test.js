@@ -50,4 +50,9 @@ describe('PrayerRequest data sources', () => {
     Prayer.getFromId = () => ({ id: 1, answer: 'answer' });
     expect(await Prayer.answer(1, 'answer')).toMatchSnapshot();
   });
+  it('removes a prayer answer', async () => {
+    Prayer.patch = () => null;
+    Prayer.getFromId = () => ({ id: 1 });
+    expect(await Prayer.answer(1)).toMatchSnapshot();
+  });
 });

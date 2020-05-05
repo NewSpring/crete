@@ -229,6 +229,18 @@ Object {
 }
 `;
 
+exports[`Prayer resolver removes a prayer answer 1`] = `
+Object {
+  "data": Object {
+    "removeAnswer": Object {
+      "answer": "This is the answer",
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
+}
+`;
+
 exports[`Prayer resolver saves a prayer (deprecated) 1`] = `
 Object {
   "data": Object {
