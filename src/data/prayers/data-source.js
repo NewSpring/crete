@@ -63,7 +63,9 @@ export default class Prayer extends RockApolloDataSource {
       entityTypeId,
     });
     return RockConstants.createOrFindInteractionComponent({
-      componentName: `${ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST} - ${prayerId}`,
+      componentName: `${
+        ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST
+      } - ${prayerId}`,
       channelId: channel.id,
       entityId: parseInt(prayerId, 10),
     });
@@ -96,7 +98,7 @@ export default class Prayer extends RockApolloDataSource {
         {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
       );
       summary =
-        moment(result).add(2, 'hours') < moment()
+        moment(result, 'MM/DD/YYYY HH:mm:ss a').add(2, 'hours') < moment()
           ? 'PrayerNotificationSent'
           : '';
     } catch (e) {
@@ -115,7 +117,7 @@ export default class Prayer extends RockApolloDataSource {
       InteractionComponentId: interactionId,
       InteractionSessionId: this.context.sessionId,
       Operation: 'Pray',
-      InteractionDateTime: new Date().toJSON(),
+      InteractionDateTime: moment().format('MM/DD/YYYY HH:mm:ss'),
       InteractionSummary: summary,
       InteractionData: `${requestedByPersonAliasId}`,
     });
@@ -159,32 +161,37 @@ export default class Prayer extends RockApolloDataSource {
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
       .andFilter(
-        `ExpirationDate gt datetime'${moment
-          .tz(ROCK.TIMEZONE)
-          .format()}' or ExpirationDate eq null`
+        type !== 'USER'
+          ? `ExpirationDate gt datetime'${moment
+              .tz(ROCK.TIMEZONE)
+              .format()}' or ExpirationDate eq null`
+          : ''
       )
+      .andFilter(type !== 'USER' ? `Answer eq null or Answer eq ''` : '')
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .sort([
-        { field: 'PrayerCount', direction: 'asc' },
-        { field: 'EnteredDateTime', direction: 'asc' },
-      ]);
+      .sort(
+        type === 'USER'
+          ? [{ field: 'EnteredDateTime', direction: 'desc' }]
+          : [
+              { field: 'PrayerCount', direction: 'asc' },
+              { field: 'EnteredDateTime', direction: 'asc' },
+            ]
+      );
   };
 
   // deprecated
   getPrayers = async (type) => {
     const prayersCursor = await this.byPrayerFeed(type);
-    if (!prayersCursor) return [];
     const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
 
-  byGroups = async (groupTypeIds, personId) => {
+  byGroups = async (groupTypeIds, personId) =>
     // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
     // right now I don't think it will pull any anonymous prayers
-    return this.request(
+    this.request(
       `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
     );
-  };
 
   bySaved = async () => {
     const {
@@ -198,7 +205,7 @@ export default class Prayer extends RockApolloDataSource {
     );
 
     const entities = await followedPrayersRequest.get();
-    if (!entities.length) return null;
+    if (!entities.length) return this.request().empty();
 
     const entityIds = entities.map((entity) => entity.entityId);
     return this.request()
@@ -291,6 +298,21 @@ export default class Prayer extends RockApolloDataSource {
     } catch (e) {
       bugsnagClient.notify(new Error('Adding prayer failed.'), {
         metaData: { primaryAliasId, text, isAnonymous },
+        severity: 'warning',
+      });
+      return null;
+    }
+  };
+
+  answer = async (id, answer) => {
+    try {
+      await this.patch(`/PrayerRequests/${id}`, {
+        Answer: answer,
+      });
+      return this.getFromId(id);
+    } catch (e) {
+      bugsnagClient.notify(new Error('Answering prayer failed.'), {
+        metaData: { rockPrayerID: id, answer },
         severity: 'warning',
       });
       return null;

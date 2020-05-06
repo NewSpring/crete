@@ -9,7 +9,9 @@ export default class LiveStream extends RockApolloDataSource {
     const stream =
       (await this.post(
         `Lava/RenderTemplate`,
-        `{[ scheduledcontent schedulecategoryid:'${ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID}' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
+        `{[ scheduledcontent schedulecategoryid:'${
+          ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID
+        }' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
       )) === 'true';
     return {
       isLive: stream,

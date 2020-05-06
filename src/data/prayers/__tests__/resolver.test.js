@@ -206,7 +206,26 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
-  it('deletes a prayer', async () => {
+  it('answers a prayer', async () => {
+    const query = `
+      mutation {
+        answerPrayer(
+          id: "Prayer:7b9330c299577990e03e637e876f0aa3"
+          answer: "This is the answer"
+        ) {
+          id
+          text
+          answer
+        }
+      }
+    `;
+    context.dataSources.Prayer.answer = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('deletes a prayer (deprecated)', async () => {
     const query = `
       mutation {
         deletePrayer(
@@ -224,7 +243,25 @@ describe('Prayer resolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('increments prayed for a request', async () => {
+  it('deletes a prayer', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:b36e55d803443431e96bb4b5068147ec",
+          action: DELETE
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Prayer.deletePrayer = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('increments prayed for a request (deprecated)', async () => {
     const query = `
       mutation {
         incrementPrayerCount(
@@ -243,7 +280,26 @@ describe('Prayer resolver', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('flags a prayer request', async () => {
+  it('increments prayed for a request', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:b36e55d803443431e96bb4b5068147ec",
+          action: INCREMENT
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Prayer.createInteraction = jest.fn(() => null);
+    context.dataSources.Prayer.incrementPrayed = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('flags a prayer request (deprecated)', async () => {
     const query = `
       mutation {
         flagPrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
@@ -258,7 +314,25 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
-  it('saves a prayer', async () => {
+  it('flags a prayer request', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:b36e55d803443431e96bb4b5068147ec",
+          action: FLAG
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Prayer.flag = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('saves a prayer (deprecated)', async () => {
     const query = `
       mutation {
         savePrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
@@ -272,10 +346,44 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
-  it('unsaves a prayer', async () => {
+  it('saves a prayer', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:b36e55d803443431e96bb4b5068147ec",
+          action: SAVE
+        ) {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Followings.followNode = jest.fn(() => null);
+    context.models.Node.get = jest.fn(() => Promise.resolve(oneRockPrayer));
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('unsaves a prayer (deprecated)', async () => {
     const query = `
       mutation {
         unSavePrayer(nodeId: "Prayer:b36e55d803443431e96bb4b5068147ec") {
+          id
+          text
+        }
+      }
+    `;
+    context.dataSources.Followings.unFollowNode = jest.fn(() => null);
+    context.models.Node.get = jest.fn(() => Promise.resolve(oneRockPrayer));
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('unsaves a prayer', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:b36e55d803443431e96bb4b5068147ec",
+          action: UNSAVE
+        ) {
           id
           text
         }

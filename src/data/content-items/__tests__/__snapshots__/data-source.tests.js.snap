@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentItem data sources gets sermon notes 1`] = `
+Array [
+  Object {
+    "__typename": "TextNote",
+    "allowsCustomNote": false,
+    "hasBlanks": false,
+    "hiddenText": null,
+    "id": "TextNote:559b23fd0aa90e81b1c023e72e230fa1",
+    "isHeader": true,
+    "simpleText": "1. this is point one",
+  },
+  Object {
+    "__typename": "TextNote",
+    "allowsCustomNote": true,
+    "hasBlanks": false,
+    "hiddenText": null,
+    "id": "TextNote:965b6e6d7046a885bea4e300b5c0400d",
+    "isHeader": false,
+    "simpleText": "this is a subpoint",
+  },
+  Object {
+    "__typename": "ScriptureNote",
+    "allowsCustomNote": true,
+    "id": "ScriptureNote:4f68015ba18662a7409d1219a4ce013e",
+    "scripture": Object {
+      "content": "<p>verse<p>",
+      "reference": "Genesis 1:1",
+    },
+    "simpleText": "verse Genesis 1:1",
+  },
+]
+`;

@@ -37,4 +37,17 @@ describe('PrayerRequest data sources', () => {
     };
     expect(await Prayer.getPrayerMenuCategories()).toMatchSnapshot();
   });
+  it('gets an empty list of saved prayers', async () => {
+    Prayer.context.dataSources.Followings = {
+      getFollowingsForCurrentUser: () => ({ get: () => [] }),
+    };
+    const cursor = await Prayer.bySaved();
+    expect(await cursor.get()).toMatchSnapshot();
+    expect(await cursor.count()).toMatchSnapshot();
+  });
+  it('answers a prayer', async () => {
+    Prayer.patch = () => null;
+    Prayer.getFromId = () => ({ id: 1, answer: 'answer' });
+    expect(await Prayer.answer(1, 'answer')).toMatchSnapshot();
+  });
 });
