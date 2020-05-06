@@ -50,6 +50,7 @@ Array [
 
 exports[`PrayerRequest data sources removes a prayer answer 1`] = `
 Object {
+  "answer": null,
   "id": 1,
 }
 `;
