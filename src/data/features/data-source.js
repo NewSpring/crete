@@ -1,8 +1,8 @@
-import { Features as baseFeatures } from '@apollosproject/data-connector-rock';
+import { Feature as baseFeatures } from '@apollosproject/data-connector-rock';
 import { createGlobalId } from '@apollosproject/server-core';
 import ApollosConfig from '@apollosproject/config';
 
-export default class Features extends baseFeatures.dataSource {
+export default class Feature extends baseFeatures.dataSource {
   baseAlgorithms = this.ACTION_ALGORITHIMS;
 
   ACTION_ALGORITHIMS = {
