@@ -24,7 +24,7 @@ import {
 import * as LiveStream from './live';
 import * as Person from './people';
 import * as ContentItem from './content-items';
-import * as Features from './features';
+import * as Feature from './features';
 import * as Campus from './campuses';
 import * as Group from './groups';
 import * as Theme from './theme';
@@ -60,7 +60,7 @@ const data = {
   BinaryFiles,
   Event,
   Cache,
-  Features,
+  Feature,
   Person,
   Prayer,
   MatrixItem,
