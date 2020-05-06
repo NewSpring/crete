@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { Features } from '@apollosproject/data-connector-rock';
+import { Feature } from '@apollosproject/data-connector-rock';
 
 export default gql`
   type NoteFeature implements Feature & Node {
@@ -17,5 +17,5 @@ export default gql`
     sharing: SharableFeature
   }
 
-  ${Features.schema}
+  ${Feature.schema}
 `;
