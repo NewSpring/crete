@@ -53,6 +53,6 @@ describe('PrayerRequest data sources', () => {
   it('removes a prayer answer', async () => {
     Prayer.patch = () => null;
     Prayer.getFromId = () => ({ id: 1 });
-    expect(await Prayer.editPrayer(1)).toMatchSnapshot();
+    expect(await Prayer.editPrayer(1, null)).toMatchSnapshot();
   });
 });

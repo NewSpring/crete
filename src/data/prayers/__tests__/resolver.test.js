@@ -228,7 +228,7 @@ describe('Prayer resolver', () => {
   it('removes a prayer answer', async () => {
     const query = `
       mutation {
-        editPrayer(id: "Prayer:7b9330c299577990e03e637e876f0aa3") {
+        editPrayer(id: "Prayer:7b9330c299577990e03e637e876f0aa3", answer: null) {
           id
           text
           answer
