@@ -1,0 +1,25 @@
+config:
+  target: https://localhost:4000
+  phases:
+    - duration: 600
+      arrivalRate: 10
+  defaults:
+    headers:
+      authorization: "{{ $processEnvironment.AUTH_TOKEN }}"
+scenarios:
+  - flow:
+    - get:
+        url: "/graphql"
+        qs:
+          query:
+            "
+              {
+                userFeed {
+                  edges {
+                    node {
+                      id
+                    }
+                  }
+                }
+              }
+            "
