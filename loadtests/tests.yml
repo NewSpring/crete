@@ -1,7 +1,9 @@
+# this is an artillery.io load test script
+# can be run with: artillery run tests.yml
 config:
-  target: https://localhost:4000
+  target: "{{ $processEnvironment.ARTILLERY_TARGET_URL }}"
   phases:
-    - duration: 600
+    - duration: 20
       arrivalRate: 10
   defaults:
     headers:
