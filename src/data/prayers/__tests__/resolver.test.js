@@ -209,7 +209,7 @@ describe('Prayer resolver', () => {
   it('answers a prayer', async () => {
     const query = `
       mutation {
-        editAnswer(
+        editPrayer(
           id: "Prayer:7b9330c299577990e03e637e876f0aa3"
           answer: "This is the answer"
         ) {
@@ -219,7 +219,7 @@ describe('Prayer resolver', () => {
         }
       }
     `;
-    context.dataSources.Prayer.editAnswer = jest.fn(() =>
+    context.dataSources.Prayer.editPrayer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -228,14 +228,14 @@ describe('Prayer resolver', () => {
   it('removes a prayer answer', async () => {
     const query = `
       mutation {
-        editAnswer(id: "Prayer:7b9330c299577990e03e637e876f0aa3") {
+        editPrayer(id: "Prayer:7b9330c299577990e03e637e876f0aa3") {
           id
           text
           answer
         }
       }
     `;
-    context.dataSources.Prayer.editAnswer = jest.fn(() =>
+    context.dataSources.Prayer.editPrayer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);

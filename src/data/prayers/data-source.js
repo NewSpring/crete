@@ -304,7 +304,7 @@ export default class Prayer extends RockApolloDataSource {
     }
   };
 
-  editAnswer = async (id, answer = null) => {
+  editPrayer = async (id, answer = null) => {
     try {
       await this.patch(`/PrayerRequests/${id}`, {
         Answer: answer,
