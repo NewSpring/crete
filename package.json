@@ -10,21 +10,21 @@
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start": "NODE_ENV=production node ./lib/index.js",
     "restart": "yarn && yarn dev",
-    "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib",
+    "build":
+      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
     "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "schema:publish": "apollo schema:publish",
-    "loadtest": "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
+    "loadtest":
+      "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
     "translate": "node scripts/translate.js"
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test|tests).{js,jsx,mjs}"
