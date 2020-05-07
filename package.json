@@ -15,7 +15,7 @@
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
-    "postinstall": "yarn build && ./scripts/rookout.sh",
+    "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "schema:publish": "apollo schema:publish",
     "loadtest":
