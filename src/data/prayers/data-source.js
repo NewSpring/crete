@@ -304,7 +304,7 @@ export default class Prayer extends RockApolloDataSource {
     }
   };
 
-  editPrayer = async ({ id, answer = undefined }) => {
+  answerPrayer = async ({ id, answer = undefined }) => {
     const prayer = {
       ...(answer !== undefined && { Answer: answer }),
     };

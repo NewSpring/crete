@@ -14,7 +14,7 @@ const prayerSchema = gql`
 
   extend type Mutation {
     addPrayer(text: String!, isAnonymous: Boolean): Prayer
-    editPrayer(id: ID!, answer: String): Prayer
+    answerPrayer(id: ID!, answer: String): Prayer
     interactWithPrayer(id: ID!, action: PrayerAction!): Prayer
     deletePrayer(nodeId: String!): Prayer
       @deprecated(reason: "Use interactWithPrayer(action:DELETE)")
@@ -34,6 +34,7 @@ const prayerSchema = gql`
     FLAG
     SAVE
     UNSAVE
+    REMOVE_ANSWER
   }
 
   type PrayerMenuCategory implements Node {

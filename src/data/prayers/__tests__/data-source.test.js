@@ -49,12 +49,14 @@ describe('PrayerRequest data sources', () => {
     Prayer.patch = () => null;
     Prayer.getFromId = () => ({ id: 1, answer: 'answer' });
     expect(
-      await Prayer.editPrayer({ id: 1, answer: 'answer' })
+      await Prayer.answerPrayer({ id: 1, answer: 'answer' })
     ).toMatchSnapshot();
   });
   it('removes a prayer answer', async () => {
     Prayer.patch = () => null;
     Prayer.getFromId = () => ({ id: 1, answer: null });
-    expect(await Prayer.editPrayer({ id: 1, answer: null })).toMatchSnapshot();
+    expect(
+      await Prayer.answerPrayer({ id: 1, answer: null })
+    ).toMatchSnapshot();
   });
 });
