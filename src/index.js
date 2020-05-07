@@ -9,6 +9,7 @@ const rookout = require('rookout');
 
 rookout.start({
   token: process.env.ROOKOUT_KEY,
+  labels: { env: process.env.ENVIRONMENT || 'development' },
 });
 
 // Use the port, if provided.
