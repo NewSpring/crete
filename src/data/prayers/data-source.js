@@ -161,15 +161,22 @@ export default class Prayer extends RockApolloDataSource {
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
       .andFilter(
-        `ExpirationDate gt datetime'${moment
-          .tz(ROCK.TIMEZONE)
-          .format()}' or ExpirationDate eq null`
+        type !== 'USER'
+          ? `ExpirationDate gt datetime'${moment
+              .tz(ROCK.TIMEZONE)
+              .format()}' or ExpirationDate eq null`
+          : ''
       )
+      .andFilter(type !== 'USER' ? `Answer eq null or Answer eq ''` : '')
       .andFilter(type === 'CAMPUS' ? `CampusId eq ${primaryCampusId}` : '')
-      .sort([
-        { field: 'PrayerCount', direction: 'asc' },
-        { field: 'EnteredDateTime', direction: 'asc' },
-      ]);
+      .sort(
+        type === 'USER'
+          ? [{ field: 'EnteredDateTime', direction: 'desc' }]
+          : [
+              { field: 'PrayerCount', direction: 'asc' },
+              { field: 'EnteredDateTime', direction: 'asc' },
+            ]
+      );
   };
 
   // deprecated
@@ -291,6 +298,21 @@ export default class Prayer extends RockApolloDataSource {
     } catch (e) {
       bugsnagClient.notify(new Error('Adding prayer failed.'), {
         metaData: { primaryAliasId, text, isAnonymous },
+        severity: 'warning',
+      });
+      return null;
+    }
+  };
+
+  answer = async (id, answer) => {
+    try {
+      await this.patch(`/PrayerRequests/${id}`, {
+        Answer: answer,
+      });
+      return this.getFromId(id);
+    } catch (e) {
+      bugsnagClient.notify(new Error('Answering prayer failed.'), {
+        metaData: { rockPrayerID: id, answer },
         severity: 'warning',
       });
       return null;

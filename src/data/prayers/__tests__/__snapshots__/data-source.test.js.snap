@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PrayerRequest data sources answers a prayer 1`] = `
+Object {
+  "answer": "answer",
+  "id": 1,
+}
+`;
+
 exports[`PrayerRequest data sources gets an empty list of saved prayers 1`] = `Array []`;
 
 exports[`PrayerRequest data sources gets an empty list of saved prayers 2`] = `0`;
