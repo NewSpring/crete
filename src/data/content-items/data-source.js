@@ -265,7 +265,7 @@ export default class ContentItem extends oldContentItem.dataSource {
 
   getFeatures({ attributeValues }) {
     const features = [];
-    const { Features } = this.context.dataSources;
+    const { Feature } = this.context.dataSources;
 
     const rawFeatures = get(attributeValues, 'features.value', '');
     parseKeyValueAttribute(rawFeatures).forEach(({ key, value }, i) => {
@@ -273,7 +273,7 @@ export default class ContentItem extends oldContentItem.dataSource {
       switch (type) {
         case 'scripture':
           features.push(
-            Features.createScriptureFeature({
+            Feature.createScriptureFeature({
               reference: value,
               version: modifier,
               id: `${attributeValues.features.id}-${i}`,
@@ -282,7 +282,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           break;
         case 'text':
           features.push(
-            Features.createTextFeature({
+            Feature.createTextFeature({
               text: value,
               id: `${attributeValues.features.id}-${i}`,
             })
@@ -291,7 +291,7 @@ export default class ContentItem extends oldContentItem.dataSource {
         case 'note':
           // TODO check for no modifier or duplicates and don't return feature if so
           features.push(
-            Features.createNoteFeature({
+            Feature.createNoteFeature({
               placeholder: value,
               id: `${attributeValues.features.id}-${i}`,
             })
@@ -299,7 +299,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           break;
         case 'header':
           features.push(
-            Features.createHeaderFeature({
+            Feature.createHeaderFeature({
               body: value,
               id: `${attributeValues.features.id}-${i}`,
             })
