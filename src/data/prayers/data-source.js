@@ -1,7 +1,7 @@
 import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
 import moment from 'moment-timezone';
-import { uniq, isEmpty } from 'lodash';
+import { uniq } from 'lodash';
 import bugsnagClient from '../../bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
@@ -304,17 +304,14 @@ export default class Prayer extends RockApolloDataSource {
     }
   };
 
-  answerPrayer = async ({ id, answer = undefined }) => {
-    const prayer = {
-      ...(answer !== undefined && { Answer: answer }),
-    };
+  answer = async (id, answer) => {
     try {
-      if (!isEmpty(prayer)) {
-        await this.patch(`/PrayerRequests/${id}`, prayer);
-      }
+      await this.patch(`/PrayerRequests/${id}`, {
+        Answer: answer,
+      });
       return this.getFromId(id);
     } catch (e) {
-      bugsnagClient.notify(new Error('Editing prayer answer failed.'), {
+      bugsnagClient.notify(new Error('Answering prayer failed.'), {
         metaData: { rockPrayerID: id },
         severity: 'warning',
       });

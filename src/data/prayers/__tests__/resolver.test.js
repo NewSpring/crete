@@ -219,7 +219,7 @@ describe('Prayer resolver', () => {
         }
       }
     `;
-    context.dataSources.Prayer.answerPrayer = jest.fn(() =>
+    context.dataSources.Prayer.answer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);
@@ -238,7 +238,7 @@ describe('Prayer resolver', () => {
         }
       }
     `;
-    context.dataSources.Prayer.answerPrayer = jest.fn(() =>
+    context.dataSources.Prayer.answer = jest.fn(() =>
       Promise.resolve(oneRockPrayer)
     );
     const result = await graphql(schema, query, rootValue, context);

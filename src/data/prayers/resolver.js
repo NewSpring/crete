@@ -33,7 +33,7 @@ export default {
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
     answerPrayer: (root, { id, answer }, { dataSources }) =>
-      dataSources.Prayer.answerPrayer({ id: parseGlobalId(id).id, answer }),
+      dataSources.Prayer.answer(parseGlobalId(id).id, answer),
     interactWithPrayer: async (
       root,
       { id, action },
@@ -64,10 +64,7 @@ export default {
           });
           return Node.get(id, dataSources, info);
         case 'REMOVE_ANSWER':
-          return dataSources.Prayer.answerPrayer({
-            id: rockID,
-            answer: null,
-          });
+          return dataSources.Prayer.answer(rockID, null);
         default:
           return null;
       }
