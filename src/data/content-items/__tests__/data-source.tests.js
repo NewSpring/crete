@@ -11,6 +11,41 @@ describe('ContentItem data sources', () => {
       },
     };
   });
+  it('gets scripture references', async () => {
+    ContentItem.context = {
+      dataSources: {
+        Scripture: { getScriptures: jest.fn(() => null) },
+        MatrixItem: {
+          getItemsFromGuid: () =>
+            Promise.resolve([
+              {
+                attributeValues: {
+                  book: { value: 'JOHN' },
+                  reference: { value: '10:10' },
+                },
+              },
+              {
+                attributeValues: {
+                  book: { value: 'JOHN' },
+                  reference: { value: '1:1' },
+                },
+              },
+            ]),
+        },
+      },
+    };
+    ContentItem.request = () => ({
+      filter: () => ({
+        first: () => Promise.resolve({ value: 'John' }),
+      }),
+    });
+    await ContentItem.getContentItemScriptures({
+      value: 'FAKEGUID123',
+    });
+    expect(
+      ContentItem.context.dataSources.Scripture.getScriptures.mock.calls
+    ).toMatchSnapshot();
+  });
   it('gets sermon notes', async () => {
     ContentItem.context.dataSources.MatrixItem = {
       getItemsFromGuid: () => [
@@ -70,18 +105,22 @@ describe('ContentItem data sources', () => {
   it('gets sermon notes comments', async () => {
     ContentItem.request = () => ({
       filter: () => ({
-        get: () => [
-          {
-            id: 1,
-            text:
-              '{"apollosParentID": "TextFeature:123", "text": "this is a comment"}',
-          },
-          {
-            id: 2,
-            text:
-              '{"apollosParentID": "ScriptureFeature:123", "text": "this is another comment"}',
-          },
-        ],
+        andFilter: () => ({
+          andFilter: () => ({
+            get: () => [
+              {
+                id: 1,
+                text:
+                  '{"apollosParentID": "TextFeature:123", "text": "this is a comment"}',
+              },
+              {
+                id: 2,
+                text:
+                  '{"apollosParentID": "ScriptureFeature:123", "text": "this is another comment"}',
+              },
+            ],
+          }),
+        }),
       }),
     });
     expect(await ContentItem.getSermonNoteComments(1)).toMatchSnapshot();

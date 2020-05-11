@@ -415,15 +415,13 @@ export default class ContentItem extends oldContentItem.dataSource {
     return this.coreSummaryMethod(root);
   };
 
-  getSermonNoteComments = async (contentID) => {
+  getSermonNoteComments = async (rockContentID) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
     const comments = await this.request('Notes')
-      .filter(
-        `CreatedByPersonAliasId eq ${primaryAliasId} and EntityId eq ${contentID} and NoteTypeId eq ${
-          ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID
-        }`
-      )
+      .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
+      .andFilter(`EntityId eq ${rockContentID}`)
+      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID}`)
       .get();
 
     const commentsHash = {};
@@ -442,12 +440,10 @@ export default class ContentItem extends oldContentItem.dataSource {
     const { primaryAliasId } = await Auth.getCurrentPerson();
 
     // find a saved note for the parent
-    const contentNotes = await this.request('Notes')
-      .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
-      .andFilter(`EntityId eq ${parseGlobalId(contentID).id}`)
-      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID}`)
-      .get();
-    const savedNotes = contentNotes.filter((note) => {
+    const comments = await this.getSermonNoteComments(
+      parseGlobalId(contentID).id
+    );
+    const savedNotes = comments.filter((note) => {
       const { apollosParentID } = JSON.parse(note.text);
       return apollosParentID === parentID;
     });
