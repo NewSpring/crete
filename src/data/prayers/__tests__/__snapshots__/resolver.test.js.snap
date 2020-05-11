@@ -2,9 +2,13 @@
 
 exports[`Prayer resolver answers a prayer 1`] = `
 Object {
-  "errors": Array [
-    [GraphQLError: Syntax Error: Expected Name, found {],
-  ],
+  "data": Object {
+    "answerPrayer": Object {
+      "answer": "This is the answer",
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
 }
 `;
 
@@ -227,9 +231,13 @@ Object {
 
 exports[`Prayer resolver removes a prayer answer 1`] = `
 Object {
-  "errors": Array [
-    [GraphQLError: Syntax Error: Expected Name, found {],
-  ],
+  "data": Object {
+    "interactWithPrayer": Object {
+      "answer": "This is the answer",
+      "id": "Prayer:559b23fd0aa90e81b1c023e72e230fa1",
+      "text": "Pray this works.",
+    },
+  },
 }
 `;
 

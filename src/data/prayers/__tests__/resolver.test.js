@@ -209,10 +209,10 @@ describe('Prayer resolver', () => {
   it('answers a prayer', async () => {
     const query = `
       mutation {
-        answerPrayer({
+        answerPrayer(
           id: "Prayer:7b9330c299577990e03e637e876f0aa3"
           answer: "This is the answer",
-        }) {
+        ) {
           id
           text
           answer
@@ -228,10 +228,10 @@ describe('Prayer resolver', () => {
   it('removes a prayer answer', async () => {
     const query = `
       mutation {
-        interactWithPrayer({ 
+        interactWithPrayer(
           id: "Prayer:7b9330c299577990e03e637e876f0aa3", 
           action: REMOVE_ANSWER,
-        }) {
+        ) {
           id
           text
           answer
