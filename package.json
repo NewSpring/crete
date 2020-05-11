@@ -4,14 +4,14 @@
   "private": true,
   "main": "lib/index.js",
   "engines": {
-    "node": "10.19.0"
+    "node": ">=10.x"
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start": "NODE_ENV=production node ./lib/index.js",
     "restart": "yarn && yarn dev",
     "build":
-      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib",
+      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
@@ -40,7 +40,7 @@
     "@apollosproject/data-connector-onesignal": "1.4.0",
     "@apollosproject/data-connector-passes": "1.4.0",
     "@apollosproject/data-connector-redis-cache": "1.4.0",
-    "@apollosproject/data-connector-rock": "1.4.0",
+    "@apollosproject/data-connector-rock": "1.4.1-alpha.3",
     "@apollosproject/data-connector-twilio": "1.4.0",
     "@apollosproject/data-schema": "1.4.0",
     "@apollosproject/rock-apollo-data-source": "1.4.0",
@@ -54,11 +54,13 @@
     "express": "^4.17.0",
     "graphql": "14.6.0",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3"
+    "randomcolor": "0.5.3",
+    "rookout": "^0.1.89"
   },
   "devDependencies": {
     "@apollosproject/apollo-server-env-mock": "1.4.0-beta.1",
     "@apollosproject/babel-preset-apollos": "1.4.0-beta.1",
+    "@apollosproject/eslint-config": "1.4.0-beta.1",
     "@babel/cli": "^7.4.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.7.4",
@@ -86,8 +88,6 @@
     "jest-fetch-mock": "^2.1.2",
     "linkemon": "^0.1.1",
     "nodemon": "^2.0.2",
-    "standard-version": "^7.0.1",
-    "@apollosproject/eslint-config": "1.4.0-beta.1",
-    "eslint-config-airbnb-base": "^14.0.0"
+    "standard-version": "^7.0.1"
   }
 }
