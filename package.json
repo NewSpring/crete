@@ -18,8 +18,7 @@
     "postinstall": "yarn build",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "schema:publish": "apollo schema:publish",
-    "loadtest":
-      "wrk -s loadtests/userFeed.lua https://apollos-ns-production-herokuapp-com.global.ssl.fastly.net",
+    "loadtest": "artillery run ./loadtests/tests.yml",
     "translate": "node scripts/translate.js"
   },
   "jest": {
@@ -67,6 +66,7 @@
     "@babel/node": "^7.7.4",
     "@entria/graphql-findbreakingchanges": "^1.0.1",
     "apollo": "^1.9.2",
+    "artillery": "^1.6.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-plugin-module-resolver": "^3.2.0",
