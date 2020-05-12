@@ -10,7 +10,10 @@ export default class Prayer extends RockApolloDataSource {
 
   expanded = true;
 
-  getFromId = (id) => this.request().find(id).get();
+  getFromId = (id) =>
+    this.request()
+      .find(id)
+      .get();
 
   sortPrayers = (prayers) =>
     prayers.sort((a, b) => {
@@ -60,7 +63,9 @@ export default class Prayer extends RockApolloDataSource {
       entityTypeId,
     });
     return RockConstants.createOrFindInteractionComponent({
-      componentName: `${ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST} - ${prayerId}`,
+      componentName: `${
+        ROCK_MAPPINGS.INTERACTIONS.PRAYER_REQUEST
+      } - ${prayerId}`,
       channelId: channel.id,
       entityId: parseInt(prayerId, 10),
     });
@@ -278,9 +283,16 @@ export default class Prayer extends RockApolloDataSource {
         IsActive: true,
         AllowComments: false,
         IsUrgent: false,
-        EnteredDateTime: moment().tz(ROCK.TIMEZONE).format(),
-        ApprovedOnDateTime: moment().tz(ROCK.TIMEZONE).format(),
-        ExpirationDate: moment().tz(ROCK.TIMEZONE).add(2, 'weeks').format(),
+        EnteredDateTime: moment()
+          .tz(ROCK.TIMEZONE)
+          .format(),
+        ApprovedOnDateTime: moment()
+          .tz(ROCK.TIMEZONE)
+          .format(),
+        ExpirationDate: moment()
+          .tz(ROCK.TIMEZONE)
+          .add(2, 'weeks')
+          .format(),
       });
       return this.getFromId(prayerId);
     } catch (e) {
