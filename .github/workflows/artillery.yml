@@ -28,4 +28,4 @@ jobs:
       run:
         - export AUTH_TOKEN=${{ secrets.AUTH_TOKEN }}
         - export ARTILLERY_TARGET_URL=${{ secrets.ARTILLERY_TARGET_URL }}
-        - yarn run loadtest
+        - yarn loadtest
