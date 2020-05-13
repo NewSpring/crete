@@ -63,6 +63,8 @@ export default {
             nodeId: id,
           });
           return Node.get(id, dataSources, info);
+        case 'REMOVE_ANSWER':
+          return dataSources.Prayer.answer(rockID, null);
         default:
           return null;
       }

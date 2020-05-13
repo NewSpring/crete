@@ -274,6 +274,7 @@ export default class Prayer extends RockApolloDataSource {
         LastName: lastName,
         Email: email,
         Text: text,
+        Answer: '',
         CategoryId: ROCK_MAPPINGS.GENERAL_PRAYER_CATEGORY_ID,
         CampusId: primaryCampusId || ROCK_MAPPINGS.WEB_CAMPUS_ID,
         IsPublic: !isAnonymous,
@@ -307,7 +308,7 @@ export default class Prayer extends RockApolloDataSource {
   answer = async (id, answer) => {
     try {
       await this.patch(`/PrayerRequests/${id}`, {
-        Answer: answer,
+        Answer: answer === null ? '' : answer,
       });
       return this.getFromId(id);
     } catch (e) {
