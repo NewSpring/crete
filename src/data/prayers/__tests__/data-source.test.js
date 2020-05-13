@@ -52,7 +52,7 @@ describe('PrayerRequest data sources', () => {
   });
   it('removes a prayer answer', async () => {
     Prayer.patch = () => null;
-    Prayer.getFromId = () => ({ id: 1, answer: null });
+    Prayer.getFromId = () => ({ id: 1, answer: '' });
     expect(await Prayer.answer(1, null)).toMatchSnapshot();
   });
 });
