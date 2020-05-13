@@ -25,9 +25,7 @@ jobs:
       run: yarn
 
     - name: Load Test
-      run: yarn run loadtest -o output.json
-
-    - name: Generate Report
-      run: yarn report output.json
-
-    #- name: Upload to Github Pages
+      run:
+        - export AUTH_TOKEN=${{ secrets.AUTH_TOKEN }}
+        - export ARTILLERY_TARGET_URL=${{ secrets.ARTILLERY_TARGET_URL }}
+        - yarn loadtest
