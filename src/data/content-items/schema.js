@@ -10,22 +10,22 @@ export default gql`
     itemIndex(id: String): Int
   }
 
-  type SermonNoteComment {
+  type NotesBlockComment {
     id: ID!
     text: String
   }
 
-  interface SermonNote {
+  interface NotesBlock {
     id: ID!
     allowsComment: Boolean
-    comment: SermonNoteComment @cacheControl(maxAge: 0)
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
   }
 
-  type TextNote implements SermonNote {
+  type NotesTextBlock implements NotesBlock {
     id: ID!
     allowsComment: Boolean
-    comment: SermonNoteComment @cacheControl(maxAge: 0)
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
 
     isHeader: Boolean
@@ -33,10 +33,10 @@ export default gql`
     hiddenText: String
   }
 
-  type ScriptureNote implements SermonNote {
+  type NotesScriptureBlock implements NotesBlock {
     id: ID!
     allowsComment: Boolean
-    comment: SermonNoteComment @cacheControl(maxAge: 0)
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
 
     scripture: Scripture
@@ -49,7 +49,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
-    sermonNotes: [SermonNote]
+    sermonNotes: [NotesBlock]
   }
 
   extend type DevotionalContentItem {
@@ -66,10 +66,10 @@ export default gql`
   }
 
   extend type Mutation {
-    saveSermonNoteComment(
+    saveNotesBlockComment(
       contentID: ID!
       parentID: ID!
       text: String
-    ): SermonNoteComment
+    ): NotesBlockComment
   }
 `;

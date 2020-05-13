@@ -238,17 +238,17 @@ describe('UniversalContentItem', () => {
   it('adds a sermon note', async () => {
     const query = `
       mutation {
-        saveSermonNoteComment(
+        saveNotesBlockComment(
           contentID: "WeekendContentItem:123"
-          parentID: "TextNote:123"
+          parentID: "NotesTextBlock:123"
           text: "hello"
         ) {
           id
         }
       }
     `;
-    context.dataSources.ContentItem.saveSermonNoteComment = jest.fn(() => ({
-      id: 'Note:456',
+    context.dataSources.ContentItem.saveNotesBlockComment = jest.fn(() => ({
+      id: 'NotesBlockComment:456',
     }));
     const rootValue = {};
     const result = await graphql(schema, query, rootValue, context);

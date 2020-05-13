@@ -57,7 +57,7 @@ describe('ContentItem data sources', () => {
             book: { value: '' },
             reference: { value: '' },
             translation: { value: '' },
-            addNoteField: { value: 'False' },
+            allowsComment: { value: 'False' },
           },
         },
         {
@@ -68,7 +68,7 @@ describe('ContentItem data sources', () => {
             book: { value: '' },
             reference: { value: '' },
             translation: { value: '' },
-            addNoteField: { value: 'True' },
+            allowsComment: { value: 'True' },
           },
         },
         {
@@ -79,7 +79,7 @@ describe('ContentItem data sources', () => {
             book: { value: '1234-234-234' },
             reference: { value: '3:5-6' },
             translation: { value: '23423-23423-23423' },
-            addNoteField: { value: 'True' },
+            allowsComment: { value: 'True' },
           },
         },
       ],
@@ -92,7 +92,7 @@ describe('ContentItem data sources', () => {
         { content: '<p>verse<p>', reference: 'Genesis 1:1' },
       ],
     };
-    ContentItem.getSermonNoteComments = () => ({
+    ContentItem.getNotesComments = () => ({
       'TextNote:559b23fd0aa90e81b1c023e72e230fa1': {
         id: 'Note:123',
         text: 'custom note comment',
@@ -111,18 +111,18 @@ describe('ContentItem data sources', () => {
               {
                 id: 1,
                 text:
-                  '{"apollosParentID": "TextFeature:123", "text": "this is a comment"}',
+                  '{"apollosParentID": "NotesTextBlock:123", "text": "this is a comment"}',
               },
               {
                 id: 2,
                 text:
-                  '{"apollosParentID": "ScriptureFeature:123", "text": "this is another comment"}',
+                  '{"apollosParentID": "NotesScriptureBlock:123", "text": "this is another comment"}',
               },
             ],
           }),
         }),
       }),
     });
-    expect(await ContentItem.getSermonNoteComments(1)).toMatchSnapshot();
+    expect(await ContentItem.getNotesComments(1)).toMatchSnapshot();
   });
 });

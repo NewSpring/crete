@@ -11,33 +11,30 @@ Array [
 exports[`ContentItem data sources gets sermon notes 1`] = `
 Array [
   Object {
-    "__typename": "TextNote",
+    "__typename": "NotesTextBlock",
     "allowsComment": false,
-    "comment": Object {
-      "id": "Note:123",
-      "text": "custom note comment",
-    },
+    "comment": null,
     "hasBlanks": false,
     "hiddenText": null,
-    "id": "TextNote:559b23fd0aa90e81b1c023e72e230fa1",
+    "id": "NotesTextBlock:559b23fd0aa90e81b1c023e72e230fa1",
     "isHeader": true,
     "simpleText": "1. this is point one",
   },
   Object {
-    "__typename": "TextNote",
+    "__typename": "NotesTextBlock",
     "allowsComment": true,
     "comment": null,
     "hasBlanks": false,
     "hiddenText": null,
-    "id": "TextNote:965b6e6d7046a885bea4e300b5c0400d",
+    "id": "NotesTextBlock:965b6e6d7046a885bea4e300b5c0400d",
     "isHeader": false,
     "simpleText": "this is a subpoint",
   },
   Object {
-    "__typename": "ScriptureNote",
+    "__typename": "NotesScriptureBlock",
     "allowsComment": true,
     "comment": null,
-    "id": "ScriptureNote:4f68015ba18662a7409d1219a4ce013e",
+    "id": "NotesScriptureBlock:4f68015ba18662a7409d1219a4ce013e",
     "scripture": Object {
       "content": "<p>verse<p>",
       "reference": "Genesis 1:1",
@@ -49,12 +46,12 @@ Array [
 
 exports[`ContentItem data sources gets sermon notes comments 1`] = `
 Object {
-  "ScriptureFeature:123": Object {
-    "id": "Note:965b6e6d7046a885bea4e300b5c0400d",
+  "NotesScriptureBlock:123": Object {
+    "id": "NotesBlockComment:965b6e6d7046a885bea4e300b5c0400d",
     "text": "this is another comment",
   },
-  "TextFeature:123": Object {
-    "id": "Note:559b23fd0aa90e81b1c023e72e230fa1",
+  "NotesTextBlock:123": Object {
+    "id": "NotesBlockComment:559b23fd0aa90e81b1c023e72e230fa1",
     "text": "this is a comment",
   },
 }

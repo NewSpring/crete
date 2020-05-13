@@ -3,8 +3,8 @@
 exports[`UniversalContentItem adds a sermon note 1`] = `
 Object {
   "data": Object {
-    "saveSermonNoteComment": Object {
-      "id": "Note:456",
+    "saveNotesBlockComment": Object {
+      "id": "NotesBlockComment:456",
     },
   },
 }

@@ -2,16 +2,19 @@ import { graphql } from 'graphql';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
 import { Followings, Auth } from '@apollosproject/data-connector-rock';
 import {
-  contentItemSchema,
   contentChannelSchema,
   themeSchema,
   scriptureSchema,
+  sharableSchema,
+  liveSchema,
 } from '@apollosproject/data-schema';
 
 import * as Prayer from '../index';
 import * as Person from '../../people';
 import * as Group from '../../groups';
 import * as Campus from '../../campuses';
+import * as ContentItem from '../../content-items';
+import * as Feature from '../../features';
 
 import oneRockPrayer, { twoRockPrayers } from '../../mocks/prayer';
 import oneRockPerson from '../../mocks/person';
@@ -25,6 +28,8 @@ const { getSchema, getContext } = createTestHelpers({
   Group,
   Campus,
   Followings,
+  ContentItem,
+  Feature,
 });
 
 describe('Prayer resolver', () => {
@@ -34,10 +39,11 @@ describe('Prayer resolver', () => {
   beforeEach(() => {
     // define here any extra schemas necessary
     schema = getSchema([
-      contentItemSchema,
+      sharableSchema,
       contentChannelSchema,
       themeSchema,
       scriptureSchema,
+      liveSchema,
     ]);
     context = getContext();
     rootValue = {};
