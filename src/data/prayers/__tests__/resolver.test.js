@@ -211,7 +211,26 @@ describe('Prayer resolver', () => {
       mutation {
         answerPrayer(
           id: "Prayer:7b9330c299577990e03e637e876f0aa3"
-          answer: "This is the answer"
+          answer: "This is the answer",
+        ) {
+          id
+          text
+          answer
+        }
+      }
+    `;
+    context.dataSources.Prayer.answer = jest.fn(() =>
+      Promise.resolve(oneRockPrayer)
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+  it('removes a prayer answer', async () => {
+    const query = `
+      mutation {
+        interactWithPrayer(
+          id: "Prayer:7b9330c299577990e03e637e876f0aa3", 
+          action: REMOVE_ANSWER,
         ) {
           id
           text

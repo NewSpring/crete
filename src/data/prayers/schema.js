@@ -34,6 +34,7 @@ const prayerSchema = gql`
     FLAG
     SAVE
     UNSAVE
+    REMOVE_ANSWER
   }
 
   type PrayerMenuCategory implements Node {
