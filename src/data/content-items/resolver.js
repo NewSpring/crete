@@ -38,12 +38,8 @@ const resolver = {
     },
   },
   Mutation: {
-    saveNotesBlockComment: (
-      root,
-      { contentID, parentID, text },
-      { dataSources }
-    ) =>
-      dataSources.ContentItem.saveNotesBlockComment(contentID, parentID, text),
+    saveNotesComment: (root, { contentID, blockID, text }, { dataSources }) =>
+      dataSources.ContentItem.saveNotesComment(contentID, blockID, text),
   },
   DevotionalContentItem: {
     ...defaultResolvers,

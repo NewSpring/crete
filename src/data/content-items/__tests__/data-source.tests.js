@@ -111,12 +111,12 @@ describe('ContentItem data sources', () => {
               {
                 id: 1,
                 text:
-                  '{"apollosParentID": "NotesTextBlock:123", "text": "this is a comment"}',
+                  '{"apollosBlockID": "NotesTextBlock:123", "text": "this is a comment"}',
               },
               {
                 id: 2,
                 text:
-                  '{"apollosParentID": "NotesScriptureBlock:123", "text": "this is another comment"}',
+                  '{"apollosBlockID": "NotesScriptureBlock:123", "text": "this is another comment"}',
               },
             ],
           }),

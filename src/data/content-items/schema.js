@@ -66,9 +66,9 @@ export default gql`
   }
 
   extend type Mutation {
-    saveNotesBlockComment(
+    saveNotesComment(
       contentID: ID!
-      parentID: ID!
+      blockID: ID!
       text: String
     ): NotesBlockComment
   }

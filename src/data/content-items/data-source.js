@@ -426,8 +426,8 @@ export default class ContentItem extends oldContentItem.dataSource {
 
     const commentsHash = {};
     comments.forEach(({ id, text: data }) => {
-      const { apollosParentID, text } = JSON.parse(data);
-      commentsHash[apollosParentID] = {
+      const { apollosBlockID, text } = JSON.parse(data);
+      commentsHash[apollosBlockID] = {
         id: createGlobalId(id, 'NotesBlockComment'),
         text,
       };
@@ -435,7 +435,7 @@ export default class ContentItem extends oldContentItem.dataSource {
     return commentsHash;
   };
 
-  saveNotesBlockComment = async (contentID, parentID, text) => {
+  saveNotesComment = async (contentID, blockID, text) => {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
 
@@ -444,13 +444,13 @@ export default class ContentItem extends oldContentItem.dataSource {
       parseGlobalId(contentID).id
     );
     const filteredComments = allComments.filter((note) => {
-      const { apollosParentID } = JSON.parse(note.text);
-      return apollosParentID === parentID;
+      const { apollosBlockID } = JSON.parse(note.text);
+      return apollosBlockID === blockID;
     });
     // if there's already a saved note, simply overwrite
     let rockNoteID;
     const data = JSON.stringify({
-      apollosParentID: parentID,
+      apollosBlockID: blockID,
       text,
     });
     if (filteredComments.length) {
@@ -472,7 +472,7 @@ export default class ContentItem extends oldContentItem.dataSource {
       .get();
     return {
       id: createGlobalId(note.id, 'Note'),
-      parent: this.getFromId(parseGlobalId(parentID).id),
+      parent: this.getFromId(parseGlobalId(blockID).id),
       text,
     };
   };

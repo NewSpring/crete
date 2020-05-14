@@ -238,16 +238,16 @@ describe('UniversalContentItem', () => {
   it('adds a sermon note', async () => {
     const query = `
       mutation {
-        saveNotesBlockComment(
+        saveNotesComment(
           contentID: "WeekendContentItem:123"
-          parentID: "NotesTextBlock:123"
+          blockID: "NotesTextBlock:123"
           text: "hello"
         ) {
           id
         }
       }
     `;
-    context.dataSources.ContentItem.saveNotesBlockComment = jest.fn(() => ({
+    context.dataSources.ContentItem.saveNotesComment = jest.fn(() => ({
       id: 'NotesBlockComment:456',
     }));
     const rootValue = {};
