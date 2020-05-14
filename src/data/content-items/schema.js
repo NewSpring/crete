@@ -10,15 +10,22 @@ export default gql`
     itemIndex(id: String): Int
   }
 
-  interface SermonNote {
+  type NotesBlockComment {
     id: ID!
-    allowsCustomNote: Boolean
+    text: String
+  }
+
+  interface NotesBlock {
+    id: ID!
+    allowsComment: Boolean
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
   }
 
-  type TextNote implements SermonNote {
+  type NotesTextBlock implements NotesBlock {
     id: ID!
-    allowsCustomNote: Boolean
+    allowsComment: Boolean
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
 
     isHeader: Boolean
@@ -26,9 +33,10 @@ export default gql`
     hiddenText: String
   }
 
-  type ScriptureNote implements SermonNote {
+  type NotesScriptureBlock implements NotesBlock {
     id: ID!
-    allowsCustomNote: Boolean
+    allowsComment: Boolean
+    comment: NotesBlockComment @cacheControl(maxAge: 0)
     simpleText: String
 
     scripture: Scripture
@@ -41,7 +49,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
-    sermonNotes: [SermonNote]
+    sermonNotes: [NotesBlock]
   }
 
   extend type DevotionalContentItem {
@@ -55,5 +63,13 @@ export default gql`
 
   extend type Query {
     contentItemFromSlug(slug: String!): ContentItem
+  }
+
+  extend type Mutation {
+    saveNotesComment(
+      contentID: ID!
+      blockID: ID!
+      text: String
+    ): NotesBlockComment
   }
 `;

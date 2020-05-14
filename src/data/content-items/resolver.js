@@ -37,6 +37,10 @@ const resolver = {
       return channels;
     },
   },
+  Mutation: {
+    saveNotesComment: (root, { contentID, blockID, text }, { dataSources }) =>
+      dataSources.ContentItem.saveNotesComment(contentID, blockID, text),
+  },
   DevotionalContentItem: {
     ...defaultResolvers,
     sharing: (root, args, { dataSources: { ContentItem } }) => ({
@@ -134,10 +138,10 @@ const resolver = {
       };
     },
     sermonNotes: (
-      { attributeValues: { sermonNotes } },
+      { id, attributeValues: { sermonNotes } },
       args,
       { dataSources: { ContentItem } }
-    ) => (sermonNotes ? ContentItem.getSermonNotes(sermonNotes) : []),
+    ) => (sermonNotes ? ContentItem.getSermonNotes(id, sermonNotes) : []),
   },
   UniversalContentItem: {
     ...defaultResolvers,
@@ -148,7 +152,7 @@ const resolver = {
   ContentSeriesContentItem: {
     ...defaultResolvers,
   },
-  SermonNote: {
+  NotesBlock: {
     __resolveType: ({ __typename }) => __typename,
   },
 };

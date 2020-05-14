@@ -235,4 +235,23 @@ describe('UniversalContentItem', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+  it('adds a sermon note', async () => {
+    const query = `
+      mutation {
+        saveNotesComment(
+          contentID: "WeekendContentItem:123"
+          blockID: "NotesTextBlock:123"
+          text: "hello"
+        ) {
+          id
+        }
+      }
+    `;
+    context.dataSources.ContentItem.saveNotesComment = jest.fn(() => ({
+      id: 'NotesBlockComment:456',
+    }));
+    const rootValue = {};
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
 });

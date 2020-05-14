@@ -1,13 +1,13 @@
 import { ContentItem as oldContentItem } from '@apollosproject/data-connector-rock';
 import { get, flatten } from 'lodash';
 import ApollosConfig from '@apollosproject/config';
+import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
 import { parseKeyValueAttribute } from '@apollosproject/rock-apollo-data-source';
-import { createGlobalId } from '@apollosproject/server-core';
 import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS, WISTIA } = ApollosConfig;
+const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS, WISTIA } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -289,6 +289,7 @@ export default class ContentItem extends oldContentItem.dataSource {
           );
           break;
         case 'note':
+          // TODO check for no modifier or duplicates and don't return feature if so
           features.push(
             Feature.createNoteFeature({
               placeholder: value,
@@ -414,9 +415,67 @@ export default class ContentItem extends oldContentItem.dataSource {
     return this.coreSummaryMethod(root);
   };
 
-  getSermonNotes = async ({ value: guid }) => {
+  getNotesComments = async (rockContentID) => {
+    const { Auth } = this.context.dataSources;
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+    const comments = await this.request('Notes')
+      .filter(`CreatedByPersonAliasId eq ${primaryAliasId}`)
+      .andFilter(`EntityId eq ${rockContentID}`)
+      .andFilter(`NoteTypeId eq ${ROCK_MAPPINGS.BLOCK_COMMENT_NOTE_TYPE_ID}`)
+      .get();
+
+    const commentsHash = {};
+    comments.forEach(({ id, text: data }) => {
+      const { apollosBlockID, text } = JSON.parse(data);
+      commentsHash[apollosBlockID] = {
+        id: createGlobalId(id, 'NotesBlockComment'),
+        text,
+      };
+    });
+    return commentsHash;
+  };
+
+  saveNotesComment = async (contentID, blockID, text) => {
+    const { Auth } = this.context.dataSources;
+    const { primaryAliasId } = await Auth.getCurrentPerson();
+
+    const data = JSON.stringify({
+      apollosBlockID: blockID,
+      text,
+    });
+
+    // find a saved note for the parent
+    const comments = await this.getNotesComments(parseGlobalId(contentID).id);
+    const comment = comments[blockID];
+
+    // if there's already a saved note, simply overwrite
+    let rockNoteID;
+    if (comment) {
+      rockNoteID = parseGlobalId(comment.id).id;
+      await this.patch(`Notes/${rockNoteID}`, {
+        Text: data,
+      });
+    } else
+      rockNoteID = await this.post('Notes', {
+        IsSystem: false,
+        NoteTypeId: ROCK_MAPPINGS.BLOCK_COMMENT_NOTE_TYPE_ID,
+        EntityId: parseGlobalId(contentID).id,
+        Text: data,
+        CreatedByPersonAliasId: primaryAliasId,
+      });
+    const note = await this.request('Notes')
+      .find(rockNoteID)
+      .get();
+    return {
+      id: createGlobalId(note.id, 'NotesBlockComment'),
+      text,
+    };
+  };
+
+  getSermonNotes = async (contentID, { value: guid }) => {
     const { MatrixItem, Scripture } = this.context.dataSources;
     const items = await MatrixItem.getItemsFromGuid(guid);
+    const comments = await this.getNotesComments(contentID);
     const notes = await Promise.all(
       items.map(
         async ({
@@ -427,7 +486,7 @@ export default class ContentItem extends oldContentItem.dataSource {
             book: { value: bookGUID },
             reference: { value: ref },
             translation: { value: versionGUID },
-            addNoteField: { value: custom },
+            allowsComment: { value: comment },
           },
         }) => {
           let book;
@@ -438,9 +497,10 @@ export default class ContentItem extends oldContentItem.dataSource {
             case 'header':
             case 'text':
               return {
-                __typename: 'TextNote',
-                id: createGlobalId(id, 'TextNote'),
-                allowsCustomNote: custom === 'True',
+                __typename: 'NotesTextBlock',
+                id: createGlobalId(id, 'NotesTextBlock'),
+                allowsComment: comment === 'True',
+                comment: comments[createGlobalId(id, 'NotesTextBlock')] || null,
                 simpleText: text.replace(blanksRegEx, (match, p1) => p1),
                 hasBlanks: !!text.match(blanksRegEx),
                 hiddenText: text.match(blanksRegEx)
@@ -462,9 +522,11 @@ export default class ContentItem extends oldContentItem.dataSource {
                 version.value
               );
               return {
-                __typename: 'ScriptureNote',
-                id: createGlobalId(id, 'ScriptureNote'),
-                allowsCustomNote: custom === 'True',
+                __typename: 'NotesScriptureBlock',
+                id: createGlobalId(id, 'NotesScriptureBlock'),
+                allowsComment: comment === 'True',
+                comment:
+                  comments[createGlobalId(id, 'NotesScriptureBlock')] || null,
                 simpleText: `${scriptures[0].content
                   .replace(/<[^>]*>?/gm, '')
                   .replace(/(\d)(\D)/gm, (match, p1, p2) => `${p1}) ${p2}`)} ${
