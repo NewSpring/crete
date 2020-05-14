@@ -439,30 +439,26 @@ export default class ContentItem extends oldContentItem.dataSource {
     const { Auth } = this.context.dataSources;
     const { primaryAliasId } = await Auth.getCurrentPerson();
 
-    // find a saved note for the parent
-    const allComments = await this.getNotesComments(
-      parseGlobalId(contentID).id
-    );
-    const filteredComments = allComments.filter((note) => {
-      const { apollosBlockID } = JSON.parse(note.text);
-      return apollosBlockID === blockID;
-    });
-    // if there's already a saved note, simply overwrite
-    let rockNoteID;
     const data = JSON.stringify({
       apollosBlockID: blockID,
       text,
     });
-    if (filteredComments.length) {
-      const comment = filteredComments[0];
-      await this.patch(`Notes/${comment.id}`, {
+
+    // find a saved note for the parent
+    const comments = await this.getNotesComments(parseGlobalId(contentID).id);
+    const comment = comments[blockID];
+
+    // if there's already a saved note, simply overwrite
+    let rockNoteID;
+    if (comment) {
+      rockNoteID = parseGlobalId(comment.id).id;
+      await this.patch(`Notes/${rockNoteID}`, {
         Text: data,
       });
-      rockNoteID = comment.id;
     } else
       rockNoteID = await this.post('Notes', {
         IsSystem: false,
-        NoteTypeId: ROCK_MAPPINGS.SAVED_SERMON_NOTE_TYPE_ID,
+        NoteTypeId: ROCK_MAPPINGS.BLOCK_COMMENT_NOTE_TYPE_ID,
         EntityId: parseGlobalId(contentID).id,
         Text: data,
         CreatedByPersonAliasId: primaryAliasId,
@@ -471,8 +467,7 @@ export default class ContentItem extends oldContentItem.dataSource {
       .find(rockNoteID)
       .get();
     return {
-      id: createGlobalId(note.id, 'Note'),
-      parent: this.getFromId(parseGlobalId(blockID).id),
+      id: createGlobalId(note.id, 'NotesBlockComment'),
       text,
     };
   };
