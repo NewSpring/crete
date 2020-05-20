@@ -60,6 +60,7 @@ const apolloServer = new ApolloServer({
     if (stacktrace) {
       delete productionError.extensions.exception.stacktrace;
     }
+    productionError.extensions.time = new Date();
     return productionError;
   },
   playground: {
