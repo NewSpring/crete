@@ -38,6 +38,7 @@ import * as RockConstants from './rock-constants';
 import * as OneSignalWithRock from './oneSignalWithRock';
 
 // patch RequestBuilder to disable caching
+// https://github.com/apollographql/apollo-server/issues/4099
 RequestBuilder.prototype.cache = () => this;
 
 const data = {
