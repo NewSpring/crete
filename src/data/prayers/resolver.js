@@ -12,7 +12,6 @@ export default {
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
     prayerFeed: async (root, { first, after, type }, { dataSources }, info) => {
-      throw new Error('hey');
       const cursor = await dataSources.Prayer.byPrayerFeed(type);
       if (type === 'SAVED') info.cacheControl.setCacheHint({ maxAge: 0 });
       return dataSources.Prayer.paginate({
