@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
-    "start": "NODE_ENV=production node ./lib/index.js",
+    "start": "NODE_ENV=production node --inspect ./lib/index.js",
     "restart": "yarn && yarn dev",
     "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
