@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import ApollosConfig from '@apollosproject/config';
 import express from 'express';
+import { RedisCache } from 'apollo-server-cache-redis';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
 import bugsnag, { bugsnagMiddleware } from './bugsnag';
 
@@ -38,6 +39,9 @@ const apolloServer = new ApolloServer({
   resolvers,
   dataSources,
   context,
+  cache: new RedisCache({
+    host: 'localhost',
+  }),
   introspection: true,
   extensions,
   debug: true,
