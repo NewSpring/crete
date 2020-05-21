@@ -39,9 +39,7 @@ const apolloServer = new ApolloServer({
   resolvers,
   dataSources,
   context,
-  cache: new RedisCache({
-    host: 'localhost',
-  }),
+  cache: new RedisCache(process.env.REDIS_URL),
   introspection: true,
   extensions,
   debug: true,
