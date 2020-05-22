@@ -2,6 +2,9 @@ import dotenv from 'dotenv/config'; // eslint-disable-line
 import config from './config'; // eslint-disable-line
 import server from './server';
 
+// memory leak dumps
+import leakdump from '../scripts/leakdump.js'; // eslint-disable-line
+
 export { testSchema } from './server'; // eslint-disable-line import/prefer-default-export
 
 // Rookout debug
