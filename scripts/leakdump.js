@@ -33,6 +33,8 @@ const uploadFile = (filename) => {
   });
 };
 
+const filename0 = dump();
+uploadFile(filename0);
 setInterval(() => {
   const filename = dump();
   uploadFile(filename);
