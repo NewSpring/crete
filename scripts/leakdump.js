@@ -7,14 +7,9 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const dir = process.cwd();
-
 const dump = () => {
-  const filename = `${dir}/${Date.now()}.heapsnapshot`;
-  heapdump.writeSnapshot(filename, (err, path) => {
-    if (err) throw err;
-    console.log('dump written to', path);
-  });
+  const filename = `${process.cwd()}/${Date.now()}.heapsnapshot`;
+  heapdump.writeSnapshot(filename);
   return filename;
 };
 
