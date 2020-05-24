@@ -10,8 +10,7 @@
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start": "NODE_ENV=production node ./lib/index.js",
     "restart": "yarn && yarn dev",
-    "build":
-      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
+    "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
@@ -23,7 +22,9 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test|tests).{js,jsx,mjs}"
@@ -57,8 +58,7 @@
     "graphql": "14.6.0",
     "heapdump": "^0.3.15",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3",
-    "rookout": "^0.1.89"
+    "randomcolor": "0.5.3"
   },
   "devDependencies": {
     "@apollosproject/apollo-server-env-mock": "1.4.0-beta.1",
