@@ -28,7 +28,7 @@ const uploadFile = (filename) => {
   });
 };
 
-setInterval(() => {
-  const filename = dump();
+setInterval(async () => {
+  const filename = await dump();
   uploadFile(filename);
 }, 60000 * 30);
