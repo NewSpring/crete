@@ -7,9 +7,11 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
-const dump = async () => {
+const dump = () => {
   const filename = `${process.cwd()}/${Date.now()}.heapsnapshot`;
-  await heapdump.writeSnapshot(filename);
+  heapdump.writeSnapshot(filename, (err, file) => {
+    console.log('Dump written to', file);
+  });
   return filename;
 };
 
@@ -28,7 +30,7 @@ const uploadFile = (filename) => {
   });
 };
 
-setInterval(async () => {
-  const filename = await dump();
+module.exports = () => {
+  const filename = dump();
   uploadFile(filename);
-}, 60000 * 30);
+};

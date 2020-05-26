@@ -15,6 +15,9 @@ import {
   setupJobs,
 } from './data';
 
+// memory leak dumps
+import leakdump from '../scripts/leakdump'; // eslint-disable-line
+
 export { resolvers, schema, testSchema };
 
 const isDev =
@@ -77,6 +80,11 @@ const apolloServer = new ApolloServer({
 });
 
 const app = express();
+
+app.get('/leak', async (req, res) => {
+  leakdump();
+  res.send('heap uploaded to S3');
+});
 
 // This must be the first piece of middleware in the stack.
 // It can only capture errors in downstream middleware
