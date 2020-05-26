@@ -81,7 +81,7 @@ const apolloServer = new ApolloServer({
 
 const app = express();
 
-app.get('/leak', async (req, res) => {
+app.get('/leak', (req, res) => {
   leakdump();
   res.send('heap uploaded to S3');
 });
