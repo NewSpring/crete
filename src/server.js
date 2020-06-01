@@ -1,7 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import ApollosConfig from '@apollosproject/config';
 import express from 'express';
-import { RedisCache } from 'apollo-server-cache-redis';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
 import bugsnag, { bugsnagMiddleware } from './bugsnag';
 
@@ -42,7 +41,6 @@ const apolloServer = new ApolloServer({
   resolvers,
   dataSources,
   context,
-  cache: new RedisCache(process.env.REDIS_URL),
   introspection: true,
   extensions,
   debug: true,
@@ -80,11 +78,6 @@ const apolloServer = new ApolloServer({
 });
 
 const app = express();
-
-app.get('/leak', (req, res) => {
-  leakdump();
-  res.send('heap uploaded to S3');
-});
 
 // This must be the first piece of middleware in the stack.
 // It can only capture errors in downstream middleware
