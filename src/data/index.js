@@ -21,7 +21,6 @@ import {
   BinaryFiles,
   Event,
 } from '@apollosproject/data-connector-rock';
-import RequestBuilder from '@apollosproject/rock-apollo-data-source/lib/request-builder';
 import * as LiveStream from './live';
 import * as Person from './people';
 import * as ContentItem from './content-items';
@@ -36,10 +35,6 @@ import * as RockConstants from './rock-constants';
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
-
-// patch RequestBuilder to disable caching
-// https://github.com/apollographql/apollo-server/issues/4099
-RequestBuilder.prototype.cache = () => this;
 
 const data = {
   Followings,

@@ -14,6 +14,9 @@ import {
   setupJobs,
 } from './data';
 
+// memory leak dumps
+import leakdump from '../scripts/leakdump'; // eslint-disable-line
+
 export { resolvers, schema, testSchema };
 
 const isDev =

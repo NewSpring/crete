@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
-    "start": "NODE_ENV=production node ./lib/index.js",
+    "start": "NODE_ENV=production node --inspect ./lib/index.js",
     "restart": "yarn && yarn dev",
     "build":
       "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
@@ -48,13 +48,14 @@
     "@bugsnag/plugin-express": "^6.2.0",
     "apollo-server": "^2.11.0",
     "apollo-server-express": "2.11.0",
+    "aws-sdk": "^2.682.0",
     "color": "3.0.0",
     "dotenv": "6.0.0",
     "express": "^4.17.0",
     "graphql": "14.6.0",
+    "heapdump": "^0.3.15",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3",
-    "rookout": "^0.1.89"
+    "randomcolor": "0.5.3"
   },
   "devDependencies": {
     "@apollosproject/apollo-server-env-mock": "1.4.0-beta.1",

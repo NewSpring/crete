@@ -4,14 +4,6 @@ import server from './server';
 
 export { testSchema } from './server'; // eslint-disable-line import/prefer-default-export
 
-// Rookout debug
-const rookout = require('rookout');
-
-rookout.start({
-  token: process.env.ROOKOUT_KEY,
-  labels: { env: process.env.ENVIRONMENT || 'development' },
-});
-
 // Use the port, if provided.
 const { PORT } = process.env;
 if (!PORT && process.env.NODE_ENV !== 'test')
