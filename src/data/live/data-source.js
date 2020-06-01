@@ -31,13 +31,7 @@ export default class LiveStream extends RockApolloDataSource {
     return Promise.all(
       liveItems.map(async (item) => ({
         contentItem: item,
-        // TODO put this back once we determine if it's the cause of the memory leak
-        // ...(await this.getLiveStream()),
-        // ... and remove these four lines
-        isLive: false,
-        eventStartTime: null,
-        media: { sources: [{ uri: LIVING_AS_ONE.STREAM_URL }] },
-        webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
+        ...(await this.getLiveStream()),
       }))
     );
   }
