@@ -542,4 +542,45 @@ export default class ContentItem extends oldContentItem.dataSource {
     );
     return notes;
   };
+
+  // Had to override this function to be able to remove campaign channel siblings
+  getCursorBySiblingContentItemId = async (id) => {
+    // Get all parents for the current item.
+    const parentAssociations = await this.request(
+      'ContentChannelItemAssociations'
+    )
+      .filter(`ChildContentChannelItemId eq ${id}`)
+      .cache({ ttl: 60 })
+      .get();
+
+    if (!parentAssociations || !parentAssociations.length)
+      return this.request().empty();
+
+    // Now, fetch all children relations for those parents (excluding the original item)
+    const siblingAssociationsRequest = await this.request(
+      'ContentChannelItemAssociations'
+    );
+
+    const parentFilter = parentAssociations.map(
+      ({ contentChannelItemId }) =>
+        `(ContentChannelItemId eq ${contentChannelItemId})`
+    );
+    siblingAssociationsRequest.filterOneOf(parentFilter);
+
+    const siblingAssociations = await siblingAssociationsRequest.get();
+    if (!siblingAssociations || !siblingAssociations.length)
+      return this.request().empty();
+
+    const blacklistedIds = (await this.byContentChannelIds(
+      ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS
+    ).get()).map(({ id: blacklistedId }) => blacklistedId);
+
+    const finalIds = siblingAssociations.filter(
+      (sibling) => !blacklistedIds.includes(sibling.contentChannelItemId)
+    );
+
+    return this.getFromIds(
+      finalIds.map(({ childContentChannelItemId }) => childContentChannelItemId)
+    ).sort(this.DEFAULT_SORT());
+  };
 }
