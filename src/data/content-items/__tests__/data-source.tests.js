@@ -1,6 +1,21 @@
 import personMock from '../../mocks/person';
 import ContentDataSource from '../data-source';
 
+const buildGetMock = (response, dataSource) => {
+  const get = jest.fn();
+  if (Array.isArray(response) && Array.isArray(response[0])) {
+    response.forEach((responseVal) => {
+      get.mockReturnValueOnce(
+        new Promise((resolve) => resolve(dataSource.normalize(responseVal)))
+      );
+    });
+  }
+  get.mockReturnValue(
+    new Promise((resolve) => resolve(dataSource.normalize(response)))
+  );
+  return get;
+};
+
 describe('ContentItem data sources', () => {
   let ContentItem;
   beforeEach(() => {
@@ -124,5 +139,39 @@ describe('ContentItem data sources', () => {
       }),
     });
     expect(await ContentItem.getNotesComments(1)).toMatchSnapshot();
+  });
+  it('gets a cursor finding sibling content items of a provided item', async () => {
+    // ContentItem.get = () => [
+    //   [{ ContentChannelItemId: 101 }],
+    //   [
+    //     { ContentChannelId: 201, ChildContentChannelItemId: 1 },
+    //     { ContentChannelId: 202, ChildContentChannelItemId: 2 },
+    //   ],
+    //   [{ Id: 1 }, { Id: 2 }],
+    // ];
+    ContentItem.get = buildGetMock(
+      [
+        [
+          { ChildContentChannelItemId: 101 },
+          { ChildContentChannelItemId: 201 },
+        ],
+        [{ Id: 1 }, { Id: 2 }],
+      ],
+      ContentItem
+    );
+    const cursor = await ContentItem.getCursorBySiblingContentItemId(1);
+    expect(cursor.get()).resolves.toMatchSnapshot();
+    expect(ContentItem.get.mock.calls).toMatchSnapshot();
+  });
+  it('returns an empty array when there are no sibling content items', async () => {
+    // ContentItem.request = () => ({
+    //   get: () => [],
+    //   filter: () => {},
+    //   cache: () => {},
+    // });
+    ContentItem.get = buildGetMock([], ContentItem);
+    const cursor = await ContentItem.getCursorBySiblingContentItemId(1);
+    expect(await cursor.get()).toEqual([]);
+    expect(ContentItem.get.mock.calls).toMatchSnapshot();
   });
 });
