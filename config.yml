@@ -95,6 +95,8 @@ ROCK_MAPPINGS:
     PRAYER_REQUEST: Apollos NewSpring Prayer Request
     # 512 is "Mobile App"
     CHANNEL_MEDIUM_TYPE_ID: 512
+    CHANNEL_IDS:
+      WeekendContentItem: 10
 
   CONTENT_ITEM:
     ContentSeriesContentItem:

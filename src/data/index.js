@@ -11,7 +11,6 @@ import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
   Followings,
-  Interactions,
   ContentChannel,
   Sharable,
   Auth,
@@ -31,6 +30,7 @@ import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
 import * as RockConstants from './rock-constants';
+import * as Interactions from './interactions';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
