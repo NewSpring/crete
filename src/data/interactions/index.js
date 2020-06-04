@@ -16,7 +16,6 @@ class Interactions extends baseInteractions.dataSource {
   };
 
   async addContentViewInteraction({ id: nodeId }) {
-    console.log('hello');
     const {
       dataSources: { RockConstants, Auth },
     } = this.context;
