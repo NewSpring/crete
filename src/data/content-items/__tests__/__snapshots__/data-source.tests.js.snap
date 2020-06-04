@@ -17,7 +17,7 @@ Array [
     Object {},
   ],
   Array [
-    "ContentChannelItems?loadAttributes=expanded&%24filter=%28%28%28StartDateTime%20lt%20datetime%272020-06-04T09%3A20%3A40%27%29%20or%20%28StartDateTime%20eq%20null%29%29%20and%20%28%28ExpireDateTime%20gt%20datetime%272020-06-04T09%3A20%3A40%27%29%20or%20%28ExpireDateTime%20eq%20null%29%29%29%20and%20%28%28%28Status%20eq%20%27Approved%27%29%20or%20%28ContentChannel%2FRequiresApproval%20eq%20false%29%29%29&%24orderby=StartDateTime%20desc",
+    "ContentChannelItems?loadAttributes=expanded&%24filter=%28%28%28StartDateTime%20lt%20datetime%272017-11-25T07%3A34%3A56%27%29%20or%20%28StartDateTime%20eq%20null%29%29%20and%20%28%28ExpireDateTime%20gt%20datetime%272017-11-25T07%3A34%3A56%27%29%20or%20%28ExpireDateTime%20eq%20null%29%29%29%20and%20%28%28%28Status%20eq%20%27Approved%27%29%20or%20%28ContentChannel%2FRequiresApproval%20eq%20false%29%29%29&%24orderby=StartDateTime%20desc",
     Object {},
     Object {
       "cacheOptions": Object {

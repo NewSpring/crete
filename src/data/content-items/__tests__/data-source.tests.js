@@ -16,6 +16,16 @@ const buildGetMock = (response, dataSource) => {
   return get;
 };
 
+const RealDate = Date;
+
+function mockDate(isoDate) {
+  global.Date = class extends RealDate {
+    constructor() {
+      return new RealDate(isoDate);
+    }
+  };
+}
+
 describe('ContentItem data sources', () => {
   let ContentItem;
   beforeEach(() => {
@@ -25,6 +35,7 @@ describe('ContentItem data sources', () => {
         Auth: { getCurrentPerson: () => personMock },
       },
     };
+    mockDate('2017-11-25T12:34:56z');
   });
   it('gets scripture references', async () => {
     ContentItem.context = {
@@ -141,14 +152,6 @@ describe('ContentItem data sources', () => {
     expect(await ContentItem.getNotesComments(1)).toMatchSnapshot();
   });
   it('gets a cursor finding sibling content items of a provided item', async () => {
-    // ContentItem.get = () => [
-    //   [{ ContentChannelItemId: 101 }],
-    //   [
-    //     { ContentChannelId: 201, ChildContentChannelItemId: 1 },
-    //     { ContentChannelId: 202, ChildContentChannelItemId: 2 },
-    //   ],
-    //   [{ Id: 1 }, { Id: 2 }],
-    // ];
     ContentItem.get = buildGetMock(
       [
         [
@@ -164,11 +167,6 @@ describe('ContentItem data sources', () => {
     expect(ContentItem.get.mock.calls).toMatchSnapshot();
   });
   it('returns an empty array when there are no sibling content items', async () => {
-    // ContentItem.request = () => ({
-    //   get: () => [],
-    //   filter: () => {},
-    //   cache: () => {},
-    // });
     ContentItem.get = buildGetMock([], ContentItem);
     const cursor = await ContentItem.getCursorBySiblingContentItemId(1);
     expect(await cursor.get()).toEqual([]);
