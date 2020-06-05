@@ -8,25 +8,18 @@ class Interactions extends baseInteractions.dataSource {
   baseInteractionsMap = this.ADDITIONAL_INTERACTIONS_MAP;
 
   ADDITIONAL_INTERACTIONS_MAP = {
+    ...this.baseInteractionsMap,
     ContentItem: {
       ...this.baseInteractionsMap.ContentItem,
       VIEW: this.addContentViewInteraction.bind(this),
     },
-    ...this.baseInteractionsMap,
   };
 
-  async addContentViewInteraction({ id: nodeId }) {
+  async addContentViewInteraction({ id, __type }) {
     const {
       dataSources: { RockConstants, Auth },
     } = this.context;
-    const { id, __type } = parseGlobalId(nodeId);
-    console.log(__type);
-    // const entityType = await RockConstants.modelType(__type);
-    // const interactionComponent = await RockConstants.interactionComponent({
-    // entityId: id,
-    // entityTypeId: entityType.id,
-    // entityTypeName: entityType.friendlyName,
-    // });
+    if (!(__type in ROCK_MAPPINGS.INTERACTIONS.CHANNEL_IDS)) return null;
     const interactionComponent = RockConstants.createOrFindInteractionComponent(
       {
         componentName: `${ROCK_MAPPINGS.INTERACTIONS.COMPONENT_NAME} - ${id}`,
@@ -44,7 +37,7 @@ class Interactions extends baseInteractions.dataSource {
     // Operation: 'VIEW',
     // InteractionDateTime: new Date().toJSON(),
     // InteractionSummary: 'VIEW',
-    // ForeignKey: nodeId,
+    // ForeignKey: id,
     // });
     return null;
   }
