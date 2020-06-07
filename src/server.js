@@ -2,7 +2,8 @@ import { ApolloServer } from 'apollo-server-express';
 import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
-import bugsnag, { bugsnagMiddleware } from './bugsnag';
+// import bugsnag, { bugsnagMiddleware } from './bugsnag';
+import { bugsnagMiddleware } from './bugsnag';
 
 import {
   resolvers,
