@@ -2,7 +2,8 @@ import { ApolloServer } from 'apollo-server-express';
 import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
-import bugsnag, { bugsnagMiddleware } from './bugsnag';
+// import bugsnag, { bugsnagMiddleware } from './bugsnag';
+import { bugsnagMiddleware } from './bugsnag';
 
 import {
   resolvers,
@@ -41,28 +42,29 @@ const apolloServer = new ApolloServer({
   introspection: true,
   extensions,
   debug: true,
-  formatError: (error) => {
-    const productionError = error;
-    const {
-      extensions: {
-        exception: { stacktrace = [] },
-      },
-    } = error;
-    bugsnag.notify(error, {
-      metaData: {
-        Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
-        'GraphQL Info': { path: error.path },
-        'Custom Stacktrace': {
-          trace: stacktrace.join('\n'),
-        },
-      },
-    });
-    if (stacktrace) {
-      delete productionError.extensions.exception.stacktrace;
-    }
-    productionError.extensions.time = new Date();
-    return productionError;
-  },
+  // TODO see if this helps find bugs
+  // formatError: (error) => {
+  // const productionError = error;
+  // const {
+  // extensions: {
+  // exception: { stacktrace = [] },
+  // },
+  // } = error;
+  // bugsnag.notify(error, {
+  // metaData: {
+  // Rock: { rockUrl: ApollosConfig.ROCK.API_URL },
+  // 'GraphQL Info': { path: error.path },
+  // 'Custom Stacktrace': {
+  // trace: stacktrace.join('\n'),
+  // },
+  // },
+  // });
+  // if (stacktrace) {
+  // delete productionError.extensions.exception.stacktrace;
+  // }
+  // productionError.extensions.time = new Date();
+  // return productionError;
+  // },
   playground: {
     settings: {
       'editor.cursorShape': 'line',
