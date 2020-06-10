@@ -1,35 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContentItem data sources gets a cursor finding sibling content items of a provided item 1`] = `
-Array [
-  Array [
-    "ContentChannelItemAssociations?loadAttributes=expanded&%24filter=ChildContentChannelItemId%20eq%201",
-    Object {},
-    Object {
-      "cacheOptions": Object {
-        "ttl": 60,
-      },
-    },
-  ],
-  Array [
-    "ContentChannelItemAssociations?loadAttributes=expanded&%24filter=%28%28ContentChannelItemId%20eq%20undefined%29%29%20or%20%28%28ContentChannelItemId%20eq%20undefined%29%29",
-    Object {},
-    Object {},
-  ],
-  Array [
-    "ContentChannelItems?loadAttributes=expanded&%24filter=%28%28%28StartDateTime%20lt%20datetime%272017-11-25T07%3A34%3A56%27%29%20or%20%28StartDateTime%20eq%20null%29%29%20and%20%28%28ExpireDateTime%20gt%20datetime%272017-11-25T07%3A34%3A56%27%29%20or%20%28ExpireDateTime%20eq%20null%29%29%29%20and%20%28%28%28Status%20eq%20%27Approved%27%29%20or%20%28ContentChannel%2FRequiresApproval%20eq%20false%29%29%29&%24orderby=StartDateTime%20desc",
-    Object {},
-    Object {
-      "cacheOptions": Object {
-        "ttl": 60,
-      },
-    },
-  ],
-]
-`;
-
-exports[`ContentItem data sources gets a cursor finding sibling content items of a provided item 2`] = `Array []`;
-
 exports[`ContentItem data sources gets scripture references 1`] = `
 Array [
   Array [
@@ -85,18 +55,4 @@ Object {
     "text": "this is a comment",
   },
 }
-`;
-
-exports[`ContentItem data sources returns an empty array when there are no sibling content items 1`] = `
-Array [
-  Array [
-    "ContentChannelItemAssociations?loadAttributes=expanded&%24filter=ChildContentChannelItemId%20eq%201",
-    Object {},
-    Object {
-      "cacheOptions": Object {
-        "ttl": 60,
-      },
-    },
-  ],
-]
 `;

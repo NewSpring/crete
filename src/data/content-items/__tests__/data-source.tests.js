@@ -1,31 +1,6 @@
 import personMock from '../../mocks/person';
 import ContentDataSource from '../data-source';
 
-const buildGetMock = (response, dataSource) => {
-  const get = jest.fn();
-  if (Array.isArray(response) && Array.isArray(response[0])) {
-    response.forEach((responseVal) => {
-      get.mockReturnValueOnce(
-        new Promise((resolve) => resolve(dataSource.normalize(responseVal)))
-      );
-    });
-  }
-  get.mockReturnValue(
-    new Promise((resolve) => resolve(dataSource.normalize(response)))
-  );
-  return get;
-};
-
-const RealDate = Date;
-
-function mockDate(isoDate) {
-  global.Date = class extends RealDate {
-    constructor() {
-      return new RealDate(isoDate);
-    }
-  };
-}
-
 describe('ContentItem data sources', () => {
   let ContentItem;
   beforeEach(() => {
@@ -35,7 +10,6 @@ describe('ContentItem data sources', () => {
         Auth: { getCurrentPerson: () => personMock },
       },
     };
-    mockDate('2017-11-25T12:34:56z');
   });
   it('gets scripture references', async () => {
     ContentItem.context = {
