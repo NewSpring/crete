@@ -79,6 +79,19 @@ const resolver = {
         ),
       };
     },
+    siblingContentItemsConnection: async ({ id }, args, { dataSources }) => {
+      const series = await dataSources.ContentItem.getSeries(
+        id,
+        ROCK_MAPPINGS.DEVOTIONAL_SERIES_CHANNEL_ID
+      );
+      const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+        series.id
+      );
+      return dataSources.ContentItem.paginate({
+        cursor,
+        args,
+      });
+    },
   },
   WeekendContentItem: {
     ...defaultResolvers,
@@ -136,6 +149,19 @@ const resolver = {
           startDateTime
         ),
       };
+    },
+    siblingContentItemsConnection: async ({ id }, args, { dataSources }) => {
+      const series = await dataSources.ContentItem.getSeries(
+        id,
+        ROCK_MAPPINGS.SERMON_SERIES_CHANNEL_ID
+      );
+      const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+        series.id
+      );
+      return dataSources.ContentItem.paginate({
+        cursor,
+        args,
+      });
     },
     sermonNotes: (
       { id, attributeValues: { sermonNotes } },
