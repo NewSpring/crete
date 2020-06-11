@@ -1,6 +1,7 @@
 import { graphql } from 'graphql';
 import { fetch } from 'apollo-server-env';
 
+import ApollosConfig from '@apollosproject/config';
 import { createGlobalId } from '@apollosproject/server-core';
 import { createTestHelpers } from '@apollosproject/server-core/lib/testUtils';
 
@@ -16,6 +17,12 @@ import { ContentChannel, Sharable } from '@apollosproject/data-connector-rock';
 
 import * as ContentItem from '../index';
 import { schema as themeSchema } from '../../theme';
+
+ApollosConfig.loadJs({
+  ROCK_MAPPINGS: {
+    CAMPAIGN_CHANNEL_IDS: [439],
+  },
+});
 
 class Cache {
   get = () => Promise.resolve(null);

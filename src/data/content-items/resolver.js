@@ -16,6 +16,19 @@ const defaultResolvers = {
 
   theme: (root, input, { dataSources }) =>
     dataSources.ContentItem.getTheme(root),
+
+  childContentItemsConnection: async (root, args, { dataSources }) => {
+    const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+      root.id
+    );
+    if (ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.includes(root.contentChannelId)) {
+      cursor.orderBy('StartDateTime', 'desc');
+    }
+    return dataSources.ContentItem.paginate({
+      cursor,
+      args,
+    });
+  },
 };
 
 const resolver = {
