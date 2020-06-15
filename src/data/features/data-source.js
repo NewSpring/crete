@@ -1,5 +1,4 @@
 import { Feature as baseFeatures } from '@apollosproject/data-connector-rock';
-import { createGlobalId } from '@apollosproject/server-core';
 import ApollosConfig from '@apollosproject/config';
 
 export default class Feature extends baseFeatures.dataSource {
@@ -9,24 +8,6 @@ export default class Feature extends baseFeatures.dataSource {
     ...this.baseAlgorithms,
     STAFF_NEWS: this.contentChannelAlgorithm.bind(this),
   };
-
-  // eslint-disable-next-line class-methods-use-this
-  createNoteFeature({ placeholder, id }) {
-    return {
-      placeholder,
-      id: createGlobalId(id, 'NoteFeature'),
-      __typename: 'NoteFeature',
-    };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  createHeaderFeature({ body, id }) {
-    return {
-      body,
-      id: createGlobalId(id, 'HeaderFeature'),
-      __typename: 'HeaderFeature',
-    };
-  }
 
   async getHomeFeedFeatures() {
     const { Person, Auth } = this.context.dataSources;

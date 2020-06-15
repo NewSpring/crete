@@ -2,7 +2,6 @@ import { ContentItem as oldContentItem } from '@apollosproject/data-connector-ro
 import { get, flatten } from 'lodash';
 import ApollosConfig from '@apollosproject/config';
 import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
-import { parseKeyValueAttribute } from '@apollosproject/rock-apollo-data-source';
 import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
@@ -262,55 +261,6 @@ export default class ContentItem extends oldContentItem.dataSource {
       ({ childContentChannelItemId }) => childContentChannelItemId === childId
     ).order;
   };
-
-  getFeatures({ attributeValues }) {
-    const features = [];
-    const { Feature } = this.context.dataSources;
-
-    const rawFeatures = get(attributeValues, 'features.value', '');
-    parseKeyValueAttribute(rawFeatures).forEach(({ key, value }, i) => {
-      const [type, modifier] = key.split('/');
-      switch (type) {
-        case 'scripture':
-          features.push(
-            Feature.createScriptureFeature({
-              reference: value,
-              version: modifier,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'text':
-          features.push(
-            Feature.createTextFeature({
-              text: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'note':
-          // TODO check for no modifier or duplicates and don't return feature if so
-          features.push(
-            Feature.createNoteFeature({
-              placeholder: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'header':
-          features.push(
-            Feature.createHeaderFeature({
-              body: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        default:
-          console.warn(`Received invalid feature key: ${key}`);
-      }
-    });
-    return features;
-  }
 
   getCommunicators = async ({ value: matrixItemGuid } = {}) => {
     const {
