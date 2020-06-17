@@ -210,18 +210,6 @@ describe('UniversalContentItem', () => {
             }
             guestCommunicators
             sermonDate
-            features {
-              __typename
-              id
-              ... on ScriptureFeature {
-                scriptures {
-                  reference
-                }
-              }
-              ... on TextFeature {
-                body
-              }
-            }
             sermonNotes {
               id
             }
