@@ -41,6 +41,17 @@ Array [
     },
     "simpleText": "verse Genesis 1:1",
   },
+  Object {
+    "__typename": "NotesScriptureBlock",
+    "allowsComment": true,
+    "comment": null,
+    "id": "NotesScriptureBlock:a0f64573eabf00a607bec911794d50fb",
+    "scripture": Object {
+      "content": "<p>verse<p>",
+      "reference": "Genesis 1:1",
+    },
+    "simpleText": "verse Genesis 1:1",
+  },
 ]
 `;
 
