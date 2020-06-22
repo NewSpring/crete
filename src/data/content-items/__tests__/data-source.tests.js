@@ -1,5 +1,17 @@
+import ApollosConfig from '@apollosproject/config';
 import personMock from '../../mocks/person';
 import ContentDataSource from '../data-source';
+
+ApollosConfig.loadJs({
+  BIBLE_API: {
+    BIBLE_ID: {
+      ESV: 'f421fe261da7624f-01',
+      NIV: '71c6eab17ae5b667-01',
+      CSB: 'a556c5305ee15c3f-01',
+      WEB: '9879dbb7cfe39e4d-01',
+    },
+  },
+});
 
 describe('ContentItem data sources', () => {
   let ContentItem;
@@ -79,6 +91,17 @@ describe('ContentItem data sources', () => {
             book: { value: '1234-234-234' },
             reference: { value: '3:5-6' },
             translation: { value: '23423-23423-23423' },
+            allowsComment: { value: 'True' },
+          },
+        },
+        {
+          id: 4,
+          attributeValues: {
+            noteType: { value: 'scripture' },
+            text: { value: '' },
+            book: { value: 'John' },
+            reference: { value: '3:16' },
+            translation: { value: '' },
             allowsComment: { value: 'True' },
           },
         },
