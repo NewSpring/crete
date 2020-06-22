@@ -6,7 +6,13 @@ import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS, WISTIA } = ApollosConfig;
+const {
+  ROCK,
+  ROCK_CONSTANTS,
+  ROCK_MAPPINGS,
+  WISTIA,
+  BIBLE_API,
+} = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -461,12 +467,19 @@ export default class ContentItem extends oldContentItem.dataSource {
                 isHeader: type === 'header',
               };
             case 'scripture':
-              book = await this.request('/DefinedValues')
+              book = await this.request('DefinedValues')
                 .filter(`Guid eq guid'${bookGUID}'`)
                 .first();
-              version = await this.request('/DefinedValues')
-                .filter(`Guid eq guid'${versionGUID}'`)
-                .first();
+              if (versionGUID === '') {
+                const versionName = Object.keys(BIBLE_API.BIBLE_ID)[0];
+                version = await this.request('DefinedValues')
+                  .filter(`Value eq '${versionName}'`)
+                  .first();
+              } else {
+                version = await this.request('DefinedValues')
+                  .filter(`Guid eq guid'${versionGUID}'`)
+                  .first();
+              }
               scriptures = await Scripture.getScriptures(
                 `${book.value} ${ref}`,
                 version.value
