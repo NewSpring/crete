@@ -419,7 +419,9 @@ export default class ContentItem extends oldContentItem.dataSource {
         Text: data,
         CreatedByPersonAliasId: primaryAliasId,
       });
-    const note = await this.request('Notes').find(rockNoteID).get();
+    const note = await this.request('Notes')
+      .find(rockNoteID)
+      .get();
     return {
       id: createGlobalId(note.id, 'NotesBlockComment'),
       text,
