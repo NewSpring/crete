@@ -7,6 +7,10 @@ Object {
 }
 `;
 
+exports[`PrayerRequest data sources creates a prayer interaction 1`] = `undefined`;
+
+exports[`PrayerRequest data sources creates an initial prayer interaction 1`] = `undefined`;
+
 exports[`PrayerRequest data sources gets an empty list of saved prayers 1`] = `Array []`;
 
 exports[`PrayerRequest data sources gets an empty list of saved prayers 2`] = `0`;

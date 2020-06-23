@@ -55,4 +55,26 @@ describe('PrayerRequest data sources', () => {
     Prayer.getFromId = () => ({ id: 1, answer: '' });
     expect(await Prayer.answer(1, null)).toMatchSnapshot();
   });
+  it('creates an initial prayer interaction', async () => {
+    Prayer.context.dataSources.Auth = {
+      getCurrentPerson: () => ({ id: 'Person123' }),
+    };
+    Prayer.post = () => ({
+      result: '',
+    });
+    Prayer.fetch = () => jest.fn();
+    Prayer.getInteractionComponent = () => ({ id: 1 });
+    expect(await Prayer.createInteraction(123456)).toMatchSnapshot();
+  });
+  it('creates a prayer interaction', async () => {
+    Prayer.context.dataSources.Auth = {
+      getCurrentPerson: () => ({ id: 'Person123' }),
+    };
+    Prayer.post = () => ({
+      result: '12-31-2019 01:01:01AM',
+    });
+    Prayer.fetch = () => jest.fn();
+    Prayer.getInteractionComponent = () => ({ id: 1 });
+    expect(await Prayer.createInteraction(123456)).toMatchSnapshot();
+  });
 });
