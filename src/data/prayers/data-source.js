@@ -98,6 +98,7 @@ export default class Prayer extends RockApolloDataSource {
         {% endsql %}{% for result in results %}{{ result.InteractionDateTime }}{% endfor %}`
       );
       summary =
+        result === '' ||
         moment(result, 'MM/DD/YYYY HH:mm:ss a').add(2, 'hours') < moment()
           ? 'PrayerNotificationSent'
           : '';
