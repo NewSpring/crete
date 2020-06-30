@@ -39,10 +39,10 @@ Array [
     "comment": null,
     "id": "NotesScriptureBlock:4f68015ba18662a7409d1219a4ce013e",
     "scripture": Object {
-      "content": "<p>verse<p>",
+      "content": "<p>1 In the beginning...<p>",
       "reference": "Genesis 1:1",
     },
-    "simpleText": "verse Genesis 1:1",
+    "simpleText": "1)  In the beginning... Genesis 1:1",
   },
   Object {
     "__typename": "NotesScriptureBlock",
@@ -50,10 +50,10 @@ Array [
     "comment": null,
     "id": "NotesScriptureBlock:a0f64573eabf00a607bec911794d50fb",
     "scripture": Object {
-      "content": "<p>verse<p>",
+      "content": "<p>1 In the beginning...<p>",
       "reference": "Genesis 1:1",
     },
-    "simpleText": "verse Genesis 1:1",
+    "simpleText": "1)  In the beginning... Genesis 1:1",
   },
   Object {
     "__typename": "NotesTextBlock",

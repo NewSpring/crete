@@ -116,6 +116,17 @@ describe('ContentItem data sources', () => {
             allowsComment: { value: 'True' },
           },
         },
+        {
+          id: 6,
+          attributeValues: {
+            noteType: { value: 'invalid' },
+            text: { value: '' },
+            book: { value: '' },
+            reference: { value: '' },
+            translation: { value: '' },
+            allowsComment: { value: 'True' },
+          },
+        },
       ],
     };
     ContentItem.request = () => ({
@@ -123,7 +134,7 @@ describe('ContentItem data sources', () => {
     });
     ContentItem.context.dataSources.Scripture = {
       getScriptures: () => [
-        { content: '<p>verse<p>', reference: 'Genesis 1:1' },
+        { content: '<p>1 In the beginning...<p>', reference: 'Genesis 1:1' },
       ],
     };
     ContentItem.getNotesComments = () => ({

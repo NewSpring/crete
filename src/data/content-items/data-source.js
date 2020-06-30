@@ -491,6 +491,6 @@ export default class ContentItem extends oldContentItem.dataSource {
         }
       )
     );
-    return notes;
+    return notes.filter((note) => note !== null);
   };
 }
