@@ -361,8 +361,5 @@ ROCK_CONSTANTS:
   GROUP_MEMBER: 118
   TIME_ZONE: 119
   LABEL: 120
-<<<<<<< ours
   WISTIA: 125
   S3_ASSET: 133
-=======
->>>>>>> theirs
