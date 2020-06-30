@@ -26,7 +26,7 @@ describe('ContentItem data sources', () => {
   it('gets scripture references', async () => {
     ContentItem.context = {
       dataSources: {
-        Scripture: { getScriptures: jest.fn(() => null) },
+        Scripture: { getScriptures: jest.fn(() => []) },
         MatrixItem: {
           getItemsFromGuid: () =>
             Promise.resolve([

@@ -3,7 +3,10 @@
 exports[`ContentItem data sources gets scripture references 1`] = `
 Array [
   Array [
-    "john 1:1, 10:10",
+    "john 10:10",
+  ],
+  Array [
+    "john 1:1",
   ],
 ]
 `;

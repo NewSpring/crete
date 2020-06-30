@@ -32,31 +32,19 @@ export default class ContentItem extends oldContentItem.dataSource {
           const { value: book } = await this.request('/DefinedValues')
             .filter(`Guid eq guid'${bookGuid}'`)
             .first();
-          return `${book.toLowerCase()} ${
-            // add leading zeroes to references for sorting
-            reference.split(':')[0].length === 1 ? `0${reference}` : reference
-          }`;
+          return `${book.toLowerCase()} ${reference}`;
         }
       )
     );
 
-    // Bible.API needs same book queries to be like this: Acts 1:1, 2:1
-    // so we need to sort and remove duplicate books
-    let lastBook = '';
-    const sortedRefs = references
-      .sort((a, b) => (a > b ? 1 : -1))
-      .map((ref) => {
-        const [book, verses] = ref.split(' ');
-        const newRef = book === lastBook ? verses : ref;
-        lastBook = book;
-        return newRef;
-      });
-
-    const query = sortedRefs.join(', ');
-    const filteredQuery = query.replace(/ 0(\d)/g, (match, p1) => ` ${p1}`);
-
-    // remove leading zeroes, Bible.API doesn't like that...
-    return query !== '' ? Scripture.getScriptures(filteredQuery) : null;
+    // get one reference at a time. Bible.API doesn't do well with multiple references
+    // in the same request
+    return Promise.all(
+      references.map(async (ref) => {
+        const scriptures = await Scripture.getScriptures(ref);
+        return scriptures.length ? scriptures[0] : null;
+      })
+    );
   };
 
   getWistiaAssetUrls = async (wistiaHashedId) => {
