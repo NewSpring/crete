@@ -47,6 +47,7 @@ const data = {
   Theme,
   Scripture,
   Interactions,
+  RockConstants,
   Sharable,
   Analytics,
   OneSignal,
@@ -58,13 +59,12 @@ const data = {
   Campus,
   Group,
   BinaryFiles,
-  Event,
-  Cache,
-  Feature,
   Person,
   Prayer,
   MatrixItem,
-  RockConstants,
+  Feature,
+  Event,
+  Cache,
 };
 
 const {
