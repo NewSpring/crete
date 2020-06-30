@@ -105,6 +105,17 @@ describe('ContentItem data sources', () => {
             allowsComment: { value: 'True' },
           },
         },
+        {
+          id: 5,
+          attributeValues: {
+            noteType: { value: 'text' },
+            text: { value: 'this is another __subpoint__' },
+            book: { value: '' },
+            reference: { value: '' },
+            translation: { value: '' },
+            allowsComment: { value: 'True' },
+          },
+        },
       ],
     };
     ContentItem.request = () => ({

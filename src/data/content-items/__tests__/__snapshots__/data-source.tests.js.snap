@@ -55,6 +55,16 @@ Array [
     },
     "simpleText": "verse Genesis 1:1",
   },
+  Object {
+    "__typename": "NotesTextBlock",
+    "allowsComment": true,
+    "comment": null,
+    "hasBlanks": true,
+    "hiddenText": "this is another ________",
+    "id": "NotesTextBlock:772fcb6087247ebad630814e2ce0cd16",
+    "isHeader": false,
+    "simpleText": "this is another subpoint",
+  },
 ]
 `;
 
