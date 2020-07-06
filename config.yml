@@ -183,7 +183,9 @@ HOME_FEATURES:
   #- title: FOR YOU
   #algorithms: [PERSONA_FEED]
   #subtitle: Explore what God calls you to today
-  #- type: UPCOMING_EVENTS
+  - subtitle: Upcoming Events
+    algorithms:
+      - type: UPCOMING_EVENTS
   - subtitle: Updates for NewSpring staff
     algorithms:
       - type: STAFF_NEWS
