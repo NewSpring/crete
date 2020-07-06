@@ -55,7 +55,8 @@ export default class ContentItem extends oldContentItem.dataSource {
 
     if (!media) return assetUrls;
     media.assets.forEach((asset) => {
-      if (asset.type === 'HlsVideoFile' && asset.height === 720)
+      // default to the 720p mp4 to use as an HLS
+      if (asset.type === 'HdMp4VideoFile' && asset.height === 720)
         assetUrls.video = asset.url.replace('.bin', '.m3u8');
       else if (asset.type === 'IphoneVideoFile')
         assetUrls.video = asset.url.replace('.bin', '/file.mp4');
