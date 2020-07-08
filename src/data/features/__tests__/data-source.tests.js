@@ -7,7 +7,11 @@ ApollosConfig.loadJs({
       title: 'Staff news',
       algorithms: [{ type: 'STAFF_NEWS' }],
     },
-    { title: 'Events', algorithms: [{ type: 'UPCOMING_EVENTS' }] },
+    {
+      title: 'Events',
+      algorithms: [{ type: 'UPCOMING_EVENTS' }],
+      primaryAction: null,
+    },
   ],
 });
 
