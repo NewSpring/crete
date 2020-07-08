@@ -1,5 +1,5 @@
 import ApollosConfig from '@apollosproject/config';
-import EventDataSource from '../data-source';
+import { dataSource as EventDataSource } from '../index';
 
 ApollosConfig.loadJs({
   ROCK_MAPPINGS: {
