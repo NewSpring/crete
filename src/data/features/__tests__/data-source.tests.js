@@ -10,7 +10,6 @@ ApollosConfig.loadJs({
     {
       title: 'Events',
       algorithms: [{ type: 'UPCOMING_EVENTS' }],
-      primaryAction: null,
     },
   ],
 });
@@ -19,7 +18,6 @@ describe('Feature data sources', () => {
   let Feature;
   beforeEach(() => {
     Feature = new FeatureDataSource();
-    // Feature.createActionListFeature = () => null;
     Feature.context = { dataSources: {} };
     Feature.context.dataSources = {
       Auth: { getCurrentPerson: () => ({ id: 1 }) },
