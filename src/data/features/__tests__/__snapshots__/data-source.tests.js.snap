@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature data sources gets available features 1`] = `
+Array [
+  Object {
+    "__typename": "ActionListFeature",
+    "actions": [Function],
+    "id": "ActionListFeature:f6b30a38eb547f1f75676ce0557a7e05509ee59fa69ab61124c114889f1b2cf9bf76b7db1f5f8ca2a7f583950b8ad1f59a86c35d1565558d3a9865691ad559f3",
+    "subtitle": undefined,
+    "title": "Staff news",
+  },
+  Object {
+    "__typename": "ActionListFeature",
+    "actions": [Function],
+    "id": "ActionListFeature:f6b30a38eb547f1f75676ce0557a7e0571cdfe3938bb6a16a818388f3047436fe1bd6ce2429557a9a073509bbbbf771510ae6b544a09b00f24fcce181d851c16",
+    "subtitle": undefined,
+    "title": "Events",
+  },
+]
+`;
