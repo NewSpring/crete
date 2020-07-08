@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event data sources gets an event image 1`] = `Promise {}`;
