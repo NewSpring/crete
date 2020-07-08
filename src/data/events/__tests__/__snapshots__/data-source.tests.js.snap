@@ -12,3 +12,5 @@ Object {
   ],
 }
 `;
+
+exports[`Event data sources return null for the image with no attributes 1`] = `null`;

@@ -12,6 +12,16 @@ describe('Event data sources', () => {
   beforeEach(() => {
     Event = new EventDataSource();
     Event.context = { dataSources: {} };
+    Event.context.dataSources = {
+      ContentItem: {
+        getCoverImage: () => ({
+          __typename: 'ImageMedia',
+          key: 'coverImage',
+          name: 'Cover Image',
+          sources: [{ uri: 'https://fakeimages.com/?coolpic1' }],
+        }),
+      },
+    };
   });
   it('gets an event image', async () => {
     Event.request = () => ({
@@ -27,16 +37,22 @@ describe('Event data sources', () => {
         }),
       }),
     });
-    Event.context.dataSources = {
-      ContentItem: {
-        getCoverImage: () => ({
-          __typename: 'ImageMedia',
-          key: 'coverImage',
-          name: 'Cover Image',
-          sources: [{ uri: 'https://fakeimages.com/?coolpic1' }],
+    expect(await Event.getImage()).toMatchSnapshot();
+  });
+  it('return null for the image with no attributes', async () => {
+    Event.request = () => ({
+      cache: () => ({
+        filter: () => ({
+          andFilter: () => ({
+            first: () => ({
+              id: 1,
+              name: 'some event',
+              attributeValues: {},
+            }),
+          }),
         }),
-      },
-    };
+      }),
+    });
     expect(await Event.getImage()).toMatchSnapshot();
   });
 });
