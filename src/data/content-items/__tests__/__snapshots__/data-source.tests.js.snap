@@ -2,8 +2,8 @@
 
 exports[`ContentItem data sources gets Wistia URLs 1`] = `
 Object {
-  "thumbnail": "http://embed.wistia.com/deliveries/6e7c901ec5a490adc2cd7b04667f3179/file.jpeg",
-  "video": "http://embed.wistia.com/deliveries/222d3a2fa3dbbc2d67e917a6c98884ec106c84f3.m3u8",
+  "thumbnail": "https://embed-ssl.wistia.com/deliveries/6e7c901ec5a490adc2cd7b04667f3179/file.jpeg",
+  "video": "https://embed-ssl.wistia.com/deliveries/222d3a2fa3dbbc2d67e917a6c98884ec106c84f3.m3u8",
 }
 `;
 
