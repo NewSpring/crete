@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ContentItem data sources gets Wistia URLs 1`] = `
+Object {
+  "thumbnail": "http://embed.wistia.com/deliveries/6e7c901ec5a490adc2cd7b04667f3179/file.jpeg",
+  "video": "http://embed.wistia.com/deliveries/222d3a2fa3dbbc2d67e917a6c98884ec106c84f3.m3u8",
+}
+`;
+
 exports[`ContentItem data sources gets scripture references 1`] = `
 Array [
   Array [

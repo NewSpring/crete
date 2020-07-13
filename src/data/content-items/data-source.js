@@ -63,15 +63,6 @@ export default class ContentItem extends oldContentItem.dataSource {
       if (asset.type === 'StillImageFile')
         assetUrls.thumbnail = asset.url.replace('.bin', '/file.jpeg');
     });
-    // use https
-    assetUrls.video = assetUrls.video.replace(
-      'http://embed',
-      'https://embed-ssl'
-    );
-    assetUrls.thumbnail = assetUrls.thumbnail.replace(
-      'http://embed',
-      'https://embed-ssl'
-    );
     return assetUrls;
   };
 
