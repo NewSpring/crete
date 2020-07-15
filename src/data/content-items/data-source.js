@@ -2,12 +2,17 @@ import { ContentItem as oldContentItem } from '@apollosproject/data-connector-ro
 import { get, flatten } from 'lodash';
 import ApollosConfig from '@apollosproject/config';
 import { createGlobalId, parseGlobalId } from '@apollosproject/server-core';
-import { parseKeyValueAttribute } from '@apollosproject/rock-apollo-data-source';
 import sanitizeHtmlNode from 'sanitize-html';
 import Color from 'color';
 import { createAssetUrl } from '../utils';
 
-const { ROCK, ROCK_CONSTANTS, ROCK_MAPPINGS, WISTIA } = ApollosConfig;
+const {
+  ROCK,
+  ROCK_CONSTANTS,
+  ROCK_MAPPINGS,
+  WISTIA,
+  BIBLE_API,
+} = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
@@ -27,31 +32,19 @@ export default class ContentItem extends oldContentItem.dataSource {
           const { value: book } = await this.request('/DefinedValues')
             .filter(`Guid eq guid'${bookGuid}'`)
             .first();
-          return `${book.toLowerCase()} ${
-            // add leading zeroes to references for sorting
-            reference.split(':')[0].length === 1 ? `0${reference}` : reference
-          }`;
+          return `${book.toLowerCase()} ${reference}`;
         }
       )
     );
 
-    // Bible.API needs same book queries to be like this: Acts 1:1, 2:1
-    // so we need to sort and remove duplicate books
-    let lastBook = '';
-    const sortedRefs = references
-      .sort((a, b) => (a > b ? 1 : -1))
-      .map((ref) => {
-        const [book, verses] = ref.split(' ');
-        const newRef = book === lastBook ? verses : ref;
-        lastBook = book;
-        return newRef;
-      });
-
-    const query = sortedRefs.join(', ');
-    const filteredQuery = query.replace(/ 0(\d)/g, (match, p1) => ` ${p1}`);
-
-    // remove leading zeroes, Bible.API doesn't like that...
-    return query !== '' ? Scripture.getScriptures(filteredQuery) : null;
+    // get one reference at a time. Bible.API doesn't do well with multiple references
+    // in the same request
+    return Promise.all(
+      references.map(async (ref) => {
+        const scriptures = await Scripture.getScriptures(ref);
+        return scriptures.length ? scriptures[0] : null;
+      })
+    );
   };
 
   getWistiaAssetUrls = async (wistiaHashedId) => {
@@ -62,13 +55,23 @@ export default class ContentItem extends oldContentItem.dataSource {
 
     if (!media) return assetUrls;
     media.assets.forEach((asset) => {
-      if (asset.type === 'HlsVideoFile' && asset.height === 720)
+      // default to the 720p mp4 to use as an HLS
+      if (asset.type === 'HdMp4VideoFile' && asset.height === 720)
         assetUrls.video = asset.url.replace('.bin', '.m3u8');
       else if (asset.type === 'IphoneVideoFile')
         assetUrls.video = asset.url.replace('.bin', '/file.mp4');
       if (asset.type === 'StillImageFile')
         assetUrls.thumbnail = asset.url.replace('.bin', '/file.jpeg');
     });
+    // use https
+    assetUrls.video = assetUrls.video.replace(
+      'http://embed',
+      'https://embed-ssl'
+    );
+    assetUrls.thumbnail = assetUrls.thumbnail.replace(
+      'http://embed',
+      'https://embed-ssl'
+    );
     return assetUrls;
   };
 
@@ -262,55 +265,6 @@ export default class ContentItem extends oldContentItem.dataSource {
       ({ childContentChannelItemId }) => childContentChannelItemId === childId
     ).order;
   };
-
-  getFeatures({ attributeValues }) {
-    const features = [];
-    const { Feature } = this.context.dataSources;
-
-    const rawFeatures = get(attributeValues, 'features.value', '');
-    parseKeyValueAttribute(rawFeatures).forEach(({ key, value }, i) => {
-      const [type, modifier] = key.split('/');
-      switch (type) {
-        case 'scripture':
-          features.push(
-            Feature.createScriptureFeature({
-              reference: value,
-              version: modifier,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'text':
-          features.push(
-            Feature.createTextFeature({
-              text: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'note':
-          // TODO check for no modifier or duplicates and don't return feature if so
-          features.push(
-            Feature.createNoteFeature({
-              placeholder: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        case 'header':
-          features.push(
-            Feature.createHeaderFeature({
-              body: value,
-              id: `${attributeValues.features.id}-${i}`,
-            })
-          );
-          break;
-        default:
-          console.warn(`Received invalid feature key: ${key}`);
-      }
-    });
-    return features;
-  }
 
   getCommunicators = async ({ value: matrixItemGuid } = {}) => {
     const {
@@ -511,12 +465,19 @@ export default class ContentItem extends oldContentItem.dataSource {
                 isHeader: type === 'header',
               };
             case 'scripture':
-              book = await this.request('/DefinedValues')
+              book = await this.request('DefinedValues')
                 .filter(`Guid eq guid'${bookGUID}'`)
                 .first();
-              version = await this.request('/DefinedValues')
-                .filter(`Guid eq guid'${versionGUID}'`)
-                .first();
+              if (versionGUID === '') {
+                const versionName = Object.keys(BIBLE_API.BIBLE_ID)[0];
+                version = await this.request('DefinedValues')
+                  .filter(`Value eq '${versionName}'`)
+                  .first();
+              } else {
+                version = await this.request('DefinedValues')
+                  .filter(`Guid eq guid'${versionGUID}'`)
+                  .first();
+              }
               scriptures = await Scripture.getScriptures(
                 `${book.value} ${ref}`,
                 version.value
@@ -540,6 +501,6 @@ export default class ContentItem extends oldContentItem.dataSource {
         }
       )
     );
-    return notes;
+    return notes.filter((note) => note !== null);
   };
 }

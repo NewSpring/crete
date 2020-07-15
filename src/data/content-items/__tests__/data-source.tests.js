@@ -1,5 +1,19 @@
+import ApollosConfig from '@apollosproject/config';
 import personMock from '../../mocks/person';
+import mediaMock from '../../mocks/wistia';
+import notesMock from '../../mocks/notes';
 import ContentDataSource from '../data-source';
+
+ApollosConfig.loadJs({
+  BIBLE_API: {
+    BIBLE_ID: {
+      ESV: 'f421fe261da7624f-01',
+      NIV: '71c6eab17ae5b667-01',
+      CSB: 'a556c5305ee15c3f-01',
+      WEB: '9879dbb7cfe39e4d-01',
+    },
+  },
+});
 
 describe('ContentItem data sources', () => {
   let ContentItem;
@@ -14,7 +28,7 @@ describe('ContentItem data sources', () => {
   it('gets scripture references', async () => {
     ContentItem.context = {
       dataSources: {
-        Scripture: { getScriptures: jest.fn(() => null) },
+        Scripture: { getScriptures: jest.fn(() => []) },
         MatrixItem: {
           getItemsFromGuid: () =>
             Promise.resolve([
@@ -48,48 +62,14 @@ describe('ContentItem data sources', () => {
   });
   it('gets sermon notes', async () => {
     ContentItem.context.dataSources.MatrixItem = {
-      getItemsFromGuid: () => [
-        {
-          id: 1,
-          attributeValues: {
-            noteType: { value: 'header' },
-            text: { value: '1. this is point one' },
-            book: { value: '' },
-            reference: { value: '' },
-            translation: { value: '' },
-            allowsComment: { value: 'False' },
-          },
-        },
-        {
-          id: 2,
-          attributeValues: {
-            noteType: { value: 'text' },
-            text: { value: 'this is a subpoint' },
-            book: { value: '' },
-            reference: { value: '' },
-            translation: { value: '' },
-            allowsComment: { value: 'True' },
-          },
-        },
-        {
-          id: 3,
-          attributeValues: {
-            noteType: { value: 'scripture' },
-            text: { value: '' },
-            book: { value: '1234-234-234' },
-            reference: { value: '3:5-6' },
-            translation: { value: '23423-23423-23423' },
-            allowsComment: { value: 'True' },
-          },
-        },
-      ],
+      getItemsFromGuid: () => notesMock,
     };
     ContentItem.request = () => ({
       filter: () => ({ first: () => 'Genesis OR NIV' }),
     });
     ContentItem.context.dataSources.Scripture = {
       getScriptures: () => [
-        { content: '<p>verse<p>', reference: 'Genesis 1:1' },
+        { content: '<p>1 In the beginning...<p>', reference: 'Genesis 1:1' },
       ],
     };
     ContentItem.getNotesComments = () => ({
@@ -124,5 +104,11 @@ describe('ContentItem data sources', () => {
       }),
     });
     expect(await ContentItem.getNotesComments(1)).toMatchSnapshot();
+  });
+  it('gets Wistia URLs', async () => {
+    ContentItem.request = () => ({ get: () => mediaMock });
+    expect(
+      await ContentItem.getWistiaAssetUrls('0bkez7zypv')
+    ).toMatchSnapshot();
   });
 });

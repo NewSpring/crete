@@ -1,9 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ContentItem data sources gets Wistia URLs 1`] = `
+Object {
+  "thumbnail": "https://embed-ssl.wistia.com/deliveries/6e7c901ec5a490adc2cd7b04667f3179/file.jpeg",
+  "video": "https://embed-ssl.wistia.com/deliveries/222d3a2fa3dbbc2d67e917a6c98884ec106c84f3.m3u8",
+}
+`;
+
 exports[`ContentItem data sources gets scripture references 1`] = `
 Array [
   Array [
-    "john 1:1, 10:10",
+    "john 10:10",
+  ],
+  Array [
+    "john 1:1",
   ],
 ]
 `;
@@ -36,10 +46,31 @@ Array [
     "comment": null,
     "id": "NotesScriptureBlock:4f68015ba18662a7409d1219a4ce013e",
     "scripture": Object {
-      "content": "<p>verse<p>",
+      "content": "<p>1 In the beginning...<p>",
       "reference": "Genesis 1:1",
     },
-    "simpleText": "verse Genesis 1:1",
+    "simpleText": "1)  In the beginning... Genesis 1:1",
+  },
+  Object {
+    "__typename": "NotesScriptureBlock",
+    "allowsComment": true,
+    "comment": null,
+    "id": "NotesScriptureBlock:a0f64573eabf00a607bec911794d50fb",
+    "scripture": Object {
+      "content": "<p>1 In the beginning...<p>",
+      "reference": "Genesis 1:1",
+    },
+    "simpleText": "1)  In the beginning... Genesis 1:1",
+  },
+  Object {
+    "__typename": "NotesTextBlock",
+    "allowsComment": true,
+    "comment": null,
+    "hasBlanks": true,
+    "hiddenText": "this is another ________",
+    "id": "NotesTextBlock:772fcb6087247ebad630814e2ce0cd16",
+    "isHeader": false,
+    "simpleText": "this is another subpoint",
   },
 ]
 `;

@@ -183,7 +183,6 @@ Object {
           "lastName": "last",
         },
       ],
-      "features": null,
       "guestCommunicators": Array [
         "guest communicator",
       ],

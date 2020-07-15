@@ -16,6 +16,19 @@ const defaultResolvers = {
 
   theme: (root, input, { dataSources }) =>
     dataSources.ContentItem.getTheme(root),
+
+  childContentItemsConnection: async (root, args, { dataSources }) => {
+    const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+      root.id
+    );
+    if (ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.includes(root.contentChannelId)) {
+      cursor.orderBy('StartDateTime', 'desc');
+    }
+    return dataSources.ContentItem.paginate({
+      cursor,
+      args,
+    });
+  },
 };
 
 const resolver = {
@@ -79,6 +92,19 @@ const resolver = {
         ),
       };
     },
+    siblingContentItemsConnection: async ({ id }, args, { dataSources }) => {
+      const series = await dataSources.ContentItem.getSeries(
+        id,
+        ROCK_MAPPINGS.DEVOTIONAL_SERIES_CHANNEL_ID
+      );
+      const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+        series.id
+      );
+      return dataSources.ContentItem.paginate({
+        cursor,
+        args,
+      });
+    },
   },
   WeekendContentItem: {
     ...defaultResolvers,
@@ -136,6 +162,19 @@ const resolver = {
           startDateTime
         ),
       };
+    },
+    siblingContentItemsConnection: async ({ id }, args, { dataSources }) => {
+      const series = await dataSources.ContentItem.getSeries(
+        id,
+        ROCK_MAPPINGS.SERMON_SERIES_CHANNEL_ID
+      );
+      const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
+        series.id
+      );
+      return dataSources.ContentItem.paginate({
+        cursor,
+        args,
+      });
     },
     sermonNotes: (
       { id, attributeValues: { sermonNotes } },
