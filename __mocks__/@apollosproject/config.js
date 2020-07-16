@@ -39,6 +39,10 @@ ApolloServer.loadJs({
       },
     },
   },
+  WISTIA: {
+    API_URL: 'https://api.wistia.com/v1/medias',
+    API_KEY: 'XXXXXXX',
+  },
 });
 
 export default ApolloServer;
