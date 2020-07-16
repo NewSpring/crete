@@ -24,9 +24,27 @@ export default class Feature extends baseFeatures.dataSource {
       return true;
     });
     return Promise.all(
-      features.map((featureConfig) =>
-        this.createActionListFeature(featureConfig)
-      )
+      features.map((featureConfig) => {
+        switch (featureConfig.type) {
+          case 'VerticalCardList':
+            return this.createVerticalCardListFeature(featureConfig);
+          case 'HorizontalCardList':
+            return this.createHorizontalCardListFeature(featureConfig);
+          case 'HeroListFeature':
+            console.warn(
+              'Deprecated: Please use the name "HeroList" instead. You used "HeroListFeature"'
+            );
+            return this.createHeroListFeature(featureConfig);
+          case 'HeroList':
+            return this.createHeroListFeature(featureConfig);
+          case 'PrayerList':
+            return this.createPrayerListFeature(featureConfig);
+          case 'ActionList':
+          default:
+            // Action list was the default in 1.3.0 and prior.
+            return this.createActionListFeature(featureConfig);
+        }
+      })
     );
   }
 }

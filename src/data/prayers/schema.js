@@ -84,6 +84,15 @@ const prayerSchema = gql`
     node: Prayer
     cursor: String
   }
+
+  type PrayerListFeature implements Feature & Node {
+    id: ID!
+    order: Int
+    isCard: Boolean
+    title: String
+    subtitle: String
+    prayers: [Prayer]
+  }
 `;
 
 export default prayerSchema;

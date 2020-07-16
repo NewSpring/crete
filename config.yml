@@ -192,10 +192,15 @@ ROCK_MAPPINGS:
   BLOCK_COMMENT_NOTE_TYPE_ID: 46
 
 HOME_FEATURES:
-  #- title: FOR YOU
-  #algorithms: [PERSONA_FEED]
-  #subtitle: Explore what God calls you to today
-  #- type: UPCOMING_EVENTS
+  - algorithms: [CAMPAIGN_ITEMS]
+    type: HeroList
+    isFeatured: true
+    #primaryAction:
+      #action: OPEN_URL
+      #title: 'Read More'
+      #relatedNode:
+        #__typename: Url
+        #url: 'https://wwww.apollos.io'
   - subtitle: Updates for NewSpring staff
     algorithms:
       - type: STAFF_NEWS
@@ -208,6 +213,8 @@ HOME_FEATURES:
         arguments:
           contentChannelId: 459
           limit: 3
+  - algorithms: [USER_FEED]
+    type: VerticalCardList
 
 #####################
 # EXAMPLES
