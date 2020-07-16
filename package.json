@@ -10,7 +10,8 @@
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start": "NODE_ENV=production node --inspect ./lib/index.js",
     "restart": "yarn && yarn dev",
-    "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
+    "build":
+      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
@@ -21,9 +22,7 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
+    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test|tests).{js,jsx,mjs}"
@@ -85,9 +84,6 @@
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
     "linkemon": "^0.1.1",
-    "nodemon": "^2.0.2",
-    "standard-version": "^7.0.1",
-    "@entria/graphql-findbreakingchanges": "^1.0.1",
-    "get-graphql-schema": "^2.1.2"
+    "nodemon": "^2.0.2"
   }
 }
