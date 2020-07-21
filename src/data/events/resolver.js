@@ -4,7 +4,7 @@ import { resolverMerge } from '@apollosproject/server-core';
 const resolver = {
   Event: {
     image: ({ eventItemId }, args, { dataSources: { Event } }) =>
-      Event.getImage(eventItemId),
+      Event.getImage({ eventItemId }),
   },
 };
 export default resolverMerge(resolver, baseEvent);

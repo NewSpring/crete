@@ -4,7 +4,7 @@ import ApollosConfig from '@apollosproject/config';
 const { ROCK_MAPPINGS } = ApollosConfig;
 
 export default class Event extends baseEvent.dataSource {
-  getImage = async (eventItemId) => {
+  getImage = async ({ eventItemId }) => {
     const { ContentItem } = this.context.dataSources;
     // get corrsponding events on the public calendar
     const calendarItem = await this.request('EventCalendarItems')
