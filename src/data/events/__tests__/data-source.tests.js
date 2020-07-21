@@ -37,7 +37,7 @@ describe('Event data sources', () => {
         }),
       }),
     });
-    expect(await Event.getImage()).toMatchSnapshot();
+    expect(await Event.getImage({ eventItemId: 1 })).toMatchSnapshot();
   });
   it('return null for the image with no attributes', async () => {
     Event.request = () => ({
@@ -53,6 +53,6 @@ describe('Event data sources', () => {
         }),
       }),
     });
-    expect(await Event.getImage()).toMatchSnapshot();
+    expect(await Event.getImage({ eventItemId: 1 })).toMatchSnapshot();
   });
 });
