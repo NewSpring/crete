@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Event data sources gets an event image 1`] = `
+Object {
+  "__typename": "ImageMedia",
+  "key": "coverImage",
+  "name": "Cover Image",
+  "sources": Array [
+    Object {
+      "uri": "https://fakeimages.com/?coolpic1",
+    },
+  ],
+}
+`;
+
+exports[`Event data sources return null for the image with no attributes 1`] = `null`;

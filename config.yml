@@ -191,11 +191,15 @@ ROCK_MAPPINGS:
 
   BLOCK_COMMENT_NOTE_TYPE_ID: 46
 
+  PUBLIC_CALENDAR_ID: 1
+
 HOME_FEATURES:
   #- title: FOR YOU
   #algorithms: [PERSONA_FEED]
   #subtitle: Explore what God calls you to today
-  #- type: UPCOMING_EVENTS
+  - subtitle: Upcoming Events
+    algorithms:
+      - type: UPCOMING_EVENTS
   - subtitle: Updates for NewSpring staff
     algorithms:
       - type: STAFF_NEWS

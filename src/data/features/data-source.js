@@ -10,17 +10,25 @@ export default class Feature extends baseFeatures.dataSource {
   };
 
   async getHomeFeedFeatures() {
-    const { Person, Auth } = this.context.dataSources;
+    const { Person, Auth, Group } = this.context.dataSources;
     const { id } = await Auth.getCurrentPerson();
     const isStaff = await Person.isStaff(id);
+    const testGroups = await Group.getTestGroups(id);
 
     const features = ApollosConfig.HOME_FEATURES.filter((feature) => {
-      const staffOnly = feature.algorithms.filter(
+      // filter staff only features
+      const isStaffFeature = feature.algorithms.filter(
         ({ type }) => type === 'STAFF_NEWS'
-      );
-      // if there are staff only features and I'm not on staff, filter out
-      if (staffOnly.length && !isStaff) return false;
-      // TODO filter out experimental if "experimental" header isn't present
+      ).length;
+      if (isStaffFeature && !isStaff) return false;
+      // filter experimental features
+      const isExperimentalFeature = feature.algorithms.filter(
+        ({ type }) => type === 'UPCOMING_EVENTS'
+      ).length;
+      const isTester = testGroups.filter(
+        (group) => group.name === 'Experimental Features'
+      ).length;
+      if (isExperimentalFeature && !isTester) return false;
       return true;
     });
     return Promise.all(

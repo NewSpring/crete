@@ -19,7 +19,6 @@ import {
   Template,
   AuthSms,
   BinaryFiles,
-  Event,
 } from '@apollosproject/data-connector-rock';
 import * as LiveStream from './live';
 import * as Person from './people';
@@ -27,6 +26,7 @@ import * as ContentItem from './content-items';
 import * as Feature from './features';
 import * as Campus from './campuses';
 import * as Group from './groups';
+import * as Event from './events';
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
