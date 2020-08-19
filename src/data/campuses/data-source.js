@@ -1,5 +1,5 @@
 import { Campus as apollosCampus } from '@apollosproject/data-connector-rock';
-import bugsnagClient from '../../bugsnag';
+import { report } from '@apollosproject/bugsnag';
 
 export default class Campus extends apollosCampus.dataSource {
   getPublicByLocation = async (location) => {
@@ -9,13 +9,10 @@ export default class Campus extends apollosCampus.dataSource {
     const campuses = allCampuses.filter((campus) => {
       const { attributeValues: { public: { value } = {} } = {} } = campus;
       if (!value) {
-        bugsnagClient.notify(
-          new Error('cannot determine if campus is public'),
-          {
-            metaData: { campus },
-            severity: 'warning',
-          }
-        );
+        report(new Error('cannot determine if campus is public'), {
+          metaData: { campus },
+          severity: 'warning',
+        });
 
         // fall back is filter out if there's no location or image
         return !!(

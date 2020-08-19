@@ -14,6 +14,10 @@ APP:
   ROOT_API_URL: ${ROOT_URL}
   JOBS_USERNAME: ${JOBS_USERNAME}
   JOBS_PASSWORD: ${JOBS_PASSWORD}
+BUGSNAG:
+  ## Optional, but you'll need to remove references to @apollosproject/bugsnag if you don't wish to use.
+  API_KEY: ${BUGSNAG_API_KEY}
+  OPTIONS: {} # In case you want to pass in other Bugsnag configuration options. https://docs.bugsnag.com/platforms/javascript/configuration-options/
 ROCK:
   API_URL: ${ROCK_API}
   API_TOKEN: ${ROCK_TOKEN}
@@ -94,6 +98,8 @@ CLOUDINARY:
   URL: ${CLOUDINARY_URL}
 ENGINE:
   API_KEY: ${ENGINE_API_KEY}
+  # What is this for?
+  # SCHEMA_TAG: ${ENGINE_SCHEMA_TAG}
 WISTIA:
   API_URL: https://api.wistia.com/v1/medias
   API_KEY: ${WISTIA_API_KEY}
@@ -101,12 +107,13 @@ WISTIA:
 # This key holds various properties that allow our GraphQL server to map to your Rock Instance
 ROCK_MAPPINGS:
   INTERACTIONS:
-    # Name of the InteractionChannel that will be created
+    # Name of the InteractionChannel that will be created per EntityType
     CHANNEL_NAME: Apollos App
-    # Name of the InteractionComponent that will be created for Content Items or Prayer Requests
+    # Prefix for the name of the InteractionComponent that will be created per Entity
     COMPONENT_NAME: Apollos App Component
     PRAYER_REQUEST: Apollos NewSpring Prayer Request
-    CHANNEL_MEDIUM_TYPE_ID: 512 # Mobile App
+    # 512 is "Mobile App"
+    CHANNEL_MEDIUM_TYPE_ID: 512
 
   CONTENT_ITEM:
     ContentSeriesContentItem:
@@ -146,6 +153,7 @@ ROCK_MAPPINGS:
 
   # Apollos will pull content items from these channels and expose them on the user feed
   # However, it will not expose the channel itself.
+  # These channels are also pulled when indexing searchable content.
   FEED_CONTENT_CHANNEL_IDS:
     - 27 # news
     - 16 # articles
