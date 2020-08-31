@@ -10,8 +10,7 @@
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2",
     "start": "NODE_ENV=production node --inspect ./lib/index.js",
     "restart": "yarn && yarn dev",
-    "build":
-      "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
+    "build": "NODE_ENV=production rm -rf ./lib && mkdir -p lib && babel ./src -d ./lib -s",
     "test": "jest",
     "test:watch": "jest --maxWorkers=2 --watch",
     "lint": "eslint ./src --ext .js",
@@ -22,7 +21,9 @@
   },
   "jest": {
     "collectCoverage": true,
-    "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
       "<rootDir>/src/**/?(*.)(spec|test|tests).{js,jsx,mjs}"
@@ -30,24 +31,24 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@apollosproject/config": "1.4.3",
-    "@apollosproject/data-connector-algolia-search": "1.4.3",
-    "@apollosproject/data-connector-analytics": "1.4.3",
-    "@apollosproject/data-connector-bible": "1.4.3",
-    "@apollosproject/data-connector-church-online": "1.4.3",
-    "@apollosproject/data-connector-cloudinary": "1.4.3",
-    "@apollosproject/data-connector-onesignal": "1.4.3",
-    "@apollosproject/data-connector-passes": "1.4.3",
-    "@apollosproject/data-connector-redis-cache": "1.4.3",
-    "@apollosproject/data-connector-rock": "1.4.3",
-    "@apollosproject/data-connector-twilio": "1.4.3",
-    "@apollosproject/data-schema": "1.4.3",
-    "@apollosproject/rock-apollo-data-source": "1.4.3",
-    "@apollosproject/server-core": "1.4.3",
+    "@apollosproject/config": "1.5.0",
+    "@apollosproject/data-connector-algolia-search": "1.5.0",
+    "@apollosproject/data-connector-analytics": "1.5.0",
+    "@apollosproject/data-connector-bible": "1.5.0",
+    "@apollosproject/data-connector-church-online": "1.5.0",
+    "@apollosproject/data-connector-cloudinary": "1.5.0",
+    "@apollosproject/data-connector-onesignal": "1.5.0",
+    "@apollosproject/data-connector-passes": "1.5.0",
+    "@apollosproject/data-connector-redis-cache": "1.5.0",
+    "@apollosproject/data-connector-rock": "1.5.0",
+    "@apollosproject/data-connector-twilio": "1.5.0",
+    "@apollosproject/data-schema": "1.5.0",
+    "@apollosproject/rock-apollo-data-source": "1.5.0",
+    "@apollosproject/server-core": "1.5.0",
     "@bugsnag/js": "^6.2.0",
     "@bugsnag/plugin-express": "^6.2.0",
-    "apollo-server": "^2.11.0",
-    "apollo-server-express": "2.11.0",
+    "apollo-server": "^2.14.2",
+    "apollo-server-express": "2.14.2",
     "aws-sdk": "^2.682.0",
     "color": "3.0.0",
     "dotenv": "6.0.0",
@@ -55,7 +56,8 @@
     "graphql": "14.6.0",
     "heapdump": "^0.3.15",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3"
+    "randomcolor": "0.5.3",
+    "@apollosproject/bugsnag": "1.5.0"
   },
   "devDependencies": {
     "@apollosproject/apollo-server-env-mock": "1.4.3",
@@ -84,6 +86,8 @@
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
     "linkemon": "^0.1.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "@entria/graphql-findbreakingchanges": "^1.0.1",
+    "get-graphql-schema": "^2.1.2"
   }
 }

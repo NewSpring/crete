@@ -2,7 +2,7 @@ import RockApolloDataSource from '@apollosproject/rock-apollo-data-source';
 import ApollosConfig from '@apollosproject/config';
 import moment from 'moment-timezone';
 import { uniq } from 'lodash';
-import bugsnagClient from '../../bugsnag';
+import { report } from '@apollosproject/bugsnag';
 
 const { ROCK, ROCK_MAPPINGS } = ApollosConfig;
 export default class Prayer extends RockApolloDataSource {
@@ -103,7 +103,7 @@ export default class Prayer extends RockApolloDataSource {
           ? 'PrayerNotificationSent'
           : '';
     } catch (e) {
-      bugsnagClient.notify(
+      report(
         new Error('Sorting interactions failed, did not send notification.'),
         {
           metaData: { prayerId },
@@ -219,7 +219,7 @@ export default class Prayer extends RockApolloDataSource {
       await this.put(`PrayerRequests/Prayed/${id}`, {});
       return this.getFromId(id);
     } catch (e) {
-      bugsnagClient.notify(new Error('Increment prayer failed.'), {
+      report(new Error('Increment prayer failed.'), {
         metaData: { id },
         severity: 'warning',
       });
@@ -232,7 +232,7 @@ export default class Prayer extends RockApolloDataSource {
       await this.put(`PrayerRequests/Flag/${id}`, {});
       return this.getFromId(id);
     } catch (e) {
-      bugsnagClient.notify(new Error('Flag prayer failed.'), {
+      report(new Error('Flag prayer failed.'), {
         metaData: { id },
         severity: 'warning',
       });
@@ -247,7 +247,7 @@ export default class Prayer extends RockApolloDataSource {
       await this.delete(`PrayerRequests/${id}`);
       return deletedPrayer;
     } catch (e) {
-      bugsnagClient.notify(new Error('Delete prayer failed.'), {
+      report(new Error('Delete prayer failed.'), {
         metaData: { id },
         severity: 'warning',
       });
@@ -297,7 +297,7 @@ export default class Prayer extends RockApolloDataSource {
       });
       return this.getFromId(prayerId);
     } catch (e) {
-      bugsnagClient.notify(new Error('Adding prayer failed.'), {
+      report(new Error('Adding prayer failed.'), {
         metaData: { primaryAliasId, text, isAnonymous },
         severity: 'warning',
       });
@@ -312,7 +312,7 @@ export default class Prayer extends RockApolloDataSource {
       });
       return this.getFromId(id);
     } catch (e) {
-      bugsnagClient.notify(new Error('Answering prayer failed.'), {
+      report(new Error('Answering prayer failed.'), {
         metaData: { rockPrayerID: id, answer },
         severity: 'warning',
       });
