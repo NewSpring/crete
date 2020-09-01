@@ -8,6 +8,8 @@ import { createAssetUrl } from '../utils';
 
 export default {
   Query: {
+    prayer: (root, { id }, { dataSources }) =>
+      dataSources.Prayer.getFromId(parseGlobalId(id).id),
     // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
