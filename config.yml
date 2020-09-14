@@ -113,7 +113,7 @@ ROCK_MAPPINGS:
     COMPONENT_NAME: Apollos App Component
     PRAYER_REQUEST: Apollos NewSpring Prayer Request
     # 512 is "Mobile App"
-    CHANNEL_MEDIUM_TYPE_ID: 512
+    CHANNEL_MEDIUM_TYPE_ID: 1648
 
   CONTENT_ITEM:
     ContentSeriesContentItem:
