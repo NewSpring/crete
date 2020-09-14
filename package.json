@@ -31,6 +31,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@apollosproject/bugsnag": "1.5.0",
     "@apollosproject/config": "1.5.0",
     "@apollosproject/data-connector-algolia-search": "1.5.0",
     "@apollosproject/data-connector-analytics": "1.5.0",
@@ -40,7 +41,7 @@
     "@apollosproject/data-connector-onesignal": "1.5.0",
     "@apollosproject/data-connector-passes": "1.5.0",
     "@apollosproject/data-connector-redis-cache": "1.5.0",
-    "@apollosproject/data-connector-rock": "1.5.0",
+    "@apollosproject/data-connector-rock": "^1.5.1-alpha.6",
     "@apollosproject/data-connector-twilio": "1.5.0",
     "@apollosproject/data-schema": "1.5.0",
     "@apollosproject/rock-apollo-data-source": "1.5.0",
@@ -56,8 +57,7 @@
     "graphql": "14.6.0",
     "heapdump": "^0.3.15",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3",
-    "@apollosproject/bugsnag": "1.5.0"
+    "randomcolor": "0.5.3"
   },
   "devDependencies": {
     "@apollosproject/apollo-server-env-mock": "1.4.3",
@@ -66,6 +66,7 @@
     "@babel/cli": "^7.4.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.7.4",
+    "@entria/graphql-findbreakingchanges": "^1.0.1",
     "apollo": "^1.9.2",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -82,12 +83,11 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.16.0",
+    "get-graphql-schema": "^2.1.2",
     "graphql-schema-linter": "^0.2.0",
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
     "linkemon": "^0.1.1",
-    "nodemon": "^2.0.2",
-    "@entria/graphql-findbreakingchanges": "^1.0.1",
-    "get-graphql-schema": "^2.1.2"
+    "nodemon": "^2.0.2"
   }
 }
