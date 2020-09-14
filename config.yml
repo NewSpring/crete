@@ -112,7 +112,7 @@ ROCK_MAPPINGS:
     # Prefix for the name of the InteractionComponent that will be created per Entity
     COMPONENT_NAME: Apollos App Component
     PRAYER_REQUEST: Apollos NewSpring Prayer Request
-    # 512 is "Mobile App"
+    # 1648 is "Mobile Application" in the Interaction Medium defined type
     CHANNEL_MEDIUM_TYPE_ID: 1648
 
   CONTENT_ITEM:
