@@ -49,6 +49,23 @@ describe('Prayer resolver', () => {
     rootValue = {};
   });
 
+  it('gets a prayer', async () => {
+    const query = `
+      query {
+        prayer(id: 1) {
+          id
+          text
+        }
+      }
+    `;
+
+    context.dataSources.Prayer.getFromId = jest.fn(() =>
+      Promise.resolve({ id: 1, text: 'very serious prayer' })
+    );
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
+
   it('gets a prayer feed', async () => {
     const query = `
       query {
@@ -177,6 +194,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('gets all saved prayers', async () => {
     const query = `
       query {
@@ -212,6 +230,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('answers a prayer', async () => {
     const query = `
       mutation {
@@ -231,6 +250,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('removes a prayer answer', async () => {
     const query = `
       mutation {
@@ -250,6 +270,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('deletes a prayer (deprecated)', async () => {
     const query = `
       mutation {
@@ -286,6 +307,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('increments prayed for a request (deprecated)', async () => {
     const query = `
       mutation {
@@ -324,6 +346,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('flags a prayer request (deprecated)', async () => {
     const query = `
       mutation {
@@ -339,6 +362,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('flags a prayer request', async () => {
     const query = `
       mutation {
@@ -357,6 +381,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('saves a prayer (deprecated)', async () => {
     const query = `
       mutation {
@@ -371,6 +396,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('saves a prayer', async () => {
     const query = `
       mutation {
@@ -388,6 +414,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('unsaves a prayer (deprecated)', async () => {
     const query = `
       mutation {
@@ -402,6 +429,7 @@ describe('Prayer resolver', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+
   it('unsaves a prayer', async () => {
     const query = `
       mutation {

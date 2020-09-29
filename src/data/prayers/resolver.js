@@ -8,6 +8,8 @@ import { createAssetUrl } from '../utils';
 
 export default {
   Query: {
+    // This takes a Rock ID, not a Node ID.
+    prayer: (root, { id }, { dataSources }) => dataSources.Prayer.getFromId(id),
     // deprecated
     prayers: (root, { type }, { dataSources }) =>
       dataSources.Prayer.getPrayers(type),
