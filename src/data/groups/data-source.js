@@ -32,4 +32,12 @@ export default class Group extends baseGroup.dataSource {
       .filterOneOf(groupFilters)
       .get();
   };
+
+  getForReadMyBible = async (personId) => {
+    const associations = await this.request('GroupMembers')
+      .filter(`GroupId eq ${ROCK_MAPPINGS.READ_MY_BIBLE_GROUP_ID}`)
+      .andFilter(`PersonId eq ${personId}`)
+      .get();
+    return associations.length > 0;
+  };
 }

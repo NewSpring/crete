@@ -5,6 +5,8 @@ const resolver = {
   Person: {
     testGroups: ({ id: personID }, args, { dataSources: { Group } }) =>
       Group.getTestGroups(personID),
+    isInReadMyBible: ({ id: personId }, args, { dataSources: { Group } }) =>
+      Group.getForReadMyBible(personId),
   },
 };
 export default resolverMerge(resolver, baseGroup);
