@@ -22,6 +22,7 @@ export const groupSchema = gql`
     groups(type: GROUP_TYPE, asLeader: Boolean): [Group]
     testGroups: [Group]
     isGroupLeader: Boolean
+    isInReadMyBible: Boolean
   }
 `;
 
