@@ -15,6 +15,34 @@ const {
 } = ApollosConfig;
 
 export default class ContentItem extends oldContentItem.dataSource {
+  getCursorByParentContentItemId = async (id) => {
+    const associations = await this.request('ContentChannelItemAssociations')
+      .filter(`ContentChannelItemId eq ${id}`)
+      .cache({ ttl: 60 })
+      .get();
+
+    if (!associations || !associations.length) return this.request().empty();
+
+    return this.getFromIds(
+      associations.map(
+        ({ childContentChannelItemId }) => childContentChannelItemId
+      )
+    ).transform((results) =>
+      results.sort((a, b) => {
+        /**
+         * Find the Association Order for the given content channel items
+         */
+        const { order: orderA } = associations.find(
+          (item) => item.childContentChannelItemId === a.id
+        );
+        const { order: orderB } = associations.find(
+          (item) => item.childContentChannelItemId === b.id
+        );
+        return orderA - orderB;
+      })
+    );
+  };
+
   getContentItemScriptures = async ({ value: matrixItemGuid }) => {
     const {
       dataSources: { Scripture, MatrixItem },
