@@ -47,6 +47,8 @@ import * as RockConstants from './rock-constants';
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
 
+delete Feature.resolver.PrayerListFeature;
+
 const data = {
   Interfaces,
   Followings,
