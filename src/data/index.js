@@ -28,13 +28,14 @@ import {
   AuthSms,
   BinaryFiles,
   FeatureFeed,
-  ActionAlgorithm,
-  PrayerRequest,
+  // ActionAlgorithm,
+  // PrayerRequest,
 } from '@apollosproject/data-connector-rock';
 import * as LiveStream from './live';
 import * as Person from './people';
 import * as ContentItem from './content-items';
 import * as Feature from './features';
+import * as ActionAlgorithm from './action-algorithm';
 import * as Campus from './campuses';
 import * as Group from './groups';
 import * as Event from './events';
@@ -79,7 +80,6 @@ const data = {
   Feature,
   Event,
   Cache,
-  Feature,
   FeatureFeed,
   ActionAlgorithm,
   // PrayerRequest,

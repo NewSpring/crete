@@ -2,13 +2,6 @@ import { Feature as baseFeatures } from '@apollosproject/data-connector-rock';
 import ApollosConfig from '@apollosproject/config';
 
 export default class Feature extends baseFeatures.dataSource {
-  baseAlgorithms = this.ACTION_ALGORITHIMS;
-
-  ACTION_ALGORITHIMS = {
-    ...this.baseAlgorithms,
-    STAFF_NEWS: this.contentChannelAlgorithm.bind(this),
-  };
-
   async getHomeFeedFeatures() {
     const { Person, Auth, Group } = this.context.dataSources;
     const { id } = await Auth.getCurrentPerson();
