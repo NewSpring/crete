@@ -20,6 +20,9 @@ import oneRockPrayer, { twoRockPrayers } from '../../mocks/prayer';
 import oneRockPerson from '../../mocks/person';
 import oneRockCampus from '../../mocks/campus';
 
+// TODO: Delete this line when we integrate core prayer.
+delete Feature.resolver.PrayerListFeature;
+
 // define here any classes with dataSource functions you need to overwrite
 const { getSchema, getContext } = createTestHelpers({
   Prayer,

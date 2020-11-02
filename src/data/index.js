@@ -48,6 +48,7 @@ import * as RockConstants from './rock-constants';
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
 
+// TODO: Delete this line when we integrate core prayer.
 delete Feature.resolver.PrayerListFeature;
 
 const data = {
