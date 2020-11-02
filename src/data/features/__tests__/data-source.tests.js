@@ -30,4 +30,8 @@ describe('Feature data sources', () => {
   it('gets available features', async () => {
     expect(await Feature.getHomeFeedFeatures()).toMatchSnapshot();
   });
+  it('gets available as non-staff', async () => {
+    Feature.context.dataSources.Person.isStaff = () => false;
+    expect(await Feature.getHomeFeedFeatures()).toMatchSnapshot();
+  });
 });

@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Feature data sources gets available as non-staff 1`] = `
+Array [
+  Object {
+    "__typename": "ActionListFeature",
+    "actions": [Function],
+    "id": "{\\"algorithms\\":[{\\"type\\":\\"UPCOMING_EVENTS\\"}],\\"title\\":\\"Events\\"}",
+    "primaryAction": undefined,
+    "subtitle": undefined,
+    "title": "Events",
+  },
+]
+`;
+
 exports[`Feature data sources gets available features 1`] = `
 Array [
   Object {
