@@ -207,6 +207,9 @@ HOME_FEATURES:
   #- title: FOR YOU
   #algorithms: [PERSONA_FEED]
   #subtitle: Explore what God calls you to today
+  - algorithms: [CAMPAIGN_ITEMS]
+    type: VerticalCardList
+    isFeatured: true
   - subtitle: Upcoming Events
     algorithms:
       - type: UPCOMING_EVENTS
@@ -222,6 +225,8 @@ HOME_FEATURES:
         arguments:
           contentChannelId: 459
           limit: 3
+  - algorithms: [USER_FEED]
+    type: VerticalCardList
 
 #####################
 # EXAMPLES
@@ -231,24 +236,24 @@ HOME_FEATURES:
     #isCard: false
     #type: PrayerList
     #title: Daily Prayer
-  #- algorithms: [CAMPAIGN_ITEMS]
-    #type: HeroList
-    #isFeatured: true
-    #primaryAction:
-      ## Right now, you hardcode exactly what GraphQL should return.
-      ## Long term, we hope to have a more sophisticated mechanism for driving this field
-      #action: OPEN_URL
-      #title: 'Read More'
-      #relatedNode:
-        #__typename: Url
-        #url: 'https://wwww.apollos.io'
+  # - algorithms: [CAMPAIGN_ITEMS]
+  #   type: HeroList
+  #   isFeatured: true
+  #   primaryAction:
+  #     # Right now, you hardcode exactly what GraphQL should return.
+  #     # Long term, we hope to have a more sophisticated mechanism for driving this field
+  #     action: OPEN_URL
+  #     title: 'Read More'
+  #     relatedNode:
+  #       __typename: Url
+  #       url: 'https://wwww.apollos.io'
   #- title: FOR YOU
     #algorithms: [SERMON_CHILDREN, PERSONA_FEED]
     #subtitle: Explore what God calls you to today
     #type: ActionList
-  #- algorithms: [PERSONA_FEED]
-    #subtitle: Continue
-    #type: HorizontalCardList
+  # - algorithms: [PERSONA_FEED]
+  #   subtitle: Continue
+  #   type: HorizontalCardList
   #- title: RECOMMENDED
     #algorithms: [SERMON_CHILDREN]
     #subtitle: For Him
@@ -268,45 +273,73 @@ DISCOVER_FEATURES:
   - algorithms:
       - type: CONTENT_CHANNEL
         arguments:
-          contentChannelId: 3
+          contentChannelId: 20
           limit: 3
     type: HorizontalCardList
-    subtitle: Sermons
-  - algorithms:
-      - type: CONTENT_CHANNEL
-        arguments:
-          contentChannelId: 5
-          limit: 3
-    type: HorizontalCardList
-    subtitle: Podcasts
+    subtitle: Sermon Series
     primaryAction:
       action: OPEN_CHANNEL
-      title: 'Read More'
+      title: 'View All'
       relatedNode:
         __typename: ContentChannel
-        id: 5
-        name: Podcasts
+        id: 20
+        name: Sermon Series
   - algorithms:
       - type: CONTENT_CHANNEL
         arguments:
-          contentChannelId: 6
+          contentChannelId: 18
           limit: 3
     type: HorizontalCardList
-    title: Videos
+    subtitle: Studies
     primaryAction:
       action: OPEN_CHANNEL
-      title: 'Read More'
+      title: 'View All'
       relatedNode:
         __typename: ContentChannel
-        id: 6
-        name: Videos
+        id: 18
+        name: Articles
   - algorithms:
       - type: CONTENT_CHANNEL
         arguments:
-          contentChannelId: 8
+          contentChannelId: 16
           limit: 3
     type: HorizontalCardList
-    subtitle: Something Else
+    subtitle: Studies
+    primaryAction:
+      action: OPEN_CHANNEL
+      title: 'View All'
+      relatedNode:
+        __typename: ContentChannel
+        id: 16
+        name: Articles
+  - algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 27
+          limit: 3
+    type: HorizontalCardList
+    subtitle: News
+    primaryAction:
+      action: OPEN_CHANNEL
+      title: 'View All'
+      relatedNode:
+        __typename: ContentChannel
+        id: 27
+        name: News
+  - algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 28
+          limit: 3
+    type: HorizontalCardList
+    subtitle: Stories
+    primaryAction:
+      action: OPEN_CHANNEL
+      title: 'View All'
+      relatedNode:
+        __typename: ContentChannel
+        id: 28
+        name: Storeis        
 
 # Default mapping of field types -> ids. There's probably no reason to edit this.
 ROCK_CONSTANTS:
