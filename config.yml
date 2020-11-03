@@ -211,15 +211,18 @@ HOME_FEATURES:
     type: VerticalCardList
     isFeatured: true
   - subtitle: Upcoming Events
+    type: ActionList
     algorithms:
       - type: UPCOMING_EVENTS
   - subtitle: Updates for NewSpring staff
+    type: ActionList
     algorithms:
       - type: STAFF_NEWS
         arguments:
           contentChannelId: 513
           limit: 3
   - subtitle: Next steps
+    type: ActionList
     algorithms:
       - type: CONTENT_CHANNEL
         arguments:

@@ -5,6 +5,9 @@ const resolver = {
   CardListItem: {
     labelText: ({ subtitle }) => subtitle.split(' - ').pop(),
   },
+  ActionListAction: {
+    subtitle: () => null,
+  },
 };
 
 export default resolverMerge(resolver, Feature);
