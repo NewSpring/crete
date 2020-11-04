@@ -6,15 +6,15 @@ const { CHURCH_ONLINE, ROCK_MAPPINGS, LIVING_AS_ONE } = ApollosConfig;
 
 export default class LiveStream extends RockApolloDataSource {
   async getLiveStream() {
-    const stream =
-      (await this.post(
-        `Lava/RenderTemplate`,
-        `{[ scheduledcontent schedulecategoryid:'${
-          ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID
-        }' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
-      )) === 'true';
+    // const stream =
+    //   (await this.post(
+    //     `Lava/RenderTemplate`,
+    //     `{[ scheduledcontent schedulecategoryid:'${
+    //       ROCK_MAPPINGS.SUNDAY_SERMON_SCHEDULE_CATEGORY_ID
+    //     }' showwhen:'both' ]}{{ IsLive }}{[ endscheduledcontent ]}`
+    //   )) === 'true';
     return {
-      isLive: stream,
+      isLive: true,
       eventStartTime: null,
       media: { sources: [{ uri: LIVING_AS_ONE.STREAM_URL }] },
       webViewUrl: CHURCH_ONLINE.WEB_VIEW_URL,
