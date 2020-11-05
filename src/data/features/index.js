@@ -1,7 +1,5 @@
-import { Feature } from '@apollosproject/data-connector-rock';
 import dataSource from './data-source';
 import schema from './schema';
-
-const { resolver } = Feature;
+import resolver from './resolver';
 
 export { schema, resolver, dataSource };
