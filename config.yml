@@ -342,7 +342,7 @@ DISCOVER_FEATURES:
       relatedNode:
         __typename: ContentChannel
         id: 28
-        name: Storeis        
+        name: Stories        
 
 # Default mapping of field types -> ids. There's probably no reason to edit this.
 ROCK_CONSTANTS:
