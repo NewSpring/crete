@@ -6,7 +6,7 @@ Object {
     "campuses": Array [
       Object {
         "image": Object {
-          "uri": "https://fake-image-url.com",
+          "uri": "https://fake-image-url.com/public",
         },
       },
     ],
