@@ -173,6 +173,32 @@ Object {
 }
 `;
 
+exports[`UniversalContentItem gets a newspring devotional item's siblings 1`] = `
+Object {
+  "data": Object {
+    "node": Object {
+      "id": "DevotionalContentItem:559b23fd0aa90e81b1c023e72e230fa1",
+      "scriptures": Array [
+        Object {
+          "html": "<p><i>1</i>In the beginning...</p>",
+        },
+      ],
+      "siblingContentItemsConnection": Object {
+        "edges": Array [
+          Object {
+            "node": Object {
+              "id": "UniversalContentItem:559b23fd0aa90e81b1c023e72e230fa1",
+              "title": "SAMPLE: Easter",
+            },
+          },
+        ],
+      },
+      "title": "SAMPLE: Easter",
+    },
+  },
+}
+`;
+
 exports[`UniversalContentItem gets a newspring weekend content item 1`] = `
 Object {
   "data": Object {
