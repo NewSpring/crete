@@ -19,6 +19,7 @@ BUGSNAG:
   API_KEY: ${BUGSNAG_API_KEY}
   OPTIONS: {} # In case you want to pass in other Bugsnag configuration options. https://docs.bugsnag.com/platforms/javascript/configuration-options/
 ROCK:
+  VERSION: 12.0
   API_URL: ${ROCK_API}
   API_TOKEN: ${ROCK_TOKEN}
   IMAGE_URL: https://s3.amazonaws.com
