@@ -301,14 +301,14 @@ DISCOVER_FEATURES:
       relatedNode:
         __typename: ContentChannel
         id: 18
-        name: Articles
+        name: Studies
   - algorithms:
       - type: CONTENT_CHANNEL
         arguments:
           contentChannelId: 16
           limit: 3
     type: HorizontalCardList
-    subtitle: Studies
+    subtitle: Articles
     primaryAction:
       action: OPEN_CHANNEL
       title: 'View All'
@@ -343,7 +343,7 @@ DISCOVER_FEATURES:
       relatedNode:
         __typename: ContentChannel
         id: 28
-        name: Stories        
+        name: Stories
 
 # Default mapping of field types -> ids. There's probably no reason to edit this.
 ROCK_CONSTANTS:
