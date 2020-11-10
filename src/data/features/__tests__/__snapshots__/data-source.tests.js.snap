@@ -33,3 +33,190 @@ Array [
   },
 ]
 `;
+
+exports[`Feature data sources should create an ActionListFeature from a CAMPAIGN_ITEMS algorithm 1`] = `
+Object {
+  "__typename": "ActionListFeature",
+  "actions": Array [
+    Object {
+      "action": "READ_CONTENT",
+      "id": "10",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "first item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 1,
+        "title": "first item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "first item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "21",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "first item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 2,
+        "title": "second item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "second item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "32",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "first item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 3,
+        "title": "third item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "third item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "13",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "second item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 1,
+        "title": "first item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "first item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "24",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "second item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 2,
+        "title": "second item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "second item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "35",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "second item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 3,
+        "title": "third item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "third item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "16",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "third item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 1,
+        "title": "first item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "first item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "27",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "third item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 2,
+        "title": "second item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "second item",
+    },
+    Object {
+      "action": "READ_CONTENT",
+      "id": "38",
+      "image": null,
+      "relatedNode": Object {
+        "__type": "UniversalContentItem",
+        "channelSubtitle": "third item",
+        "contentChannel": Object {
+          "name": "content channel",
+        },
+        "id": 3,
+        "title": "third item",
+      },
+      "subtitle": "content channel",
+      "summary": "some summary",
+      "title": "third item",
+    },
+  ],
+  "id": "{\\"algorithms\\":[{\\"type\\":\\"CAMPAIGN_ITEMS\\"}],\\"title\\":\\"Test Featured Item\\",\\"subtitle\\":\\"It's featured!\\"}",
+  "primaryAction": undefined,
+  "subtitle": "It's featured!",
+  "title": "Test Featured Item",
+}
+`;
+
+exports[`Feature data sources should create an ActionListFeature from a CAMPAIGN_ITEMS algorithm 2`] = `
+Array [
+  Array [
+    1,
+  ],
+  Array [
+    2,
+  ],
+  Array [
+    3,
+  ],
+]
+`;
+
+exports[`Feature data sources should create an ActionListFeature from a CAMPAIGN_ITEMS algorithm 3`] = `
+Array [
+  Array [
+    undefined,
+  ],
+]
+`;
