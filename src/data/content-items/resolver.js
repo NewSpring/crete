@@ -23,6 +23,8 @@ const defaultResolvers = {
     );
     if (ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.includes(root.contentChannelId)) {
       cursor.orderBy('StartDateTime', 'desc');
+    } else {
+      cursor.orderBy('Order');
     }
     return dataSources.ContentItem.paginate({
       cursor,
@@ -101,7 +103,7 @@ const resolver = {
         series.id
       );
       return dataSources.ContentItem.paginate({
-        cursor,
+        cursor: cursor.orderBy('Order'),
         args,
       });
     },
@@ -172,7 +174,7 @@ const resolver = {
         series.id
       );
       return dataSources.ContentItem.paginate({
-        cursor,
+        cursor: cursor.orderBy('Order'),
         args,
       });
     },

@@ -196,6 +196,33 @@ describe('UniversalContentItem', () => {
     const result = await graphql(schema, query, rootValue, context);
     expect(result).toMatchSnapshot();
   });
+  it("gets a newspring devotional item's siblings", async () => {
+    const query = `
+      query {
+        node(id: "${createGlobalId(123, 'DevotionalContentItem')}") {
+          id
+          ... on DevotionalContentItem {
+            id
+            title
+            scriptures {
+              html
+            }
+            siblingContentItemsConnection {
+              edges {
+                node {
+                  id
+                  title
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+    const rootValue = {};
+    const result = await graphql(schema, query, rootValue, context);
+    expect(result).toMatchSnapshot();
+  });
 
   it('gets a newspring weekend content item', async () => {
     const query = `
