@@ -214,7 +214,7 @@ HOME_FEATURES:
   - subtitle: Upcoming Events
     type: ActionList
     algorithms:
-      - type: UPCOMING_EVENTS
+      - type: EXPERIMENTAL_UPCOMING_EVENTS
   - subtitle: Updates for NewSpring staff
     type: ActionList
     algorithms:

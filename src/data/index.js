@@ -27,7 +27,7 @@ import {
   Template,
   AuthSms,
   BinaryFiles,
-  // FeatureFeed,
+  FeatureFeed,
   // ActionAlgorithm,
   // PrayerRequest,
 } from '@apollosproject/data-connector-rock';
@@ -42,7 +42,6 @@ import * as Event from './events';
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
-import * as FeatureFeed from './feature-feed';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`

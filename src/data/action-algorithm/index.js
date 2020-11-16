@@ -8,8 +8,48 @@ class dataSource extends ActionAlgorithm.dataSource {
   ACTION_ALGORITHMS = {
     ...this.ACTION_ALGORITHMS,
     CAMPAIGN_ITEMS: this.campaignItemsAlgorithm.bind(this),
-    STAFF_NEWS: this.contentChannelAlgorithm.bind(this),
+    STAFF_NEWS: this.staffNewsAlgorithm.bind(this),
+    EXPERIMENTAL_UPCOMING_EVENTS: this.experimentalUpcomingEventsAlgorithm.bind(
+      this
+    ),
   };
+
+  async experimentalUpcomingEventsAlgorithm(...args) {
+    const { Feature, Auth, Group } = this.context.dataSources;
+
+    Feature.setCacheHint({
+      maxAge: 0,
+      scope: 'PRIVATE',
+    });
+
+    const { id } = await Auth.getCurrentPerson();
+    const testGroups = await Group.getTestGroups(id);
+    const isTester = testGroups.filter(
+      (group) => group.name === 'Experimental Features'
+    ).length;
+
+    if (!isTester) {
+      return [];
+    }
+    return this.upcomingEventsAlgorithm.call(this, ...args);
+  }
+
+  async staffNewsAlgorithm(...args) {
+    const { Feature, Auth, Person } = this.context.dataSources;
+
+    Feature.setCacheHint({
+      maxAge: 0,
+      scope: 'PRIVATE',
+    });
+
+    const { id } = await Auth.getCurrentPerson();
+    const isStaff = await Person.isStaff(id);
+
+    if (!isStaff) {
+      return [];
+    }
+    return this.contentChannelAlgorithm.call(this, ...args);
+  }
 
   async campaignItemsAlgorithm({ limit = 1 } = {}) {
     const { ContentItem } = this.context.dataSources;

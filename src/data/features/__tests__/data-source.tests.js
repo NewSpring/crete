@@ -1,6 +1,6 @@
 import ApollosConfig from '@apollosproject/config';
+import { FeatureFeed as FF } from '@apollosproject/data-connector-rock';
 import { dataSource as FeatureDataSource } from '../index';
-import { dataSource as FeedDataSource } from '../../feature-feed';
 import { dataSource as ActionAlgorithm } from '../../action-algorithm';
 
 async function expandResult(result) {
@@ -87,7 +87,8 @@ describe('Feature data sources', () => {
   beforeEach(() => {
     const ActionAlgo = new ActionAlgorithm();
     Feature = new FeatureDataSource();
-    FeatureFeed = new FeedDataSource();
+    // eslint-disable-next-line
+    FeatureFeed = new FF.dataSource();
     context = { dataSources: {} };
     context.dataSources = {
       Auth: { getCurrentPerson: () => ({ id: 1 }) },
