@@ -17,7 +17,7 @@ import * as Sms from '@apollosproject/data-connector-twilio';
 import {
   Followings,
   Interactions,
-  // RockConstants,
+  RockConstants,
   // Person,
   // ContentItem,
   ContentChannel,
@@ -42,7 +42,6 @@ import * as Event from './events';
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
-import * as RockConstants from './rock-constants';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`

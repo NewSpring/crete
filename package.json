@@ -31,21 +31,21 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@apollosproject/bugsnag": "^1.7.0-beta.2",
-    "@apollosproject/config": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-algolia-search": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-analytics": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-bible": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-church-online": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-cloudinary": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-onesignal": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-passes": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-redis-cache": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-rock": "^1.7.0-beta.2",
-    "@apollosproject/data-connector-twilio": "^1.7.0-beta.2",
-    "@apollosproject/data-schema": "^1.7.0-beta.2",
-    "@apollosproject/rock-apollo-data-source": "^1.7.0-beta.2",
-    "@apollosproject/server-core": "^1.7.0-beta.2",
+    "@apollosproject/bugsnag": "^1.7.0-beta.3",
+    "@apollosproject/config": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-algolia-search": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-analytics": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-bible": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-church-online": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-cloudinary": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-onesignal": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-passes": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-redis-cache": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-rock": "^1.7.0-beta.3",
+    "@apollosproject/data-connector-twilio": "^1.7.0-beta.3",
+    "@apollosproject/data-schema": "^1.7.0-beta.3",
+    "@apollosproject/rock-apollo-data-source": "^1.7.0-beta.3",
+    "@apollosproject/server-core": "^1.7.0-beta.3",
     "@bugsnag/js": "^6.2.0",
     "@bugsnag/plugin-express": "^6.2.0",
     "apollo-server": "^2.14.2",
@@ -57,12 +57,13 @@
     "graphql": "14.6.0",
     "heapdump": "^0.3.15",
     "prettier": "1.12.1",
-    "randomcolor": "0.5.3"
+    "randomcolor": "0.5.3",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
-    "@apollosproject/apollo-server-env-mock": "^1.7.0-beta.2",
-    "@apollosproject/babel-preset-apollos": "^1.7.0-beta.2",
-    "@apollosproject/eslint-config": "^1.7.0-beta.2",
+    "@apollosproject/apollo-server-env-mock": "^1.7.0-beta.3",
+    "@apollosproject/babel-preset-apollos": "^1.7.0-beta.3",
+    "@apollosproject/eslint-config": "^1.7.0-beta.3",
     "@babel/cli": "^7.4.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.7.4",
@@ -88,6 +89,6 @@
     "jest": "^24.9.0",
     "jest-fetch-mock": "^2.1.2",
     "linkemon": "^0.1.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "1.18.7"
   }
 }
