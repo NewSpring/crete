@@ -232,6 +232,23 @@ HOME_FEATURES:
   - algorithms: [USER_FEED]
     type: VerticalCardList
 
+READ_TAB:
+  - algorithms: [CAMPAIGN_ITEMS]
+    type: VerticalCardList
+    isFeatured: true
+  - title: Continue Reading
+    type: HorizontalCardList
+    algorithms:
+      - type: SERIES_IN_PROGRESS
+        arguments:
+          contentChannelId: 18
+  - title: More Studies
+    type: HorizontalCardList
+    algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 18
+
 #####################
 # EXAMPLES
 #####################
