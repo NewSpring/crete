@@ -233,9 +233,12 @@ HOME_FEATURES:
     type: VerticalCardList
 
 READ_TAB:
-  - algorithms: [CAMPAIGN_ITEMS]
+  - algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 18
+          limit: 1
     type: VerticalCardList
-    isFeatured: true
   - title: Continue Reading
     type: HorizontalCardList
     algorithms:
