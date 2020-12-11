@@ -11,6 +11,8 @@ export default class Group extends baseGroup.dataSource {
     Fuse: ROCK_MAPPINGS.FUSE_GROUP_TYPE_ID,
     Rally: ROCK_MAPPINGS.RALLY_GROUP_TYPE_ID,
     Mentoring: ROCK_MAPPINGS.MENTORING_GROUP_TYPE_ID,
+    Coaching: ROCK_MAPPINGS.COACHING_GROUP_TYPE_ID,
+    GroupHub: ROCK_MAPPINGS.GROUP_HUB_GROUP_TYPE_ID,
   };
 
   getGroupTypeIds = () => Object.values(this.groupTypeMap);
