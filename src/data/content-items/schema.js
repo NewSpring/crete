@@ -1,8 +1,8 @@
-import { ContentItem } from '@apollosproject/data-connector-rock';
+import { contentItemSchema } from '@apollosproject/data-schema';
 import gql from 'graphql-tag';
 
 export default gql`
-  ${ContentItem.schema}
+  ${contentItemSchema}
 
   type SeriesConnection {
     series: ContentItem

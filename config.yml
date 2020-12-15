@@ -234,6 +234,27 @@ HOME_FEATURES:
   - algorithms: [USER_FEED]
     type: VerticalCardList
 
+READ_TAB:
+  - algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 18
+          limit: 1
+    type: VerticalCardList
+  - title: Continue Reading
+    type: HorizontalCardList
+    algorithms:
+      - type: SERIES_IN_PROGRESS
+        arguments:
+          channelIds:
+            - 18
+  - title: More Studies
+    type: HorizontalCardList
+    algorithms:
+      - type: CONTENT_CHANNEL
+        arguments:
+          contentChannelId: 18
+
 #####################
 # EXAMPLES
 #####################
