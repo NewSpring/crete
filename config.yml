@@ -246,7 +246,8 @@ READ_TAB:
     algorithms:
       - type: SERIES_IN_PROGRESS
         arguments:
-          contentChannelId: 18
+          channelIds:
+            - 18
   - title: More Studies
     type: HorizontalCardList
     algorithms:
