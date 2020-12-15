@@ -242,14 +242,14 @@ READ_TAB:
           contentChannelId: 17
           limit: 1
     type: VerticalCardList
-  - title: Continue Reading
+  - subtitle: Continue Reading
     type: HorizontalCardList
     algorithms:
       - type: SERIES_IN_PROGRESS
         arguments:
           channelIds:
             - 18
-  - title: More Studies
+  - subtitle: More Studies
     type: HorizontalCardList
     algorithms:
       - type: CONTENT_CHANNEL
