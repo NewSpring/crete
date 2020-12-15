@@ -235,10 +235,11 @@ HOME_FEATURES:
     type: VerticalCardList
 
 READ_TAB:
-  - algorithms:
+  - subtitle: Read
+    algorithms:
       - type: CONTENT_CHANNEL
         arguments:
-          contentChannelId: 18
+          contentChannelId: 17
           limit: 1
     type: VerticalCardList
   - title: Continue Reading
