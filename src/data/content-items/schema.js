@@ -49,7 +49,7 @@ export default gql`
     sermonDate: String
     series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
-    sermonNotes: [NotesBlock]
+    sermonNotes: [NotesBlock] @cacheControl(maxAge: 0)
   }
 
   extend type DevotionalContentItem {

@@ -6,7 +6,8 @@ const prayerSchema = gql`
     prayers(type: PrayerType): [Prayer]
       @deprecated(reason: "Use paginated version: prayerFeed")
     prayerFeed(first: Int, after: String, type: PrayerType): PrayersConnection
-    prayerMenuCategories: [PrayerMenuCategory]
+      @cacheControl(maxAge: 0)
+    prayerMenuCategories: [PrayerMenuCategory] @cacheControl(maxAge: 0)
     campusPrayers: [Prayer] @deprecated(reason: "Use prayers(type:SAVED)")
     userPrayers: [Prayer] @deprecated(reason: "Use prayers(type:USER)")
     groupPrayers: [Prayer] @deprecated(reason: "Use prayers(type:GROUP)")
