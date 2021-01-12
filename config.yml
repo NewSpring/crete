@@ -255,6 +255,14 @@ READ_TAB:
       - type: CONTENT_CHANNEL
         arguments:
           contentChannelId: 18
+          limit: 3
+    primaryAction:
+      action: OPEN_CHANNEL
+      title: 'View More'
+      relatedNode:
+        __typename: ContentChannel
+        id: 18
+        name: Studies
 
 DISCOVER_FEATURES:
   - algorithms:
