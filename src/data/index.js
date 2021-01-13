@@ -22,7 +22,7 @@ import {
   // ContentItem,
   ContentChannel,
   Sharable,
-  Auth,
+  // Auth,
   PersonalDevice,
   Template,
   AuthSms,
@@ -31,6 +31,7 @@ import {
   // ActionAlgorithm,
   // PrayerRequest,
 } from '@apollosproject/data-connector-rock';
+import Auth from './auth';
 import * as LiveStream from './live';
 import * as Person from './people';
 import * as ContentItem from './content-items';
