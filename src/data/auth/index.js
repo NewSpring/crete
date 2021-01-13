@@ -8,15 +8,15 @@ export const contextMiddleware = ({ req, context: ctx }) => {
       req.headers.authorization
     );
     if (rockCookie) {
-      report(new Error('User Header - Valid'), {
-        metaData: {
-          userToken,
-          rockCookie,
-          sessionId,
-          header: req.headers.authorization,
-        },
-        severity: 'warning',
-      });
+      // report(new Error('User Header - Valid'), {
+      //   metaData: {
+      //     userToken,
+      //     rockCookie,
+      //     sessionId,
+      //     header: req.headers.authorization,
+      //   },
+      //   severity: 'warning',
+      // });
     } else {
       report(new Error('User Header - Invalid'), {
         metaData: {
