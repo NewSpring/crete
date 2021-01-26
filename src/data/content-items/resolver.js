@@ -1,4 +1,5 @@
 import { ContentItem as originalContentItem } from '@apollosproject/data-connector-rock';
+import sanitizeHtml from '@apollosproject/data-connector-rock/lib/sanitize-html';
 import { resolverMerge } from '@apollosproject/server-core';
 
 import ApollosConfig from '@apollosproject/config';
@@ -16,6 +17,9 @@ const defaultResolvers = {
 
   theme: (root, input, { dataSources }) =>
     dataSources.ContentItem.getTheme(root),
+
+  htmlContent: (root, input, { dataSources }) =>
+    sanitizeHtml(root.content) || dataSources.ContentItem.createSummary(root),
 
   childContentItemsConnection: async (root, args, { dataSources }) => {
     const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
