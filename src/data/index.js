@@ -20,7 +20,7 @@ import {
   RockConstants,
   // Person,
   // ContentItem,
-  ContentChannel,
+  // ContentChannel,
   Sharable,
   // Auth,
   PersonalDevice,
@@ -35,6 +35,7 @@ import Auth from './auth';
 import * as LiveStream from './live';
 import * as Person from './people';
 import * as ContentItem from './content-items';
+import * as ContentChannel from './content-channel';
 import * as Feature from './features';
 import * as ActionAlgorithm from './action-algorithm';
 import * as Campus from './campuses';
