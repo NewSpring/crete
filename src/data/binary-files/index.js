@@ -1,22 +1,26 @@
+import FormData from 'form-data';
 import { BinaryFiles } from '@apollosproject/data-connector-rock';
 
 class dataSource extends BinaryFiles.dataSource {
-  willSendRequest(request) {
-    this.callCount += 1;
-    if (!this.calls[request.path]) {
-      this.calls[request.path] = 0;
-    }
-    this.calls[request.path] += 1;
+  async uploadFile({ stream }) {
+    const data = new FormData();
 
-    if (!request.headers.has('Authorization-Token')) {
-      request.headers.set('Authorization-Token', this.rockToken);
-    }
-    request.headers.set('user-agent', 'Apollos');
-    request.headers.set('Content-Type', 'application/json');
-    // Use an HTTP agent for keepAlive
-    // if (get(ROCK, 'USE_AGENT', true)) {
-    //   request.agent = ROCK_AGENT;
-    // }
+    data.append('file', stream);
+
+    const response = await this.nodeFetch(
+      `${this.baseURL}/BinaryFiles/Upload?binaryFileTypeId=5`,
+      {
+        method: 'POST',
+        body: data,
+        agent: this.agent,
+        headers: {
+          'Authorization-Token': this.rockToken,
+          ...data.getHeaders(),
+        },
+      }
+    );
+
+    return response.text();
   }
 }
 
