@@ -3,6 +3,7 @@ import { BinaryFiles } from '@apollosproject/data-connector-rock';
 
 class dataSource extends BinaryFiles.dataSource {
   async uploadFile({ stream }) {
+    console.log('got file');
     const data = new FormData();
 
     data.append('file', stream);
@@ -19,7 +20,7 @@ class dataSource extends BinaryFiles.dataSource {
         },
       }
     );
-
+    console.log('returning');
     return response.text();
   }
 }
