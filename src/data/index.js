@@ -26,7 +26,7 @@ import {
   PersonalDevice,
   Template,
   AuthSms,
-  // BinaryFiles,
+  BinaryFiles,
   // FeatureFeed,
   // ActionAlgorithm,
   // PrayerRequest,
@@ -45,7 +45,6 @@ import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
 import * as FeatureFeed from './feature-feeds';
-import * as BinaryFiles from './binary-files';
 
 // This module is used to attach Rock User updating to the OneSignal module.
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
