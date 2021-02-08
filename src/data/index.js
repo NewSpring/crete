@@ -31,6 +31,7 @@ import {
   // ActionAlgorithm,
   // PrayerRequest,
 } from '@apollosproject/data-connector-rock';
+import { Comment, UserFlag } from '@apollosproject/data-connector-postgres';
 import Auth from './auth';
 import * as LiveStream from './live';
 import * as Person from './people';
@@ -52,6 +53,7 @@ import * as OneSignalWithRock from './oneSignalWithRock';
 
 // TODO: Delete this line when we integrate core prayer.
 delete Feature.resolver.PrayerListFeature;
+delete Feature.resolver.VerticalPrayerListFeature;
 
 const data = {
   Interfaces,
@@ -85,6 +87,8 @@ const data = {
   Cache,
   FeatureFeed,
   ActionAlgorithm,
+  Comment,
+  UserFlag,
   // PrayerRequest,
 };
 

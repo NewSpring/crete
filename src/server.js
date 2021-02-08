@@ -10,6 +10,7 @@ import { get } from 'lodash';
 // From core. For use with their universal linking implementation.
 // import { setupUniversalLinks } from '@apollosproject/server-core';
 import { BugsnagPlugin } from '@apollosproject/bugsnag';
+import { sequelize } from '@apollosproject/data-connector-postgres';
 import {
   resolvers,
   schema,
@@ -89,5 +90,12 @@ setupJobs({ app, dataSources, context });
 
 apolloServer.applyMiddleware({ app });
 apolloServer.applyMiddleware({ app, path: '/' });
+
+// make sure this is called last.
+// (or at least after the apollos server setup)
+(async () => {
+  await sequelize.sync();
+  // await seed();
+})();
 
 export default app;

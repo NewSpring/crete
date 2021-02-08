@@ -57,6 +57,11 @@ export default gql`
     seriesConnection: SeriesConnection
   }
 
+  extend type DevotionalContentItem implements FeaturesNode {
+    features: [Feature] @deprecated(reason: "Use featureFeed")
+    featureFeed: FeatureFeed
+  }
+
   extend type VideoMedia {
     thumbnail: ImageMedia
   }

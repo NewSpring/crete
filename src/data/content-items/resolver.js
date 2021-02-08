@@ -117,6 +117,10 @@ const resolver = {
         args,
       });
     },
+    features: (root, args, { dataSources: { ContentItem } }) =>
+      ContentItem.getFeatures(root),
+    featureFeed: ({ id }, args, { dataSources: { FeatureFeed } }) =>
+      FeatureFeed.getFeed({ type: 'contentItem', args: { id } }),
   },
   WeekendContentItem: {
     ...defaultResolvers,
