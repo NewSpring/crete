@@ -18,15 +18,19 @@ export const contextMiddleware = ({ req, context: ctx }) => {
       //   severity: 'warning',
       // });
     } else {
-      report(new Error('User Header - Invalid'), {
-        metaData: {
-          userToken,
-          rockCookie,
-          sessionId,
-          header: req.headers.authorization,
+      report(
+        new Error('User Header - Invalid'),
+        {
+          metaData: {
+            userToken,
+            rockCookie,
+            sessionId,
+            header: req.headers.authorization,
+          },
+          severity: 'warning',
         },
-        severity: 'warning',
-      });
+        () => ({})
+      );
     }
     return {
       ...ctx,
