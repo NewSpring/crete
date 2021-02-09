@@ -496,8 +496,8 @@ export default class ContentItem extends oldContentItem.dataSource {
     );
 
     const parentCommentsEnabled = get(
-      parent.attributeValues,
-      'comments.value',
+      parent,
+      'attributeValues.comments.value',
       'False'
     );
     if (
