@@ -141,6 +141,7 @@ export default class ContentItem extends oldContentItem.dataSource {
 
   attributeIsImage = ({ key, attributeValues, attributes }) => {
     try {
+      console.log(attributeValues[key].value);
       return (
         attributes[key].fieldTypeId === ROCK_CONSTANTS.S3_ASSET &&
         !get(JSON.parse(attributeValues[key].value), 'Key', '')
@@ -148,7 +149,8 @@ export default class ContentItem extends oldContentItem.dataSource {
           .includes('audio') &&
         !get(JSON.parse(attributeValues[key].value), 'Key', '')
           .split('/')
-          .includes('video')
+          .includes('video') &&
+        !get(JSON.parse(attributeValues[key].value), 'Key', '').includes('.mp3')
       );
     } catch (error) {
       return attributes[key].fieldTypeId === ROCK_CONSTANTS.S3_ASSET;
