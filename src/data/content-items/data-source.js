@@ -141,7 +141,6 @@ export default class ContentItem extends oldContentItem.dataSource {
 
   attributeIsImage = ({ key, attributeValues, attributes }) => {
     try {
-      console.log(attributeValues[key].value);
       return (
         attributes[key].fieldTypeId === ROCK_CONSTANTS.S3_ASSET &&
         !get(JSON.parse(attributeValues[key].value), 'Key', '')
