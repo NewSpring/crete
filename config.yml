@@ -14,6 +14,7 @@ APP:
   ROOT_API_URL: ${ROOT_URL}
   JOBS_USERNAME: ${JOBS_USERNAME}
   JOBS_PASSWORD: ${JOBS_PASSWORD}
+  FLAG_LIMIT: 1
 DATABASE:
   URL: ${DATABASE_URL}
   OPTIONS: {
@@ -93,6 +94,7 @@ ANALYTICS:
   # on the accompanying service
   SEGMENT_KEY:
   GA_ID:
+  USE_ROCK: true
   # this is for putting interactions in Rock
   # USE_ROCK: true
 BIBLE_API:

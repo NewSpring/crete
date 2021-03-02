@@ -42,6 +42,7 @@ import * as ActionAlgorithm from './action-algorithm';
 import * as Campus from './campuses';
 import * as Group from './groups';
 import * as Event from './events';
+
 import * as Theme from './theme';
 import * as MatrixItem from './matrix-items';
 import * as Prayer from './prayers';
