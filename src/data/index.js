@@ -30,11 +30,17 @@ import {
   // FeatureFeed,
   // ActionAlgorithm,
   // PrayerRequest,
+  Persona,
 } from '@apollosproject/data-connector-rock';
-import { Comment, UserFlag } from '@apollosproject/data-connector-postgres';
+import {
+  Comment,
+  UserFlag,
+  Campus as PostgresCampus,
+  Person as PostgresPerson,
+} from '@apollosproject/data-connector-postgres';
 import Auth from './auth';
 import * as LiveStream from './live';
-import * as Person from './people';
+import * as RockPerson from './people';
 import * as ContentItem from './content-items';
 import * as ContentChannel from './content-channel';
 import * as Feature from './features';
@@ -52,6 +58,10 @@ import * as FeatureFeed from './feature-feeds';
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
 
+// This modules ties together certain updates so they occurs in both Rock and Postgres.
+// Will be eliminated in the future through an enhancement to the Shovel
+import * as Person from './rockWithPostgres';
+
 // TODO: Delete this line when we integrate core prayer.
 delete Feature.resolver.PrayerListFeature;
 delete Feature.resolver.VerticalPrayerListFeature;
@@ -61,7 +71,9 @@ const data = {
   Followings,
   ContentChannel,
   ContentItem,
-  Person,
+  RockPerson, // This entry needs to come before (postgres) Person
+  BinaryFiles, // This entry needs to come before (postgres) Person
+  PostgresPerson, // Postgres person for now, as we extend this dataSource in the 'rockWithPostgres' file
   Auth,
   AuthSms,
   Sms,
@@ -80,7 +92,6 @@ const data = {
   Template,
   Campus,
   Group,
-  BinaryFiles,
   Prayer,
   MatrixItem,
   Feature,
@@ -90,6 +101,9 @@ const data = {
   ActionAlgorithm,
   Comment,
   UserFlag,
+  PostgresCampus,
+  Persona,
+  Person,
   // PrayerRequest,
 };
 
