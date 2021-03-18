@@ -51,6 +51,17 @@ export default class Prayer extends RockApolloDataSource {
     return filteredCategories;
   };
 
+  getRequestor = async (requestedByPersonAliasId) => {
+    const { personId } = await this.request('/PersonAlias')
+      .filter(`Id eq ${requestedByPersonAliasId}`)
+      .select('PersonId')
+      .first();
+
+    return this.context.dataSources.Person.getFromId(personId, null, {
+      originType: 'rock',
+    });
+  };
+
   getInteractionComponent = async ({ prayerId }) => {
     const { RockConstants } = this.context.dataSources;
     const { id: entityTypeId } = await this.request('EntityTypes')

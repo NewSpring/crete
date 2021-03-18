@@ -125,9 +125,9 @@ export default {
     isAnonymous: ({ isPublic }) => !isPublic,
     // deprecated
     person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
-      dataSources.Person.getFromAliasId(requestedByPersonAliasId),
+      dataSources.Prayer.getRequestor(requestedByPersonAliasId),
     requestor: ({ requestedByPersonAliasId }, args, { dataSources }) =>
-      dataSources.Person.getFromAliasId(requestedByPersonAliasId),
+      dataSources.Prayer.getRequestor(requestedByPersonAliasId),
     flagCount: ({ flagCount }) =>
       (typeof flagCount === 'number' && flagCount) || 0,
     prayerCount: ({ prayerCount }) =>
