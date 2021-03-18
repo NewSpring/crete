@@ -4,11 +4,11 @@ import ApollosConfig from '@apollosproject/config';
 export default class Feature extends baseFeatures.dataSource {
   getHomeFeedFeatures = async () => {
     // Deprecated. Used in the old homeFeedFeatures query.
-    const { Person, Auth, Group } = this.context.dataSources;
+    const { RockPerson, Auth, Group } = this.context.dataSources;
     const config = ApollosConfig.HOME_FEATURES || [];
 
     const { id } = await Auth.getCurrentPerson();
-    const isStaff = await Person.isStaff(id);
+    const isStaff = await RockPerson.isStaff(id);
     const testGroups = await Group.getTestGroups(id);
 
     const features = config

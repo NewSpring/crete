@@ -9,7 +9,6 @@ import * as Analytics from '@apollosproject/data-connector-analytics';
 import * as Scripture from '@apollosproject/data-connector-bible';
 // import * as LiveStream from '@apollosproject/data-connector-church-online';
 // import * as Cloudinary from '@apollosproject/data-connector-cloudinary';
-
 import * as OneSignal from '@apollosproject/data-connector-onesignal';
 import * as Search from '@apollosproject/data-connector-algolia-search';
 import * as Pass from '@apollosproject/data-connector-passes';
@@ -19,7 +18,6 @@ import {
   Followings,
   Interactions,
   RockConstants,
-  // Person,
   // ContentItem,
   // ContentChannel,
   Sharable,
@@ -27,15 +25,27 @@ import {
   PersonalDevice,
   Template,
   AuthSms,
+  // Campus,
+  // Group,
   BinaryFiles,
+  // Feature,
   // FeatureFeed,
   // ActionAlgorithm,
+  // Event,
   // PrayerRequest,
+  Persona,
+  // Person as RockPerson,
 } from '@apollosproject/data-connector-rock';
-import { Comment, UserFlag } from '@apollosproject/data-connector-postgres';
-// import Auth from './auth';
+
+import {
+  Comment,
+  UserFlag,
+  Follow,
+  Campus as PostgresCampus,
+  Person as PostgresPerson,
+} from '@apollosproject/data-connector-postgres';
 import * as LiveStream from './live';
-import * as Person from './people';
+import * as RockPerson from './people';
 import * as ContentItem from './content-items';
 import * as ContentChannel from './content-channel';
 import * as Feature from './features';
@@ -53,7 +63,10 @@ import * as FeatureFeed from './feature-feeds';
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
 
-// TODO: Delete this line when we integrate core prayer.
+// This modules ties together certain updates so they occurs in both Rock and Postgres.
+// Will be eliminated in the future through an enhancement to the Shovel
+import * as Person from './rockWithPostgres';
+
 delete Feature.resolver.PrayerListFeature;
 delete Feature.resolver.VerticalPrayerListFeature;
 
@@ -62,7 +75,10 @@ const data = {
   Followings,
   ContentChannel,
   ContentItem,
-  Person,
+  RockPerson, // This entry needs to come before (postgres) Person
+  BinaryFiles, // This entry needs to come before (postgres) Person
+  PostgresPerson, // Postgres person for now, as we extend this dataSource in the 'rockWithPostgres' file
+  // Cloudinary,
   Auth,
   AuthSms,
   Sms,
@@ -81,17 +97,18 @@ const data = {
   Template,
   Campus,
   Group,
-  BinaryFiles,
-  Prayer,
-  MatrixItem,
   Feature,
-  Event,
-  Cache,
   FeatureFeed,
   ActionAlgorithm,
+  Event,
+  Cache,
+  // PrayerRequest,
   Comment,
   UserFlag,
-  // PrayerRequest,
+  Follow,
+  PostgresCampus,
+  Persona,
+  Person, // An extension of Postgres person. Will be eliminated in the near future so you can use just postgres/Person.
 };
 
 const {
@@ -101,6 +118,7 @@ const {
   context,
   applyServerMiddleware,
   setupJobs,
+  migrations,
 } = createApolloServerConfig(data);
 
 export {
@@ -110,6 +128,7 @@ export {
   context,
   applyServerMiddleware,
   setupJobs,
+  migrations,
 };
 
 // the upload Scalar is added

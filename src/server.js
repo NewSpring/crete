@@ -1,17 +1,27 @@
 import fs from 'fs';
 import path from 'path';
 import cors from 'cors';
-
 import { ApolloServer } from 'apollo-server-express';
 import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
 import { get } from 'lodash';
-// From core. For use with their universal linking implementation.
 // import { setupUniversalLinks } from '@apollosproject/server-core';
 import { BugsnagPlugin } from '@apollosproject/bugsnag';
-import { sequelize } from '@apollosproject/data-connector-postgres';
 import {
+  sync,
+  createMigrationRunner,
+} from '@apollosproject/data-connector-postgres';
+
+let dataObj;
+
+if (ApollosConfig?.DATABASE?.URL) {
+  dataObj = require('./data/index.postgres');
+} else {
+  dataObj = require('./data/index');
+}
+
+const {
   resolvers,
   schema,
   testSchema,
@@ -19,7 +29,8 @@ import {
   dataSources,
   applyServerMiddleware,
   setupJobs,
-} from './data';
+  migrations,
+} = dataObj;
 
 export { resolvers, schema, testSchema };
 
@@ -94,8 +105,11 @@ apolloServer.applyMiddleware({ app, path: '/' });
 // make sure this is called last.
 // (or at least after the apollos server setup)
 (async () => {
-  await sequelize.sync();
-  // await seed();
+  if (ApollosConfig?.DATABASE?.URL) {
+    const migrationRunner = await createMigrationRunner({ migrations });
+    await migrationRunner.up();
+    await sync();
+  }
 })();
 
 export default app;

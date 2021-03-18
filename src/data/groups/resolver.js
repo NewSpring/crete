@@ -3,10 +3,10 @@ import { resolverMerge } from '@apollosproject/server-core';
 
 const resolver = {
   Person: {
-    testGroups: ({ id: personID }, args, { dataSources: { Group } }) =>
-      Group.getTestGroups(personID),
-    isInReadMyBible: ({ id: personId }, args, { dataSources: { Group } }) =>
-      Group.getForReadMyBible(personId),
+    testGroups: ({ originId }, args, { dataSources: { Group } }) =>
+      Group.getTestGroups(originId),
+    isInReadMyBible: ({ originId }, args, { dataSources: { Group } }) =>
+      Group.getForReadMyBible(originId),
   },
 };
 export default resolverMerge(resolver, baseGroup);

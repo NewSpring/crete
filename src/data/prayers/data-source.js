@@ -39,7 +39,7 @@ export default class Prayer extends RockApolloDataSource {
     const { id } = await Auth.getCurrentPerson();
 
     // filter out campus
-    const campus = await Campus.getForPerson({ personId: id });
+    const campus = await Campus.getForPerson({ id });
     if (campus && campus.name === 'Web')
       filteredCategories = allCategories.filter(
         (category) =>
