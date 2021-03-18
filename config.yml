@@ -59,6 +59,61 @@ CHURCH_ONLINE:
   URL: https://live.newspring.cc/api/v1/
   MEDIA_URLS: []
   WEB_VIEW_URL: https://live.newspring.cc
+SUGGESTED_FOLLOWS:
+  - Brad.Cooper@newspring.cc
+  - Shane.duffey@newspring.cc
+  - michael.mullikin@newspring.cc
+  - mtt@newspring.cc
+  - david.hall@newspring.cc
+  - Clayton King
+  - meredith.knox@newspring.cc
+  - dan.lian@newspring.cc
+  - 
+    email: matt.steelman@newspring.cc
+    campusId: 0d2957a3-d10f-4c6b-99a3-bb508dde4b84 # Anderson   
+  - 
+    email: riley.cummings@newspring.cc
+    campusId: 0d2957a3-d10f-4c6b-99a3-bb508dde4b84 # Anderson   
+  - 
+    email: mike.link@newspring.cc
+    campusId: 58757cd9-f2d2-4bef-bb4e-9b1c0b40be50 # Powdersville       
+  - 
+    email: andrew.sentell@newspring.cc
+    campusId: 58757cd9-f2d2-4bef-bb4e-9b1c0b40be50 # Powdersville                
+  - 
+    email: brendan.mendenhall@newspring.cc
+    campusId: cedf631b-3fda-4484-a218-1530a8645838 # Charleston
+  - 
+    email: josh.seabaugh@newspring.cc
+    campusId: 052912cf-efbe-4c56-82dc-ce53d8f5f6ff # Clemson
+  - 
+    email: Alden.ellis@newspring.cc
+    campusId: 4c518a17-119a-4232-a9c1-2d7ccedc0f16 # Columbia
+  - 
+    email: leemcd@newspring.cc
+    campusId: b2f57672-0c76-4ce1-8657-1d7e381b6b47 # Eastlan
+  - 
+    email: sam.gibson@newspring.cc
+    campusId: 48ed8e0f-014c-4d46-babe-f591f344acfe # Florence    
+  - 
+    email: matt.alley@newspring.cc
+    campusId: 4f4008a4-0151-4d3c-bea1-bb85ea6a9d0c # Greenwood
+  - 
+    email: jason.smith@newspring.cc
+    campusId: 25fe7ef1-8aa3-412b-a501-b05088bf4503 # Hilton Head
+  - 
+    email: john.berry@newspring.cc
+    campusId: 29e96b55-9351-45a4-8161-5d18f4fdcf02 # Lake Wylie    
+  - 
+    email: darrin.dick@newspring.cc
+    campusId: 180712b4-6e70-4ea9-8a89-f1cc421f64e0 # Myrtle Beach        
+  - 
+    email: Robbie.green@newspring.cc
+    campusId: 3c028421-df87-4841-8da1-0d7cf3688f67 # Northeast Columbia            
+
+
+
+  
 LIVING_AS_ONE:
   STREAM_URL: https://resi.media/ns/Manifest.m3u8
 ALGOLIA:
@@ -445,7 +500,7 @@ ROCK_CONSTANTS:
   MARKDOWN: 103
   DATA_VIEW: 104
   PHONE_NUMBER: 105
-  SCHEDULE: 106p
+  SCHEDULE: 106
   LAVA_COMMANDS: 107
   ADDRESS: 108
   BENEVOLENCE_REQUEST: 109

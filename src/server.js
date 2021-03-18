@@ -108,7 +108,6 @@ apolloServer.applyMiddleware({ app, path: '/' });
   if (ApollosConfig?.DATABASE?.URL) {
     const migrationRunner = await createMigrationRunner({ migrations });
     await migrationRunner.up();
-    await sync();
   }
 })();
 
