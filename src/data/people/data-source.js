@@ -9,7 +9,7 @@ export default class Person extends basePerson.dataSource {
       )
       .get();
     const staffIds = staff.map(({ personId }) => personId);
-    if (!staffIds.includes(id)) return false;
+    if (!staffIds.includes(parseInt(id, 10))) return false;
     return true;
   }
 }
