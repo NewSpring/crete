@@ -62,7 +62,6 @@ const data = {
   Followings,
   ContentChannel,
   ContentItem,
-  Person,
   Auth,
   AuthSms,
   Sms,
@@ -81,6 +80,7 @@ const data = {
   Template,
   Campus,
   Group,
+  Person,
   BinaryFiles,
   Prayer,
   MatrixItem,
@@ -101,6 +101,7 @@ const {
   context,
   applyServerMiddleware,
   setupJobs,
+  migrations,
 } = createApolloServerConfig(data);
 
 export {
@@ -110,6 +111,7 @@ export {
   context,
   applyServerMiddleware,
   setupJobs,
+  migrations,
 };
 
 // the upload Scalar is added

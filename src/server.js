@@ -6,12 +6,9 @@ import ApollosConfig from '@apollosproject/config';
 import express from 'express';
 import { RockLoggingExtension } from '@apollosproject/rock-apollo-data-source';
 import { get } from 'lodash';
-// import { setupUniversalLinks } from '@apollosproject/server-core';
+import { setupUniversalLinks } from '@apollosproject/server-core';
 import { BugsnagPlugin } from '@apollosproject/bugsnag';
-import {
-  sync,
-  createMigrationRunner,
-} from '@apollosproject/data-connector-postgres';
+import { createMigrationRunner } from '@apollosproject/data-connector-postgres';
 
 let dataObj;
 
