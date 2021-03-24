@@ -35,7 +35,7 @@ class dataSource extends ActionAlgorithm.dataSource {
   }
 
   async staffNewsAlgorithm(...args) {
-    const { Feature, Auth, Person } = this.context.dataSources;
+    const { Feature, Auth, RockPerson } = this.context.dataSources;
 
     Feature.setCacheHint({
       maxAge: 0,
@@ -43,7 +43,7 @@ class dataSource extends ActionAlgorithm.dataSource {
     });
 
     const { id } = await Auth.getCurrentPerson();
-    const isStaff = await Person.isStaff(id);
+    const isStaff = await RockPerson.isStaff(id);
 
     if (!isStaff) {
       return [];
