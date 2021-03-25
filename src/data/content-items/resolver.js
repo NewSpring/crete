@@ -44,7 +44,7 @@ const resolver = {
     contentChannels: async (
       root,
       args,
-      { dataSources: { ContentChannel, Person, Auth } },
+      { dataSources: { ContentChannel, RockPerson, Auth } },
       { cacheControl }
     ) => {
       cacheControl.setCacheHint({ maxAge: 0 });
@@ -53,7 +53,7 @@ const resolver = {
       // if not staff, strip out staff channel
       try {
         const { id: personId } = await Auth.getCurrentPerson();
-        const isStaff = await Person.isStaff(personId);
+        const isStaff = await RockPerson.isStaff(personId);
         if (!isStaff) channels = channels.filter(({ id }) => id !== 513);
       } catch (e) {
         return channels.filter(({ id }) => id !== 513);

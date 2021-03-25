@@ -146,10 +146,10 @@
     passkit-generator "1.5.9"
     qrcode "^1.3.3"
 
-"@apollosproject/data-connector-postgres@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-postgres/-/data-connector-postgres-2.5.0.tgz#036c8918a1aeb182276d9e845c9fa64f210b8fee"
-  integrity sha512-PUOwxLNPwflTGlmdHJr88VxyyJi8VNiTFk8dGqhbtlJ19DGS0tBmZp1vGQzInrHyOAqF9DgRUhsqlwvYYv2qsw==
+"@apollosproject/data-connector-postgres@^2.5.1-canary.4":
+  version "2.5.1-canary.4"
+  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-postgres/-/data-connector-postgres-2.5.1-canary.4.tgz#43f7845fbaebaab60b7a4bb51c499d33b44c8c8e"
+  integrity sha512-6HSJ+UoeT7qm4NfYldsE1ilzFd+UeHrOPxP8sodnr+03YzGVJoQ/ElGf6CCgCGqkw2/yLVZ8xRvBvUDPSYhUsQ==
   dependencies:
     "@apollosproject/data-schema" "^2.5.0"
     "@apollosproject/server-core" "^2.5.0"
@@ -159,10 +159,10 @@
     sequelize "^6.3.5"
     umzug "^3.0.0-beta.15"
 
-"@apollosproject/data-connector-redis-cache@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-redis-cache/-/data-connector-redis-cache-2.5.0.tgz#9fecbb6842933f87c55f62f439b2d96480bd7731"
-  integrity sha512-105PCLAr/V7EKMGdCDvebc8cz+qt/USafDSPkvYcJpY8R/Ztjk+/2YQM4i5pZAg6/1ko8IJWcACQut8A8IUVpQ==
+"@apollosproject/data-connector-redis-cache@^2.5.1-canary.0":
+  version "2.5.1-canary.0"
+  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-redis-cache/-/data-connector-redis-cache-2.5.1-canary.0.tgz#c42b06d7f66ec9e047416d25a965e653f3ab24c9"
+  integrity sha512-9hHEp5fXTKp5mNctK61rmAkGL2ff96OwB1WGFOzM84NRxi4INNTVAyU4EsiQvVnAMM2XqYmikQtkL7+QRhH+Vw==
   dependencies:
     apollo-datasource "^0.2.0"
     ioredis "4.14.1"
