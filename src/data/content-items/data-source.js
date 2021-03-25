@@ -346,7 +346,9 @@ export default class ContentItem extends oldContentItem.dataSource {
         const { personId } = await this.request('/PersonAlias')
           .filter(`Guid eq guid'${personAliasGuid}'`)
           .first();
-        return this.context.dataSources.Person.getFromId(personId);
+        return this.context.dataSources.Person.getFromId(personId, null, {
+          originType: 'rock',
+        });
       })
     );
     // filter out null lines
