@@ -30,7 +30,14 @@ const personResolver = {
     },
     updateProfileFields: async (root, { input }, { dataSources }) => {
       await dataSources.RockPerson.updateProfile(input); // Update in Rock
-      return dataSources.Person.updateProfile(input); // updates in Postgres
+      return dataSources.Person.updateProfile(
+        input.map((pair) => {
+          if (pair.field === 'Gender') {
+            return { field: 'Gender', value: pair.value.toUpperCase() };
+          }
+          return pair;
+        })
+      ); // updates in Postgres
     },
     uploadProfileImage: async (root, { file, size }, { dataSources }) => {
       const person = await dataSources.RockPerson.uploadProfileImage(
