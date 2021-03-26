@@ -53,6 +53,10 @@ import * as FeatureFeed from './feature-feeds';
 // This module includes a Resolver that overides a resolver defined in `OneSignal`
 import * as OneSignalWithRock from './oneSignalWithRock';
 
+// This is to mock any postgres resolvers so we don't throw API errors for unresolved
+// typedefs
+import NoPostgres from './noPostgres';
+
 // TODO: Delete this line when we integrate core prayer.
 delete Feature.resolver.PrayerListFeature;
 delete Feature.resolver.VerticalPrayerListFeature;
@@ -92,6 +96,7 @@ const data = {
   Comment,
   UserFlag,
   // PrayerRequest,
+  NoPostgres,
 };
 
 const {
