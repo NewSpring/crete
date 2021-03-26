@@ -10,6 +10,7 @@ class personDataSource extends postgresPerson.dataSource {
     );
     super.create({
       ...attributes,
+      ...(attributes.gender ? { gender: attributes.gender.toUpperCase() } : {}),
       originType: 'rock',
       originId: String(rockPersonId),
     });
