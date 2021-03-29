@@ -40,6 +40,7 @@ import {
 import {
   Comment,
   UserFlag,
+  UserLike,
   Follow,
   Campus as PostgresCampus,
   Person as PostgresPerson,
@@ -99,6 +100,7 @@ const data = {
   Cache,
   // PrayerRequest,
   Comment,
+  UserLike,
   UserFlag,
   Follow,
   PostgresCampus,
