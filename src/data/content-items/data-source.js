@@ -569,6 +569,7 @@ export default class ContentItem extends oldContentItem.dataSource {
                 isHeader: type === 'header',
               };
             case 'scripture':
+              if (!bookGUID) return null;
               book = await this.request('DefinedValues')
                 .filter(`Guid eq guid'${bookGUID}'`)
                 .first();
