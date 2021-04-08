@@ -569,6 +569,7 @@ export default class ContentItem extends oldContentItem.dataSource {
                 isHeader: type === 'header',
               };
             case 'scripture':
+              if (!bookGUID) return null;
               book = await this.request('DefinedValues')
                 .filter(`Guid eq guid'${bookGUID}'`)
                 .first();
@@ -586,6 +587,7 @@ export default class ContentItem extends oldContentItem.dataSource {
                 `${book.value} ${ref}`,
                 version.value
               );
+              if (!scriptures.length) return null;
               return {
                 __typename: 'NotesScriptureBlock',
                 id: createGlobalId(id, 'NotesScriptureBlock'),

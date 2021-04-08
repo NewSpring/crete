@@ -8,7 +8,7 @@ import {
 import * as Analytics from '@apollosproject/data-connector-analytics';
 import * as Scripture from '@apollosproject/data-connector-bible';
 // import * as LiveStream from '@apollosproject/data-connector-church-online';
-// import * as Cloudinary from '@apollosproject/data-connector-cloudinary';
+import * as Cloudinary from '@apollosproject/data-connector-cloudinary';
 // import * as OneSignal from '@apollosproject/data-connector-onesignal';
 import * as Search from '@apollosproject/data-connector-algolia-search';
 import * as Pass from '@apollosproject/data-connector-passes';
@@ -40,6 +40,7 @@ import {
 import {
   Comment,
   UserFlag,
+  UserLike,
   Follow,
   Campus as PostgresCampus,
   Person as PostgresPerson,
@@ -74,7 +75,7 @@ const data = {
   RockPerson, // This entry needs to come before (postgres) Person
   BinaryFiles, // This entry needs to come before (postgres) Person
   PostgresPerson, // Postgres person for now, as we extend this dataSource in the 'rockWithPostgres' file
-  // Cloudinary,
+  Cloudinary,
   Auth,
   AuthSms,
   Sms,
@@ -99,6 +100,7 @@ const data = {
   Cache,
   // PrayerRequest,
   Comment,
+  UserLike,
   UserFlag,
   Follow,
   PostgresCampus,
