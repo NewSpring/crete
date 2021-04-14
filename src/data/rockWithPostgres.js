@@ -112,7 +112,7 @@ class oneSignalDataSource extends OneSignalOriginal.dataSource {
         to.originId
       );
       return super.createNotification({
-        toUserIds: [person.primaryAliasId],
+        toUserIds: [String(person.primaryAliasId)],
         content,
         heading,
         subtitle,
