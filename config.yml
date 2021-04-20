@@ -310,13 +310,13 @@ READ_TAB:
           contentChannelId: 17
           limit: 1
     type: VerticalCardList
-  - subtitle: Continue Reading
-    type: HorizontalCardList
-    algorithms:
-      - type: SERIES_IN_PROGRESS
-        arguments:
-          channelIds:
-            - 18
+#   - subtitle: Continue Reading
+#     type: HorizontalCardList
+#     algorithms:
+#       - type: SERIES_IN_PROGRESS
+#         arguments:
+#           channelIds:
+#             - 18
   - subtitle: More Studies
     type: HorizontalCardList
     algorithms:
