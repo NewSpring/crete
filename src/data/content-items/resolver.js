@@ -18,7 +18,7 @@ const defaultResolvers = {
     dataSources.ContentItem.getTheme(root),
 
   htmlContent: (root, input, { dataSources }) =>
-    originalContentItem.resolver.ContentItem.htmlContent(root) ||
+    dataSources.ContentItem.createHTMLContent(root.content) ||
     dataSources.ContentItem.createSummary(root),
 
   childContentItemsConnection: async (root, args, { dataSources }) => {
