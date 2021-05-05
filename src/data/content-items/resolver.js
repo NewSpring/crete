@@ -25,7 +25,11 @@ const defaultResolvers = {
     const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
       root.id
     );
-    if (ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.includes(root.contentChannelId)) {
+
+    if (
+      ROCK_MAPPINGS.CAMPAIGN_CHANNEL_IDS.includes(root.contentChannelId) ||
+      root.contentChannelId === ROCK_MAPPINGS.DEVOTIONAL_SERIES_CHANNEL_ID
+    ) {
       cursor.orderBy('StartDateTime', 'desc');
     } else {
       cursor.orderBy('Order');
@@ -113,7 +117,7 @@ const resolver = {
         series.id
       );
       return dataSources.ContentItem.paginate({
-        cursor: cursor.orderBy('Order'),
+        cursor: cursor.orderBy('StartDateTime', 'desc'),
         args,
       });
     },
