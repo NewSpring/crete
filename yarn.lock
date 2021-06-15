@@ -167,22 +167,10 @@
     apollo-datasource "^0.2.0"
     ioredis "4.14.1"
 
-<<<<<<< HEAD
 "@apollosproject/data-connector-rock@^2.20.0":
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-rock/-/data-connector-rock-2.20.0.tgz#feaa0b37c2bbe0fd0c714b845b62e7852a850c5e"
   integrity sha512-I6wvzhZiylQFUDm+nfoNAGhaDxq1rW+CZxN27W01CXNL/OyGTh1btMvNYpioGlTD/7e4hwr5qS7f8pgo8w4+oA==
-||||||| 57c24c0
-"@apollosproject/data-connector-rock@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-rock/-/data-connector-rock-2.9.0.tgz#96dd9f388455f470cca8fc855a665fc7fa582eaf"
-  integrity sha512-S6T85zc45KPrF5nCSUUGNA1JJjBTWLAbb7UnemB3oBaKcmEoUrD4lmApRN6ZNTv9lY69SRO3RRhi/jRxHDIY+A==
-=======
-"@apollosproject/data-connector-rock@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-rock/-/data-connector-rock-2.13.0.tgz#308df90647be3c3329672be03af18c2b1fda37ad"
-  integrity sha512-Z7rsF2Y/yCcpZvrxYaHn58JUvV0DXEdUnFTHM7xy6faFutHEkoysTnm3qWokqK/0r0hWkjOD0hQ3pfhRECupDQ==
->>>>>>> 280b0ef2b2a7c41d83fb3f34d5268ce9fc32750b
   dependencies:
     awesome-phonenumber "^2.4.2"
     form-data "^2.3.3"
@@ -204,29 +192,17 @@
     apollo-datasource "^0.2.0"
     twilio "^3.28.0"
 
-<<<<<<< HEAD
-"@apollosproject/data-schema@^2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.20.0.tgz#7626b61f543c27f087b010baaf193454814147df"
-  integrity sha512-7fYblkc24QDCJzqdU1vHFuAhfYk/Oq3EcWr0Qm9d2A3QUVlu9oJ112UGEr4kPE3rcPJo/fHoTY7FQiRl6nm/kw==
-  dependencies:
-    graphql-tag "^2.10.0"
-
-"@apollosproject/data-schema@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.9.0.tgz#befd2640af17f1d488fe9ee5203efa5d5ddd510e"
-  integrity sha512-g0F+GbYdTebpSWdRwBOdvLMt9xK7CdNlafgSzOHfBU2XVL7EnS2dF/53Lh1Ys3jMpxzkuvPneB5MdAm4LRDjJw==
-||||||| 57c24c0
-"@apollosproject/data-schema@^2.9.0":
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.9.0.tgz#befd2640af17f1d488fe9ee5203efa5d5ddd510e"
-  integrity sha512-g0F+GbYdTebpSWdRwBOdvLMt9xK7CdNlafgSzOHfBU2XVL7EnS2dF/53Lh1Ys3jMpxzkuvPneB5MdAm4LRDjJw==
-=======
 "@apollosproject/data-schema@^2.13.0":
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.13.0.tgz#ef5a0a4461cd5956697d510cda9e97c1f6f1da2f"
   integrity sha512-tvkIJI9VOazaGJ5QTEf75AfzNHa48RJ0FLgROTeojl7wHW/82Lyoh17jp+xFDlVr9C3XqItHA7of5mU3dUDepQ==
->>>>>>> 280b0ef2b2a7c41d83fb3f34d5268ce9fc32750b
+  dependencies:
+    graphql-tag "^2.10.0"
+
+"@apollosproject/data-schema@^2.20.0":
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.20.0.tgz#7626b61f543c27f087b010baaf193454814147df"
+  integrity sha512-7fYblkc24QDCJzqdU1vHFuAhfYk/Oq3EcWr0Qm9d2A3QUVlu9oJ112UGEr4kPE3rcPJo/fHoTY7FQiRl6nm/kw==
   dependencies:
     graphql-tag "^2.10.0"
 
