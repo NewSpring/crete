@@ -17,9 +17,12 @@ const defaultResolvers = {
   theme: (root, input, { dataSources }) =>
     dataSources.ContentItem.getTheme(root),
 
-  htmlContent: (root, input, { dataSources }) =>
-    originalContentItem.resolver.ContentItem.htmlContent(root) ||
-    dataSources.ContentItem.createSummary(root),
+  htmlContent: (root, input, context) =>
+    originalContentItem.resolver.ContentItem.htmlContent(
+      root,
+      input,
+      context
+    ) || context.dataSources.ContentItem.createSummary(root),
 
   childContentItemsConnection: async (root, args, { dataSources }) => {
     const cursor = await dataSources.ContentItem.getCursorByParentContentItemId(
