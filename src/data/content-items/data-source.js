@@ -31,7 +31,7 @@ export default class ContentItem extends oldContentItem.dataSource {
     let sortByOrder = false;
 
     // If this is true, our transform will be activated.
-    // The transform is the only wait to sort by `order`
+    // The transform is the only way to sort by `order`
     const originalOrderBy = cursor.orderBy;
 
     // Here we hijack the default behavior of the `.order` call, using it to set
@@ -569,6 +569,7 @@ export default class ContentItem extends oldContentItem.dataSource {
                 isHeader: type === 'header',
               };
             case 'scripture':
+              if (!bookGUID) return null;
               book = await this.request('DefinedValues')
                 .filter(`Guid eq guid'${bookGUID}'`)
                 .first();
