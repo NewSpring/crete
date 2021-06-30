@@ -146,13 +146,13 @@
     passkit-generator "1.5.9"
     qrcode "^1.3.3"
 
-"@apollosproject/data-connector-postgres@^2.13.0":
-  version "2.13.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-postgres/-/data-connector-postgres-2.13.0.tgz#fdda51e4246245626cac71afa7f07b6d1c0707c0"
-  integrity sha512-3byYDiBQ7zy31YapLoTeTTE8+vNRndFvUg7vdbPLJP7q/ykgoX5AyWe7PuSdjt9+NYidF+LZWLNTv/W8in03uQ==
+"@apollosproject/data-connector-postgres@^2.23.0":
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/@apollosproject/data-connector-postgres/-/data-connector-postgres-2.24.0.tgz#92d37fa4a12e0594d744a9ad1aac1b5689f9bb23"
+  integrity sha512-EKJ3JWCbqU9bGmJ7VoMq5IpTuChFjIwDAQTBpdZwMkrQDvX3v07C9rN8vb8iNCkYYdSJmdzQcH7lcuo61Eo14g==
   dependencies:
-    "@apollosproject/data-schema" "^2.13.0"
-    "@apollosproject/server-core" "^2.13.0"
+    "@apollosproject/data-schema" "^2.24.0"
+    "@apollosproject/server-core" "^2.24.0"
     lodash "^4.17.11"
     pg "^8.5.1"
     pg-hstore "^2.3.3"
@@ -199,10 +199,10 @@
   dependencies:
     graphql-tag "^2.10.0"
 
-"@apollosproject/data-schema@^2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.20.0.tgz#7626b61f543c27f087b010baaf193454814147df"
-  integrity sha512-7fYblkc24QDCJzqdU1vHFuAhfYk/Oq3EcWr0Qm9d2A3QUVlu9oJ112UGEr4kPE3rcPJo/fHoTY7FQiRl6nm/kw==
+"@apollosproject/data-schema@^2.24.0":
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/@apollosproject/data-schema/-/data-schema-2.24.0.tgz#5150f8e1ad2f6f93eab61ae81d7c1e53fec5eb81"
+  integrity sha512-Hx/W3WPre/78z5Uh0/sGbh7+NxGBTOVJhC9UR0dZanRZEgKmDEfwjsmV4v0x1vpu4wtn8XAkGxarYaLfuEIqmA==
   dependencies:
     graphql-tag "^2.10.0"
 
@@ -227,6 +227,20 @@
   integrity sha512-wngmy7hiqMHg47yXH7XVNXZ0qK5e8wiFkjPxelNy4OF0eX2e6xlX613eIHkyEttIebkULRQVHATgrSDSBkh2sg==
   dependencies:
     "@apollosproject/data-schema" "^2.13.0"
+    apollo-server-caching "^0.4.0"
+    bull "^3.11.0"
+    bull-board "^0.1.1"
+    express-basic-auth "^1.2.0"
+    graphql-parse-resolve-info "^4.4.5"
+    graphql-tag "^2.10.0"
+    lodash "^4.17.11"
+
+"@apollosproject/server-core@^2.24.0":
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/@apollosproject/server-core/-/server-core-2.24.0.tgz#6a5fd200a25deff1efd5c169a89e7170105d85c5"
+  integrity sha512-qlMErxb8o3GMAX+qzO5kXNTHcPa4Lp3IC/5CIC7/tNOcPkSiGiHOsVq/Fkoe4WdDc9XFAxUIZ2OTRNPsuB1KDg==
+  dependencies:
+    "@apollosproject/data-schema" "^2.24.0"
     apollo-server-caching "^0.4.0"
     bull "^3.11.0"
     bull-board "^0.1.1"

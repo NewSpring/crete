@@ -490,46 +490,6 @@ export default class ContentItem extends oldContentItem.dataSource {
     };
   };
 
-  async getFeatures(item) {
-    const features = super.getFeatures(item);
-
-    const parent = await this.getSeries(
-      item.id,
-      ROCK_MAPPINGS.DEVOTIONAL_SERIES_CHANNEL_ID
-    );
-
-    const parentCommentsEnabled = get(
-      parent,
-      'attributeValues.childrenHaveComments.value',
-      'False'
-    );
-    if (
-      parentCommentsEnabled === 'True' &&
-      !features.some(({ __typename }) => __typename === 'AddCommentFeature') // We don't want two comment features
-    ) {
-      const { Feature } = this.context.dataSources;
-      const nodeType = item.__type || this.resolveType(item);
-      const flagLimit = get(ApollosConfig, 'APP.FLAG_LIMIT', 0);
-      features.push(
-        Feature.createAddCommentFeature({
-          nodeId: item.id,
-          nodeType,
-          relatedNode: item,
-          initialPrompt: this.getAddCommentInitialPrompt(
-            parent.attributeValues
-          ),
-          addPrompt: this.getAddCommentAddPrompt(parent.attributeValues),
-        }),
-        Feature.createCommentListFeature({
-          nodeId: item.id,
-          nodeType,
-          flagLimit,
-        })
-      );
-    }
-    return features;
-  }
-
   getSermonNotes = async (contentID, { value: guid }) => {
     const { MatrixItem, Scripture } = this.context.dataSources;
     const items = await MatrixItem.getItemsFromGuid(guid);

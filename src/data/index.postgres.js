@@ -42,6 +42,8 @@ import {
   UserFlag,
   UserLike,
   Follow,
+  Notification,
+  NotificationPreference,
   Campus as PostgresCampus,
   Person as PostgresPerson,
 } from '@apollosproject/data-connector-postgres';
@@ -72,6 +74,8 @@ const data = {
   Followings,
   ContentChannel,
   ContentItem,
+  Notification,
+  NotificationPreference,
   RockPerson, // This entry needs to come before (postgres) Person
   BinaryFiles, // This entry needs to come before (postgres) Person
   PostgresPerson, // Postgres person for now, as we extend this dataSource in the 'rockWithPostgres' file
