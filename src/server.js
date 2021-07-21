@@ -43,7 +43,7 @@ const cacheOptions = isDev
       },
     };
 
-const { ENGINE } = ApollosConfig;
+const { ROCK, APP, ENGINE } = ApollosConfig;
 
 const apolloServer = new ApolloServer({
   typeDefs: schema,
@@ -72,10 +72,14 @@ const apolloServer = new ApolloServer({
 
 const app = express();
 
+app.get('/forgot-password', (req, res) => {
+  res.redirect(APP.FORGOT_PASSWORD_URL || `${ROCK.URL}/page/56`);
+});
+
 applyServerMiddleware({ app, dataSources, context });
 setupJobs({ app, dataSources, context });
 // Comment out if you don't want the API serving apple-app-site-association or assetlinks manifests.
-// setupUniversalLinks({ app });
+//  setupUniversalLinks({ app });
 
 apolloServer.applyMiddleware({ app });
 apolloServer.applyMiddleware({ app, path: '/' });
