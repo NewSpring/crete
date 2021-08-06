@@ -10,7 +10,6 @@ class personDataSource extends postgresPerson.dataSource {
     );
     super.create({
       ...attributes,
-      ...(attributes.gender ? { gender: attributes.gender.toUpperCase() } : {}),
       originType: 'rock',
       originId: String(rockPersonId),
     });
@@ -31,14 +30,7 @@ const personResolver = {
     },
     updateProfileFields: async (root, { input }, { dataSources }) => {
       await dataSources.RockPerson.updateProfile(input); // Update in Rock
-      return dataSources.Person.updateProfile(
-        input.map((pair) => {
-          if (pair.field === 'Gender') {
-            return { field: 'Gender', value: pair.value.toUpperCase() };
-          }
-          return pair;
-        })
-      ); // updates in Postgres
+      return dataSources.Person.updateProfile(input); // updates in Postgres
     },
     uploadProfileImage: async (root, { file, size }, { dataSources }) => {
       const person = await dataSources.RockPerson.uploadProfileImage(
@@ -120,7 +112,7 @@ class oneSignalDataSource extends OneSignalOriginal.dataSource {
         to.originId
       );
       return super.createNotification({
-        toUserIds: [String(person.primaryAliasId)],
+        toUserIds: [person.primaryAliasId],
         content,
         heading,
         subtitle,

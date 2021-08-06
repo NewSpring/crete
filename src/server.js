@@ -62,12 +62,8 @@ const apolloServer = new ApolloServer({
       'editor.cursorShape': 'line',
     },
   },
+  uploads: false,
   ...cacheOptions,
-  engine: {
-    apiKey: ENGINE.API_KEY,
-    // From core. What would this do for us?
-    // schemaTag: ENGINE.SCHEMA_TAG,
-  },
 });
 
 const app = express();
