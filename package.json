@@ -4,7 +4,7 @@
   "private": true,
   "main": "lib/index.js",
   "engines": {
-    "node": "12.x"
+    "node": ">=14"
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2 -e js,yaml,json,yml",
@@ -46,9 +46,9 @@
     "@apollosproject/data-connector-passes": "^2.13.0",
     "@apollosproject/data-connector-postgres": "^2.25.1-canary.16",
     "@apollosproject/data-connector-redis-cache": "^2.13.0",
-    "@apollosproject/data-connector-rock": "^2.20.0",
+    "@apollosproject/data-connector-rock": "^2.32.2",
     "@apollosproject/data-connector-twilio": "^2.13.0",
-    "@apollosproject/data-schema": "^2.24.0",
+    "@apollosproject/data-schema": "^2.32.2",
     "@apollosproject/rock-apollo-data-source": "^2.13.0",
     "@apollosproject/server-core": "^2.24.0",
     "@bugsnag/js": "^6.2.0",
