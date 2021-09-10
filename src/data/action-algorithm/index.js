@@ -8,7 +8,6 @@ class dataSource extends ActionAlgorithm.dataSource {
   ACTION_ALGORITHMS = {
     ...this.ACTION_ALGORITHMS,
     CAMPAIGN_ITEMS: this.campaignItemsAlgorithm.bind(this),
-    STAFF_NEWS: this.staffNewsAlgorithm.bind(this),
     EXPERIMENTAL_UPCOMING_EVENTS: this.experimentalUpcomingEventsAlgorithm.bind(
       this
     ),
@@ -32,23 +31,6 @@ class dataSource extends ActionAlgorithm.dataSource {
       return [];
     }
     return this.upcomingEventsAlgorithm.call(this, ...args);
-  }
-
-  async staffNewsAlgorithm(...args) {
-    const { Feature, Auth, RockPerson } = this.context.dataSources;
-
-    Feature.setCacheHint({
-      maxAge: 0,
-      scope: 'PRIVATE',
-    });
-
-    const { id } = await Auth.getCurrentPerson();
-    const isStaff = await RockPerson.isStaff(id);
-
-    if (!isStaff) {
-      return [];
-    }
-    return this.contentChannelAlgorithm.call(this, ...args);
   }
 
   async campaignItemsAlgorithm({ limit = 1 } = {}) {

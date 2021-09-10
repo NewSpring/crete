@@ -59,7 +59,7 @@ CLOUDINARY:
   URL: ${CLOUDINARY_URL}
 
 CONTENT:
-  SERMON_CHANNEL_ID: cbc0994a-97f1-471a-a7d5-4eff59d8a389
+  SERMON_CHANNEL_ID: 031d9bf7-1e12-4245-b782-413a4cf10067
   TYPES:
     - ContentSeriesContentItem
     - DevotionalContentItem
@@ -71,63 +71,35 @@ CONTENT:
 
 TABS:
   HOME:
-    - type: ActionBar
-      title: Welcome to Apollos
-      actions:
-        [
-          {
-            title: Check In,
-            icon: check,
-            action: OPEN_URL,
-            relatedNode: { __typename: Url, url: 'https://www.google.com' },
-          },
-        ]
     - algorithms:
-      - type: CONTENT_FEED
+      - type: CHILDREN_OF_PARENTS_BY_CATEGORIES
         arguments:
-          channelIds:
-            - c7f43eb9-2200-4267-ab28-871e0d5e785f
-            - 3dfe7149-136b-4134-bd91-fdd935ef2221
-      type: HeroList
-      primaryAction:
-        # Right now, you hardcode exactly what GraphQL should return.
-        # Long term, we hope to have a more sophisticated mechanism for driving this field
-        action: OPEN_NODE
-        title: 'Read More'
-        relatedNode:
-          __typename: UniversalContentItem
-          id: a2c42d1d-98c8-46fb-aeea-603bc569cf7d
-    - algorithms: [DAILY_PRAYER]
-      isCard: false
-      type: PrayerList
-      title: Daily Prayer
-    - algorithms:
-        - type: CAMPAIGN_ITEMS
-          channelIds:
-            - 4b23ebc9-248e-4092-99f9-8829e1b6f1cc
-      type: HeroList
-      isFeatured: true
-      subtitle: Featured
-    - title: FOR YOU
-      algorithms: [SERMON_CHILDREN, PERSONA_FEED]
-      subtitle: Explore what God calls you to today
-      type: ActionList
-    - algorithms: [SERIES_IN_PROGRESS]
-      subtitle: Continue
-      type: HorizontalCardList
-    - title: RECOMMENDED
-      algorithms: [SERMON_CHILDREN]
-      subtitle: For Him
+          categoryIds:
+            - c0cd22ea-74ec-4766-acac-4861296aec2a
       type: VerticalCardList
-    - title: BULLETIN
-      subtitle: What's happening at apollos?
+      isFeatured: true
+    - subtitle: Next steps
       type: ActionList
       algorithms:
         - type: CONTENT_FEED
           arguments:
+            channelIds: [3eca8b29-e21a-441e-8e74-726d0ba0c854]
+            limit: 3
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
             channelIds:
-              - 13
-        - type: UPCOMING_EVENTS
+              - 3897dbc7-9b93-41d8-832c-23a38d359f55
+              - fbf06537-afd0-4e18-a3ad-6f53ccbfe58f
+              - bba44e5b-fb04-4799-adf4-5bfc293aed5c
+              - 031d9bf7-1e12-4245-b782-413a4cf10067
+              - ccbb78d6-56ab-4862-bc34-15a66a4db57b
+      type: VerticalCardList
+    # - 27 # news
+    # - 16 # articles
+    # - 18 # studies
+    # - 19 # sermons
+    # - 28 # stories
 
   READ:
     - algorithms:

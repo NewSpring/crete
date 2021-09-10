@@ -4,7 +4,7 @@
   "private": true,
   "main": "lib/index.js",
   "engines": {
-    "node": "14.x"
+    "node": ">=14"
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2 -e js,yaml,json,yml",
@@ -21,7 +21,8 @@
     "beta": "node ./scripts/add-packages.js beta",
     "canary": "node ./scripts/add-packages.js canary",
     "next": "node ./scripts/add-packages.js next",
-    "translate": "node scripts/translate.js"
+    "translate": "node scripts/translate.js",
+    "migrator": "node ./lib/migrator.js"
   },
   "jest": {
     "collectCoverage": true,
@@ -35,22 +36,22 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "@apollosproject/bugsnag": "^2.13.0",
-    "@apollosproject/config": "^2.29.2",
-    "@apollosproject/data-connector-algolia-search": "^2.29.2",
-    "@apollosproject/data-connector-analytics": "^2.29.2",
-    "@apollosproject/data-connector-bible": "^2.29.2",
-    "@apollosproject/data-connector-church-online": "^2.29.2",
-    "@apollosproject/data-connector-cloudinary": "^2.29.2",
-    "@apollosproject/data-connector-onesignal": "^2.29.2",
-    "@apollosproject/data-connector-passes": "^2.29.2",
-    "@apollosproject/data-connector-postgres": "^2.29.2",
-    "@apollosproject/data-connector-redis-cache": "^2.29.2",
-    "@apollosproject/data-connector-rock": "^2.29.2",
-    "@apollosproject/data-connector-twilio": "^2.29.2",
-    "@apollosproject/data-schema": "^2.29.2",
-    "@apollosproject/rock-apollo-data-source": "^2.29.2",
-    "@apollosproject/server-core": "^2.29.2",
+    "@apollosproject/bugsnag": "^2.32.2",
+    "@apollosproject/config": "^2.32.2",
+    "@apollosproject/data-connector-algolia-search": "^2.32.2",
+    "@apollosproject/data-connector-analytics": "^2.32.2",
+    "@apollosproject/data-connector-bible": "^2.32.2",
+    "@apollosproject/data-connector-church-online": "^2.32.2",
+    "@apollosproject/data-connector-cloudinary": "^2.32.2",
+    "@apollosproject/data-connector-onesignal": "^2.32.2",
+    "@apollosproject/data-connector-passes": "^2.32.2",
+    "@apollosproject/data-connector-postgres": "^2.32.2",
+    "@apollosproject/data-connector-redis-cache": "^2.32.2",
+    "@apollosproject/data-connector-rock": "^2.32.2",
+    "@apollosproject/data-connector-twilio": "^2.32.2",
+    "@apollosproject/data-schema": "^2.32.2",
+    "@apollosproject/rock-apollo-data-source": "^2.32.2",
+    "@apollosproject/server-core": "^2.32.2",
     "@bugsnag/js": "^6.2.0",
     "@bugsnag/plugin-express": "^6.2.0",
     "apollo-server": "^2.24.1",
@@ -70,9 +71,9 @@
     "graphql-upload": "^12.0.0"
   },
   "devDependencies": {
-    "@apollosproject/apollo-server-env-mock": "^2.29.2",
-    "@apollosproject/babel-preset-apollos": "^2.29.2",
-    "@apollosproject/eslint-config": "^2.29.2",
+    "@apollosproject/apollo-server-env-mock": "^2.32.2",
+    "@apollosproject/babel-preset-apollos": "^2.32.2",
+    "@apollosproject/eslint-config": "^2.32.2",
     "@babel/cli": "^7.4.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.7.4",

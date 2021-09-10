@@ -11,6 +11,8 @@ ApollosConfig.loadYaml({
   configPath: path.join(__dirname, '..', configName),
 });
 
+ApollosConfig.HOME_FEATURES = ApollosConfig.TABS.HOME;
+
 // defaults
 ApollosConfig.loadJs({
   ROCK: { TIMEZONE: ApollosConfig?.ROCK?.TIMEZONE || 'America/New_York' },
