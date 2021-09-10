@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentItem data sources gets Wistia URLs 1`] = `
+Object {
+  "thumbnail": "https://embed-ssl.wistia.com/deliveries/6e7c901ec5a490adc2cd7b04667f3179/file.jpeg",
+  "video": "https://embed-ssl.wistia.com/deliveries/222d3a2fa3dbbc2d67e917a6c98884ec106c84f3.m3u8",
+}
+`;
+
+exports[`ContentItem data sources gets scripture references 1`] = `
+Array [
+  Array [
+    "john 10:10",
+  ],
+  Array [
+    "john 1:1",
+  ],
+]
+`;
+
+exports[`ContentItem data sources gets sermon notes 1`] = `
+Array [
+  Object {
+    "__typename": "NotesTextBlock",
+    "allowsComment": false,
+    "comment": null,
+    "hasBlanks": false,
+    "hiddenText": null,
+    "id": "NotesTextBlock:559b23fd0aa90e81b1c023e72e230fa1",
+    "isHeader": true,
+    "simpleText": "1. this is point one",
+  },
+  Object {
+    "__typename": "NotesTextBlock",
+    "allowsComment": true,
+    "comment": null,
+    "hasBlanks": false,
+    "hiddenText": null,
+    "id": "NotesTextBlock:965b6e6d7046a885bea4e300b5c0400d",
+    "isHeader": false,
+    "simpleText": "this is a subpoint",
+  },
+  Object {
+    "__typename": "NotesScriptureBlock",
+    "allowsComment": true,
+    "comment": null,
+    "id": "NotesScriptureBlock:4f68015ba18662a7409d1219a4ce013e",
+    "scripture": Object {
+      "content": "<p>1 In the beginning...<p>",
+      "reference": "Genesis 1:1",
+    },
+    "simpleText": "1)  In the beginning... Genesis 1:1",
+  },
+  Object {
+    "__typename": "NotesScriptureBlock",
+    "allowsComment": true,
+    "comment": null,
+    "id": "NotesScriptureBlock:a0f64573eabf00a607bec911794d50fb",
+    "scripture": Object {
+      "content": "<p>1 In the beginning...<p>",
+      "reference": "Genesis 1:1",
+    },
+    "simpleText": "1)  In the beginning... Genesis 1:1",
+  },
+  Object {
+    "__typename": "NotesTextBlock",
+    "allowsComment": true,
+    "comment": null,
+    "hasBlanks": true,
+    "hiddenText": "this is another ________",
+    "id": "NotesTextBlock:772fcb6087247ebad630814e2ce0cd16",
+    "isHeader": false,
+    "simpleText": "this is another subpoint",
+  },
+]
+`;
+
+exports[`ContentItem data sources gets sermon notes comments 1`] = `
+Object {
+  "NotesScriptureBlock:123": Object {
+    "id": "NotesBlockComment:965b6e6d7046a885bea4e300b5c0400d",
+    "text": "this is another comment",
+  },
+  "NotesTextBlock:123": Object {
+    "id": "NotesBlockComment:559b23fd0aa90e81b1c023e72e230fa1",
+    "text": "this is a comment",
+  },
+}
+`;

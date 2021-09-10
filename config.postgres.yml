@@ -133,7 +133,7 @@ TABS:
           apollosId: ContentChannel:d9da719f-84ef-4cf0-9875-22fea4bf09eb
           title: Devotionals
 
-  WATCH:
+  WATCH:  
     - algorithms:
         - type: LATEST_SERIES_CHILDREN
           arguments:
