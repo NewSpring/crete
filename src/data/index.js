@@ -62,6 +62,7 @@ delete Feature.resolver.PrayerListFeature;
 delete Feature.resolver.VerticalPrayerListFeature;
 
 const data = {
+  NoPostgres,  
   Interfaces,
   Followings,
   ContentChannel,
@@ -96,7 +97,6 @@ const data = {
   Comment,
   UserFlag,
   // PrayerRequest,
-  NoPostgres,
 };
 
 const {
