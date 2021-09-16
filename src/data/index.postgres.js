@@ -40,7 +40,7 @@ import {
   UserFlag,
   UserLike,
   Follow,
-  // Interactions,
+  Interactions,
   // Likes,
   Notification,
   NotificationPreference,
@@ -56,6 +56,7 @@ import {
   // PrayerRequest as PostgresPrayerRequest,
 } from '@apollosproject/data-connector-postgres';
 
+import * as MatrixItem from './matrix-items';
 import * as Theme from './theme';
 import * as RockContentItem from './rock-content-item';
 // This modules ties together certain updates so they occurs in both Rock and Postgres.
@@ -68,16 +69,16 @@ import {
 } from './rockWithPostgres';
 
 const postgresContentModules = {
-  // Interactions,
-  Interactions: RockInteractions,
+  Interactions,
+  // Interactions: RockInteractions,
   // Likes,
   Followings,
   ActionAlgorithm: PostgresActionAlgorithm,
   Feature: PostgresFeature,
   PostgresMedia,
   Tag,
-  RockContentItem,
   ContentItem: PostgresContentItem,
+  RockContentItem,
   ContentItemsConnection,
   ContentChannel: ContentItemCategory,
   // PrayerRequest: PostgresPrayerRequest,
@@ -101,7 +102,10 @@ const rockContentModules = {
   RockDefaultCampusOverride,
 };
 
+console.log(process.env.DATABASE_CONTENT, 'db');
+
 const data = {
+  MatrixItem,
   Interfaces,
   FeatureFeed,
   RockPerson, // This entry needs to come before (postgres) Person

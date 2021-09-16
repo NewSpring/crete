@@ -1,6 +1,3 @@
-import { ContentItem as originalContentItem } from '@apollosproject/data-connector-rock';
-import { resolverMerge } from '@apollosproject/server-core';
-
 import ApollosConfig from '@apollosproject/config';
 
 const { ROCK_MAPPINGS } = ApollosConfig;
@@ -28,7 +25,9 @@ const resolver = {
       title: 'Share via ...',
       message: `${root.title} - ${ContentItem.createSummary(root)}`,
     }),
-    series: (root) => root.getDirectParent(),
+    scriptures: async (root, args, { dataSources }) =>
+      console.log('boo!') ||
+      dataSources.RockContentItem.getContentItemScriptures(root),
     seriesConnection: async (root, args, { dataSources: { ContentItem } }) => {
       const series = root.getDirectParent();
 
@@ -93,4 +92,4 @@ const resolver = {
   },
 };
 
-export default resolverMerge(resolver, originalContentItem);
+export default resolver;

@@ -76,12 +76,18 @@ export default class ContentItem extends oldContentItem.dataSource {
     return cursor;
   };
 
-  getContentItemScriptures = async ({ value: matrixItemGuid }) => {
+  getContentItemScriptures = async (root) => {
     const {
       dataSources: { Scripture, MatrixItem },
     } = this.context;
-    if (!matrixItemGuid) return null;
-    const matrixItems = await MatrixItem.getItemsFromGuid(matrixItemGuid);
+    const item = await this.request()
+      .filter(`Id eq ${root.originId}`)
+      .first();
+
+    if (!item?.attributeValues?.scriptures?.value) return null;
+    const matrixItems = await MatrixItem.getItemsFromGuid(
+      item.attributeValues.scriptures.value
+    );
     const references = await Promise.all(
       matrixItems.map(
         async ({
