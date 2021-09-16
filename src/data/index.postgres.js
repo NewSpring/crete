@@ -28,7 +28,7 @@ import {
   Event,
   PrayerRequest,
   Person as RockPerson,
-  ContentItem as RockContentItem,
+  // ContentItem as RockContentItem,
   Campus as RockCampus,
   ContentChannel,
   Feature as RockFeature,

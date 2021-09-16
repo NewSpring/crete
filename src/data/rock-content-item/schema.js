@@ -1,9 +1,6 @@
-import { contentItemSchema } from '@apollosproject/data-schema';
 import gql from 'graphql-tag';
 
 export default gql`
-  ${contentItemSchema}
-
   type SeriesConnection {
     series: ContentItem
     itemCount: Int
