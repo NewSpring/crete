@@ -11,7 +11,6 @@ import * as Scripture from '@apollosproject/data-connector-bible';
 import * as Cloudinary from '@apollosproject/data-connector-cloudinary';
 // import * as OneSignal from '@apollosproject/data-connector-onesignal';
 import * as Search from '@apollosproject/data-connector-algolia-search';
-import * as Pass from '@apollosproject/data-connector-passes';
 import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
@@ -47,6 +46,7 @@ import {
   Campus as PostgresCampus,
   Person as PostgresPerson,
 } from '@apollosproject/data-connector-postgres';
+import * as Pass from './pass';
 import * as LiveStream from './live';
 import * as RockPerson from './people';
 import * as ContentItem from './content-items';
