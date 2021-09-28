@@ -43,7 +43,7 @@ const cacheOptions = isDev
       },
     };
 
-const { ENGINE } = ApollosConfig;
+const { ROCK, APP, ENGINE } = ApollosConfig;
 
 const apolloServer = new ApolloServer({
   typeDefs: schema,
@@ -62,20 +62,20 @@ const apolloServer = new ApolloServer({
       'editor.cursorShape': 'line',
     },
   },
+  uploads: false,
   ...cacheOptions,
-  engine: {
-    apiKey: ENGINE.API_KEY,
-    // From core. What would this do for us?
-    // schemaTag: ENGINE.SCHEMA_TAG,
-  },
 });
 
 const app = express();
 
+app.get('/forgot-password', (req, res) => {
+  res.redirect(APP.FORGOT_PASSWORD_URL || `${ROCK.URL}/page/56`);
+});
+
 applyServerMiddleware({ app, dataSources, context });
 setupJobs({ app, dataSources, context });
 // Comment out if you don't want the API serving apple-app-site-association or assetlinks manifests.
-// setupUniversalLinks({ app });
+//  setupUniversalLinks({ app });
 
 apolloServer.applyMiddleware({ app });
 apolloServer.applyMiddleware({ app, path: '/' });
@@ -85,7 +85,23 @@ apolloServer.applyMiddleware({ app, path: '/' });
 (async () => {
   if (ApollosConfig?.DATABASE?.URL) {
     const migrationRunner = await createMigrationRunner({ migrations });
-    await migrationRunner.up();
+    const pending = await migrationRunner.pending();
+    if (pending.length) {
+      console.log('\x1b[31m', '██████████████████████████████████', '\x1b[0m');
+      console.log(
+        '\x1b[36m',
+        'You currently have a number of pending migrations',
+        '\x1b[0m'
+      );
+      console.log(pending);
+      console.log(
+        `Keep in mind, you are currently connected to ${
+          migrationRunner?.options?.context?.sequelize?.options?.host
+        }`
+      );
+      console.log('\x1b[31m', '██████████████████████████████████', '\x1b[0m');
+    }
+    if (ApollosConfig.AUTO_MIGRATE) await migrationRunner.up();
   }
 })();
 

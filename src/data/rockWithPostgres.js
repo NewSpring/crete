@@ -10,7 +10,6 @@ class personDataSource extends postgresPerson.dataSource {
     );
     super.create({
       ...attributes,
-      ...(attributes.gender ? { gender: attributes.gender.toUpperCase() } : {}),
       originType: 'rock',
       originId: String(rockPersonId),
     });
@@ -31,14 +30,7 @@ const personResolver = {
     },
     updateProfileFields: async (root, { input }, { dataSources }) => {
       await dataSources.RockPerson.updateProfile(input); // Update in Rock
-      return dataSources.Person.updateProfile(
-        input.map((pair) => {
-          if (pair.field === 'Gender') {
-            return { field: 'Gender', value: pair.value.toUpperCase() };
-          }
-          return pair;
-        })
-      ); // updates in Postgres
+      return dataSources.Person.updateProfile(input); // updates in Postgres
     },
     uploadProfileImage: async (root, { file, size }, { dataSources }) => {
       const person = await dataSources.RockPerson.uploadProfileImage(
@@ -50,23 +42,8 @@ const personResolver = {
       ]); // updates in Postgres. Reuses already uploaded imageUrl
       // return dataSources.Person.uploadProfileImage(file, size); // updates in Postgres. Performs the upload again.
     },
-    updateUserCampus: async (root, { campusId }, { dataSources }) => {
-      await dataSources.Campus.updateCurrentUserCampus({ campusId }); // updates in Rock
-
-      const { id: rockCampusId } = parseGlobalId(campusId);
-      const campus = await dataSources.PostgresCampus.getFromId(
-        rockCampusId,
-        null,
-        {
-          originType: 'rock',
-        }
-      ); // finds the postgres campus id
-      return dataSources.Person.updateProfile([
-        { field: 'campusId', value: campus.id },
-      ]); // updates in Postgres
-    },
     updateUserPushSettings: async (root, { input }, { dataSources }) => {
-      // register the changes w/ one signal
+      // register the changes w/ postgres
       await dataSources.NotificationPreference.updateUserNotificationPreference(
         {
           notificationProviderId: input.pushProviderUserId,
@@ -74,6 +51,7 @@ const personResolver = {
           enabled: input.enabled,
         }
       );
+      // register the changes w/ one signal
       const returnValue = await dataSources.OneSignal.updatePushSettings(input);
 
       // if the pushProviderUserId is changing, we need ot register the device with rock.
@@ -119,7 +97,7 @@ class oneSignalDataSource extends OneSignalOriginal.dataSource {
         to.originId
       );
       return super.createNotification({
-        toUserIds: [String(person.primaryAliasId)],
+        toUserIds: [person.primaryAliasId],
         content,
         heading,
         subtitle,
@@ -139,4 +117,44 @@ class oneSignalDataSource extends OneSignalOriginal.dataSource {
 export const OneSignal = {
   ...OneSignalOriginal,
   dataSource: oneSignalDataSource,
+};
+
+// Used when IDs coming from the API are Rock APIS.
+export const RockDefaultCampusOverride = {
+  resolver: {
+    Mutation: {
+      updateUserCampus: async (root, { campusId }, { dataSources }) => {
+        await dataSources.Campus.updateCurrentUserCampus({ campusId }); // updates in Rock
+
+        const { id: rockCampusId } = parseGlobalId(campusId);
+        const campus = await dataSources.PostgresCampus.getFromId(
+          rockCampusId,
+          null,
+          {
+            originType: 'rock',
+          }
+        ); // finds the postgres campus id
+        return dataSources.Person.updateProfile([
+          { field: 'campusId', value: campus.id },
+        ]); // updates in Postgres
+      },
+    },
+  },
+};
+
+// Used when IDs coming from the API are Postgres APIS.
+export const PostgresDefaultCampusOverride = {
+  resolver: {
+    Mutation: {
+      updateUserCampus: async (root, { campusId }, { dataSources }) => {
+        const campus = await dataSources.Campus.getFromId(
+          parseGlobalId(campusId).id
+        ); // finds the postgres campus id
+        await dataSources.RockCampus.updateCurrentUserCampus({
+          rockId: campus.originId,
+        }); // updates in Rock
+        return dataSources.Campus.updateCurrentUserCampus({ campusId }); // updates in Postgres
+      },
+    },
+  },
 };

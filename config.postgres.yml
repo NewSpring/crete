@@ -1,0 +1,222 @@
+# This file, in conjuction with your .env file,
+# should be used to configure the apollos server.
+
+# Any values you wish to keep secret should be placed in `.env`
+# You can access those values (and any other values in your environment)
+# using the ${VARIABLE_NAME} syntax
+
+# This file should be checked into version control.
+# `.env` should NOT be checked into version control.
+APP:
+  # This variable is used for generating deep links.
+  # It should match whatver is in your Info.plist `CFBundleURLTypes`
+  DEEP_LINK_HOST: ${DEEP_LINK_HOST}
+  UNIVERSAL_LINK_HOST: ${UNIVERSAL_LINK_HOST}
+  ROOT_API_URL: ${ROOT_URL}
+  JOBS_USERNAME: ${JOBS_USERNAME}
+  JOBS_PASSWORD: ${JOBS_PASSWORD}
+DATABASE:
+  URL: ${DATABASE_URL}
+BUGSNAG:
+  API_KEY: ${BUGSNAG_KEY}
+ROCK:
+  URL: ${ROCK_URL}
+  API_TOKEN: ${ROCK_TOKEN}
+UNIVERSAL_LINKS:
+  APPLE_APP_ID: ${APPLE_APP_ID}
+  APPLE_TEAM_ID: ${APPLE_TEAM_ID}
+  APP_STORE_LINK: ${IOS_REDIRECT}
+  PLAY_STORE_LINK: ${ANDROID_REDIRECT}
+  GOOGLE_APP_ID: ${GOOGLE_APP_ID}
+  GOOGLE_KEYSTORE_SHA256: ${GOOGLE_KEYSTORE_SHA256}
+ONE_SIGNAL:
+  APP_ID: ${ONE_SIGNAL_APP_ID}
+  REST_KEY: ${ONE_SIGNAL_REST_KEY}
+CHURCH_ONLINE:
+  URL: ${CHURCH_ONLINE_URL}
+  WEB_VIEW_URL: https://apollos.online.church/
+ALGOLIA:
+  APPLICATION_ID: ${ALGOLIASEARCH_APPLICATION_ID}
+  API_KEY: ${ALGOLIASEARCH_API_KEY}
+TWILIO:
+  ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+  AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+  FROM_NUMBER: ${TWILIO_FROM_NUMBER}
+PASS:
+  TEMPLATES:
+    CHECKIN: ${PWD}/wallet-passes/checkin.pass
+  CERTIFICATES:
+    WWDR: ${PASS_WWDR_CERT}
+    SIGNER_CERT: ${PASS_SIGNER_CERT}
+    SIGNER_KEY: ${PASS_SIGNER_KEY}
+    SIGNER_KEY_PASSPHRASE: ${PASS_SIGNER_PASSPHRASE}
+BIBLE_API:
+  KEY: ${BIBLE_API_KEY}
+  BIBLE_ID:
+    WEB: '9879dbb7cfe39e4d-01'
+    KJV: 'de4e12af7f28f599-02'
+CLOUDINARY:
+  URL: ${CLOUDINARY_URL}
+
+CONTENT:
+  SERMON_CHANNEL_ID: 031d9bf7-1e12-4245-b782-413a4cf10067
+  TYPES:
+    - ContentSeriesContentItem
+    - DevotionalContentItem
+    - MediaContentItem
+    - UniversalContentItem
+    - WeekendContentItem
+    - ContentItem
+
+
+TABS:
+  HOME:
+    - algorithms:
+      - type: CHILDREN_OF_PARENTS_BY_CATEGORIES
+        arguments:
+          categoryIds:
+            - c0cd22ea-74ec-4766-acac-4861296aec2a # Work MacMini
+            - 8a4d9402-1f2f-40d7-aedd-626759c914c7 # Home Laptop
+      type: VerticalCardList
+      isFeatured: true
+    - subtitle: Next steps
+      type: ActionList
+      algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - 3eca8b29-e21a-441e-8e74-726d0ba0c854 # Work MacMini
+              - 7ec586b2-7f69-4226-a5f7-982595141410 # Home Laptop
+            limit: 3
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              # Work Mac Mini
+              - 3897dbc7-9b93-41d8-832c-23a38d359f55
+              - fbf06537-afd0-4e18-a3ad-6f53ccbfe58f
+              - bba44e5b-fb04-4799-adf4-5bfc293aed5c
+              - 031d9bf7-1e12-4245-b782-413a4cf10067
+              - ccbb78d6-56ab-4862-bc34-15a66a4db57b
+              # Home MacBook Pro
+              - efdbb2a6-499b-47d0-816f-5523c13a5d7c
+              - a68c4232-87a3-478f-8b6c-8dab7c735071
+              - 1ba9ec8d-5ab8-4e5c-8bdd-141fdc3a799d
+              - 37e2abcf-53d4-4073-a385-c2786826ec57
+              - f3d8146b-220f-432b-9e26-142873e32fd3              
+      type: VerticalCardList
+    # - 27 # news
+    # - 16 # articles
+    # - 18 # studies
+    # - 19 # sermons
+    # - 28 # stories
+
+  READ:
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - c7f43eb9-2200-4267-ab28-871e0d5e785f
+            limit: 3
+      type: HorizontalCardList
+      subtitle: Podcast Messages
+      primaryAction:
+        action: OPEN_CHANNEL
+        title: 'Read More'
+        relatedNode:
+          __typename: ContentChannel
+          apollosId: ContentChannel:f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+          title: Podcast Messages
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - d9da719f-84ef-4cf0-9875-22fea4bf09eb
+            limit: 3
+      type: HorizontalCardList
+      subtitle: Devotionals
+      primaryAction:
+        action: OPEN_CHANNEL
+        title: 'Read More'
+        relatedNode:
+          __typename: ContentChannel
+          apollosId: ContentChannel:d9da719f-84ef-4cf0-9875-22fea4bf09eb
+          title: Devotionals
+
+  WATCH:  
+    - algorithms:
+        - type: LATEST_SERIES_CHILDREN
+          arguments:
+            channelId: 8f0a93f5-ccec-4cc1-8fd8-06afe5982f7b
+      type: HeroList
+      title: Catch up
+      subtitle: Latest Series
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+      type: VerticalCardList
+      subtitle: All series
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - 8f0a93f5-ccec-4cc1-8fd8-06afe5982f7b
+            limit: 3
+      type: HorizontalCardList
+      subtitle: Sermons
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+            limit: 3
+      type: HorizontalCardList
+      subtitle: Podcasts
+      primaryAction:
+        action: OPEN_CHANNEL
+        title: 'Read More'
+        relatedNode:
+          __typename: ContentChannel
+          apollosId: ContentChannel:f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+          title: Podcasts
+    - algorithms:
+        - type: CONTENT_FEED
+          arguments:
+            channelIds:
+              - f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+            limit: 3
+      type: HorizontalCardList
+      title: Videos
+      primaryAction:
+        action: OPEN_CHANNEL
+        title: 'Read More'
+        relatedNode:
+          __typename: ContentChannel
+          apollosId: ContentChannel:f4a5890c-4af5-4d9f-afe3-5d1c6aa85419
+          title: Videos
+
+  PRAY:
+    - algorithms: [DAILY_PRAYER]
+      isCard: false
+      type: PrayerList
+      title: Daily Prayer
+    - type: VerticalPrayerList
+      title: Your Prayers
+  CONNECT:
+    - type: ActionTable
+      title: Connect to Apollos
+      actions:
+        [
+          {
+            title: Google,
+            action: OPEN_URL,
+            relatedNode: { __typename: Url, url: 'https://www.google.com' },
+          },
+          {
+            title: Facebook,
+            action: OPEN_URL,
+            relatedNode: { __typename: Url, url: 'https://www.facebook.com' },
+          },
+        ]
