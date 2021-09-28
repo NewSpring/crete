@@ -75,7 +75,8 @@ TABS:
       - type: CHILDREN_OF_PARENTS_BY_CATEGORIES
         arguments:
           categoryIds:
-            - c0cd22ea-74ec-4766-acac-4861296aec2a
+            - c0cd22ea-74ec-4766-acac-4861296aec2a # Work MacMini
+            - 8a4d9402-1f2f-40d7-aedd-626759c914c7 # Home Laptop
       type: VerticalCardList
       isFeatured: true
     - subtitle: Next steps
@@ -83,17 +84,26 @@ TABS:
       algorithms:
         - type: CONTENT_FEED
           arguments:
-            channelIds: [3eca8b29-e21a-441e-8e74-726d0ba0c854]
+            channelIds:
+              - 3eca8b29-e21a-441e-8e74-726d0ba0c854 # Work MacMini
+              - 7ec586b2-7f69-4226-a5f7-982595141410 # Home Laptop
             limit: 3
     - algorithms:
         - type: CONTENT_FEED
           arguments:
             channelIds:
+              # Work Mac Mini
               - 3897dbc7-9b93-41d8-832c-23a38d359f55
               - fbf06537-afd0-4e18-a3ad-6f53ccbfe58f
               - bba44e5b-fb04-4799-adf4-5bfc293aed5c
               - 031d9bf7-1e12-4245-b782-413a4cf10067
               - ccbb78d6-56ab-4862-bc34-15a66a4db57b
+              # Home MacBook Pro
+              - efdbb2a6-499b-47d0-816f-5523c13a5d7c
+              - a68c4232-87a3-478f-8b6c-8dab7c735071
+              - 1ba9ec8d-5ab8-4e5c-8bdd-141fdc3a799d
+              - 37e2abcf-53d4-4073-a385-c2786826ec57
+              - f3d8146b-220f-432b-9e26-142873e32fd3              
       type: VerticalCardList
     # - 27 # news
     # - 16 # articles

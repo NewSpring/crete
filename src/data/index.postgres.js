@@ -41,7 +41,7 @@ import {
   UserLike,
   Follow,
   Interactions,
-  // Likes,
+  Likes,
   Notification,
   NotificationPreference,
   Tag,
