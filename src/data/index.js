@@ -12,7 +12,6 @@ import * as Scripture from '@apollosproject/data-connector-bible';
 
 import * as OneSignal from '@apollosproject/data-connector-onesignal';
 import * as Search from '@apollosproject/data-connector-algolia-search';
-import * as Pass from '@apollosproject/data-connector-passes';
 import * as Cache from '@apollosproject/data-connector-redis-cache';
 import * as Sms from '@apollosproject/data-connector-twilio';
 import {
@@ -33,6 +32,7 @@ import {
   // PrayerRequest,
 } from '@apollosproject/data-connector-rock';
 import { Comment, UserFlag } from '@apollosproject/data-connector-postgres';
+import * as Pass from './pass';
 // import Auth from './auth';
 import * as LiveStream from './live';
 import * as Person from './people';
@@ -62,7 +62,7 @@ delete Feature.resolver.PrayerListFeature;
 delete Feature.resolver.VerticalPrayerListFeature;
 
 const data = {
-  NoPostgres,  
+  NoPostgres,
   Interfaces,
   Followings,
   ContentChannel,
