@@ -73,6 +73,7 @@ const apolloServer = new ApolloServer({
 const app = express();
 
 // password reset
+// This link is coming in malformed from the APP and this code should be refactored once we fix that in the APP
 app.get('//forgot-password', (req, res) => {
   res.redirect(APP.FORGOT_PASSWORD_URL || `${ROCK.URL}/page/56`);
 });
