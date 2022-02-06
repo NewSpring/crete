@@ -156,12 +156,13 @@ export default class Prayer extends RockApolloDataSource {
     if (type === 'SAVED') return this.bySaved();
 
     const {
-      id: personId,
+      // id: personId,
       primaryAliasId,
       primaryCampusId,
     } = await Auth.getCurrentPerson();
-    if (type === 'GROUP')
-      return this.byGroups(Group.getGroupTypeIds(), personId);
+    // group prayers are busted
+    if (type === 'GROUP') return this.request().empty();
+    // return this.byGroups(Group.getGroupTypeIds(), personId);
 
     return this.request()
       .filter(
@@ -192,17 +193,23 @@ export default class Prayer extends RockApolloDataSource {
 
   // deprecated
   getPrayers = async (type) => {
+    //
+    // TODO group endpoint is broken, this is a bandaid
+    if (type === 'GROUP') return [];
+    //
+    //
     const prayersCursor = await this.byPrayerFeed(type);
     const prayers = await prayersCursor.get();
     return this.sortPrayers(prayers);
   };
 
-  byGroups = async (groupTypeIds, personId) =>
-    // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
-    // right now I don't think it will pull any anonymous prayers
-    this.request(
-      `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
-    );
+  // group prayers are busted
+  // byGroups = async (groupTypeIds, personId) =>
+  // // TODO: need to fix this endpoint to use IsPublic vs IsAnonymous
+  // // right now I don't think it will pull any anonymous prayers
+  // this.request(
+  // `PrayerRequests/GetForGroupMembersOfPersonInGroupTypes/${personId}?groupTypeIds=${groupTypeIds}&excludePerson=true`
+  // );
 
   bySaved = async () => {
     const {
