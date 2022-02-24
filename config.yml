@@ -272,6 +272,9 @@ HOME_FEATURES:
   - algorithms: [CAMPAIGN_ITEMS]
     type: VerticalCardList
     isFeatured: true
+  - algorithms: [UPCOMING_EVENTS]
+    subtitle: Upcoming Events
+    type: ActionList
   - subtitle: Next steps
     type: ActionList
     algorithms:
