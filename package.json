@@ -48,7 +48,7 @@
     "@apollosproject/data-connector-redis-cache": "^2.13.0",
     "@apollosproject/data-connector-rock": "^2.32.2",
     "@apollosproject/data-connector-twilio": "^2.13.0",
-    "@apollosproject/data-schema": "^2.32.2",
+    "@apollosproject/data-schema": "^2.44.0",
     "@apollosproject/rock-apollo-data-source": "^2.13.0",
     "@apollosproject/server-core": "^2.24.0",
     "@bugsnag/js": "^6.2.0",
