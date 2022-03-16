@@ -142,6 +142,7 @@ const resolver = {
       args,
       { dataSources }
     ) => {
+      return null; // TODO: Disabling for performance band-aid
       const speakers = await dataSources.ContentItem.getCommunicators(
         communicators
       );
@@ -151,12 +152,12 @@ const resolver = {
       { attributeValues: { communicators } = {} },
       args,
       { dataSources }
-    ) => dataSources.ContentItem.getCommunicators(communicators),
+    ) => [], // TODO: Disabling for performance band-aid data. Orig: Sources.ContentItem.getCommunicators(communicators),
     guestCommunicators: (
       { attributeValues: { communicators } = {} },
       args,
       { dataSources }
-    ) => dataSources.ContentItem.getGuestCommunicators(communicators),
+    ) => [], // TODO: Disabling for performance band-aid data. Orig: dataSources.ContentItem.getGuestCommunicators(communicators),
     sermonDate: ({ attributeValues: { actualDate: { value } = {} } = {} }) =>
       value,
     // deprecated
