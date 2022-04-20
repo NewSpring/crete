@@ -150,7 +150,7 @@ export default class Prayer extends RockApolloDataSource {
 
   byPrayerFeed = async (type) => {
     const {
-      dataSources: { Auth, Group },
+      dataSources: { Auth },
     } = this.context;
 
     if (type === 'SAVED') return this.bySaved();
@@ -170,6 +170,7 @@ export default class Prayer extends RockApolloDataSource {
           type === 'USER' ? 'eq' : 'ne'
         } ${primaryAliasId}`
       )
+      .andFilter('RequestedByPersonAliasId ne null')
       .andFilter(`IsActive eq true`)
       .andFilter(`IsApproved eq true`)
       .andFilter(
