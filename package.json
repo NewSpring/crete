@@ -4,7 +4,7 @@
   "private": true,
   "main": "lib/index.js",
   "engines": {
-    "node": ">=14"
+    "node": "14"
   },
   "scripts": {
     "dev": "nodemon ./src/index.js --exec babel-node --delay 2 -e js,yaml,json,yml",
