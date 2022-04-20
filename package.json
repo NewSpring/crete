@@ -55,7 +55,7 @@
     "@bugsnag/plugin-express": "^6.2.0",
     "apollo-server": "^2.14.2",
     "apollo-server-express": "2.14.2",
-    "aws-sdk": "^2.682.0",
+    "aws-sdk": "^2.814.0",
     "color": "3.0.0",
     "cors": "^2.8.5",
     "dotenv": "6.0.0",
