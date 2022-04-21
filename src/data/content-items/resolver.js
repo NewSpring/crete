@@ -85,9 +85,6 @@ const resolver = {
       args,
       { dataSources }
     ) => dataSources.ContentItem.getContentItemScriptures(scriptures),
-    // deprecated
-    series: ({ id }, args, { dataSources: { ContentItem } }) =>
-      ContentItem.getSeries(id, ROCK_MAPPINGS.DEVOTIONAL_SERIES_CHANNEL_ID),
     seriesConnection: async (
       { id, contentChannelId },
       args,
@@ -136,18 +133,6 @@ const resolver = {
       title: 'Share via ...',
       message: `${root.title} - ${ContentItem.createSummary(root)}`,
     }),
-    // deprecated
-    communicator: async (
-      { attributeValues: { communicators } = {} },
-      args,
-      { dataSources }
-    ) => {
-      return null; // TODO: Disabling for performance band-aid
-      const speakers = await dataSources.ContentItem.getCommunicators(
-        communicators
-      );
-      return speakers[0] || null;
-    },
     communicators: (
       { attributeValues: { communicators } = {} },
       args,
@@ -160,9 +145,6 @@ const resolver = {
     ) => [], // TODO: Disabling for performance band-aid data. Orig: dataSources.ContentItem.getGuestCommunicators(communicators),
     sermonDate: ({ attributeValues: { actualDate: { value } = {} } = {} }) =>
       value,
-    // deprecated
-    series: ({ id }, args, { dataSources: { ContentItem } }) =>
-      ContentItem.getSeries(id, ROCK_MAPPINGS.SERMON_SERIES_CHANNEL_ID),
     seriesConnection: async (
       { id, contentChannelId, startDateTime },
       args,

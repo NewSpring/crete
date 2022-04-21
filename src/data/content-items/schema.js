@@ -43,17 +43,14 @@ export default gql`
   }
 
   extend type WeekendContentItem {
-    communicator: Person @deprecated(reason: "Use communicators")
     communicators: [Person]
     guestCommunicators: [String]
     sermonDate: String
-    series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
     sermonNotes: [NotesBlock] @cacheControl(maxAge: 0)
   }
 
   extend type DevotionalContentItem {
-    series: ContentItem @deprecated(reason: "Use seriesConnection")
     seriesConnection: SeriesConnection
   }
 

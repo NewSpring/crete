@@ -23,14 +23,6 @@ export default {
     },
     prayerMenuCategories: (root, args, { dataSources }) =>
       dataSources.Prayer.getPrayerMenuCategories(),
-    campusPrayers: (root, args, { dataSources }) =>
-      dataSources.Prayer.getPrayers('CAMPUS'),
-    userPrayers: (root, args, { dataSources }) =>
-      dataSources.Prayer.getPrayers('USER'),
-    groupPrayers: (root, args, { dataSources }) =>
-      dataSources.Prayer.getPrayers('GROUP'),
-    savedPrayers: (root, args, { dataSources }) =>
-      dataSources.Prayer.getPrayers('SAVED'),
   },
   Mutation: {
     addPrayer: (root, args, { dataSources }) => dataSources.Prayer.add(args),
@@ -123,9 +115,6 @@ export default {
     campus: ({ campusId }, args, { dataSources }) =>
       isNumber(campusId) ? dataSources.Campus.getFromId(campusId) : null,
     isAnonymous: ({ isPublic }) => !isPublic,
-    // deprecated
-    person: ({ requestedByPersonAliasId }, args, { dataSources }) =>
-      dataSources.Prayer.getRequestor(requestedByPersonAliasId),
     requestor: ({ requestedByPersonAliasId }, args, { dataSources }) =>
       dataSources.Prayer.getRequestor(requestedByPersonAliasId),
     flagCount: ({ flagCount }) =>
@@ -148,9 +137,6 @@ export default {
     subtitle: ({ attributeValues: { subtitle: { value } = {} } = {} }) => value,
     imageURL: ({ attributeValues: { imageSquare: { value } = {} } = {} }) =>
       createAssetUrl(JSON.parse(value)),
-    overlayColor: ({
-      attributeValues: { overlayColor: { value } = {} } = {},
-    }) => value,
   },
   PrayersConnection: {
     totalCount: ({ getTotalCount }) => getTotalCount(),
