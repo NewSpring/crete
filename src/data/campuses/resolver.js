@@ -7,6 +7,7 @@ const resolver = {
     image: ({ location }) =>
       location.image
         ? {
+            // this is custom, Newspring stores campus images in S3
             uri: createAssetUrl(location.image),
           }
         : null,
