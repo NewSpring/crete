@@ -215,7 +215,6 @@ ROCK_MAPPINGS:
   # However, it will not expose the channel itself.
   # These channels are also pulled when indexing searchable content.
   FEED_CONTENT_CHANNEL_IDS:
-    - 27 # news
     - 16 # articles
     - 18 # studies
     - 19 # sermons
