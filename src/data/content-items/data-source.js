@@ -109,9 +109,14 @@ export default class ContentItem extends oldContentItem.dataSource {
   };
 
   getWistiaAssetUrls = async (wistiaHashedId) => {
+    const headers = { Authorization: `Bearer ${WISTIA.API_KEY}` };
+
     const media = await this.request(
-      `${WISTIA.API_URL}/${wistiaHashedId}.json?access_token=${WISTIA.API_KEY}`
-    ).get();
+      `${WISTIA.API_URL}/${wistiaHashedId}.json`
+    ).get({
+      options: { headers },
+    });
+
     const assetUrls = { video: '', thumbnail: '' };
 
     if (!media) return assetUrls;
