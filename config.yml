@@ -208,7 +208,6 @@ ROCK_MAPPINGS:
     - 20 # sermon series
     - 18 # studies
     - 16 # articles
-    - 27 # news
     - 28 # stories
 
   # Apollos will pull content items from these channels and expose them on the user feed
