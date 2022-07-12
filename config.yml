@@ -357,20 +357,6 @@ DISCOVER_FEATURES:
   - algorithms:
       - type: CONTENT_CHANNEL
         arguments:
-          contentChannelId: 27
-          limit: 3
-    type: HorizontalCardList
-    subtitle: News
-    primaryAction:
-      action: OPEN_CHANNEL
-      title: 'View All'
-      relatedNode:
-        __typename: ContentChannel
-        id: 27
-        name: News
-  - algorithms:
-      - type: CONTENT_CHANNEL
-        arguments:
           contentChannelId: 28
           limit: 3
     type: HorizontalCardList
